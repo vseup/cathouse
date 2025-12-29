@@ -4,6 +4,7 @@ import cat01GifSleep from '$lib/assets/sprites/cat01_brown_gifs/cat01_sleep_8fps
 import cat01GifSit from '$lib/assets/sprites/cat01_brown_gifs/cat01_sit_8fps.gif';
 import cat01GifLie from '$lib/assets/sprites/cat01_brown_gifs/cat01_liedown_8fps.gif';
 import cat01GifRun from '$lib/assets/sprites/cat01_brown_gifs/cat01_run_12fps.gif';
+import cat01GifClean from '$lib/assets/sprites/cat01_brown_gifs/cat01_clean_8fps.gif';
 import cat01GifCuddle from '$lib/assets/sprites/cat01_brown_gifs/cat01_cuddle_8fps.gif';
 
 export enum CatState {
@@ -12,6 +13,7 @@ export enum CatState {
     SIT,
     LIE,
     RUN,
+    CLEAN,
     CUDDLE
 }
 
@@ -40,7 +42,7 @@ export class Cat {
     public updateState(state?: null | CatState) {
         let vals = Object.values(CatState) as CatState[];
         vals = vals.slice(vals.length / 2);
-        const images = [cat01GifWalk, cat01GifSleep, cat01GifSit, cat01GifLie, cat01GifRun, cat01GifCuddle];
+        const images = [cat01GifWalk, cat01GifSleep, cat01GifSit, cat01GifLie, cat01GifRun, cat01GifClean, cat01GifCuddle];
         let index = Math.floor(Math.floor(Math.random() * vals.length));
 
         if (state != null) {

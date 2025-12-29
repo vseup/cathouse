@@ -25,6 +25,7 @@ export class Cat {
     y: number = 0;
     vx: number = 0;
     vy: number = 0;
+    donation: number;
     state: CatState = CatState.WALK;
     stateTimer: number = 0;
     name: string;
@@ -32,12 +33,13 @@ export class Cat {
     el?: HTMLImageElement;
 
 
-    public constructor(id: number, name: string, x: number, y: number) {
+    public constructor(id: number, name: string, x: number, y: number, donation: number) {
         this.id = id;
         this.name = name;
         this.x = x;
         this.y = y;
         this.stateTimer = rand(8, 15);
+        this.donation = donation;
         this.updateSpeedAndDirection();
     }
 

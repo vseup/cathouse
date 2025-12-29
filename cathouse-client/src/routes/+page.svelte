@@ -6,8 +6,8 @@
 
 	const NUM_CATS = 40;
 
-	const CAT_WIDTH = 24 * 2.5;
-	const CAT_HEIGHT = 24 * 2.5;
+	const CAT_WIDTH = 24 * 3;
+	const CAT_HEIGHT = 24 * 3;
 
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
@@ -29,7 +29,7 @@
 		const x = rand(0, worldWidth - catWidth);
 		const y = rand(0, worldHeight - catHeight);
 
-		return new Cat(id, `Kitty-${id}`, x, y);
+		return new Cat(id, `Kitty-${id}`, x, y, rand(1, 100));
 	}
 
 	function updateCat(cat: Cat, deltaTime: number, worldWidth: number, worldHeight: number) {
@@ -141,7 +141,7 @@
 					}}
 				></div>
 			</div>
-			<Sidebar />
+			<Sidebar donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)} />
 		</div>
 	{:else}
 		<div class="bottombar"></div>

@@ -3,6 +3,9 @@
 	import Button from '$lib/components/button.svelte';
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
 	import Spacer from './spacer.svelte';
+
+	export let donation: number;
+
 	const SIDEBAR_WIDTH = 450;
 	let searchTerm = '';
 </script>
@@ -28,7 +31,9 @@
 	<div class="col">
 		<div id="donation" class="col">
 			<div>bereits gesammelt*:</div>
-			<span>23,50€</span>
+			<span>
+				{Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(donation)}
+			</span>
 		</div>
 		<p id="note">
 			*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angeben

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { rand } from '$lib/helpers/number.helper';
 	import { Cat, CatState } from '$lib/models/cat';
+	import Sidebar from '$lib/components/sidebar.svelte';
 
 	const NUM_CATS = 40;
 
@@ -140,7 +141,7 @@
 					}}
 				></div>
 			</div>
-			<div class="sidebar"></div>
+			<Sidebar />
 		</div>
 	{:else}
 		<div class="bottombar"></div>
@@ -183,13 +184,6 @@
 		flex-direction: row;
 	}
 	.col {
-		display: flex;
-		flex-direction: column;
-	}
-	.sidebar {
-		width: var(--sidebar-width);
-		height: 100%;
-		background-color: #17823e;
 		display: flex;
 		flex-direction: column;
 	}

@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import catGif from '$lib/assets/sprites/cat01_brown_gifs/cat01_walk_8fps.gif'; // animated cat gif
 	import { rand } from '$lib/helpers/number.helper';
-	import { Cat } from '$lib/models/cat';
+	import { Cat, CatState } from '$lib/models/cat';
 
 	const NUM_CATS = 40;
 
-	const CAT_WIDTH = 19 * 2.5;
-	const CAT_HEIGHT = 17 * 2.5;
+	const CAT_WIDTH = 24 * 2.5;
+	const CAT_HEIGHT = 24 * 2.5;
 
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
@@ -72,6 +71,8 @@
 				if (!cat.el) continue;
 				updateCat(cat, deltaTime, worldWidth, worldHeight);
 			}
+
+			cats = [...cats];
 			animationFrameId = requestAnimationFrame(loop);
 		}
 
@@ -100,7 +101,15 @@
 		<div class="world-wrapper row">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}
-					<img class="cat" src={catGif} alt="Cat" bind:this={cat.el} />
+					<img
+						class="cat"
+						src={cat.src}
+						alt="Cat"
+						bind:this={cat.el}
+						on:click={() => {
+							cat.updateState(CatState.CUDDLE);
+						}}
+					/>
 				{/each}
 			</div>
 			<div class="sidebar"></div>
@@ -110,7 +119,15 @@
 		<div class="world-wrapper col">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}
-					<img class="cat" src={catGif} alt="Cat" bind:this={cat.el} />
+					<img
+						class="cat"
+						src={cat.src}
+						alt="Cat"
+						bind:this={cat.el}
+						on:click={() => {
+							cat.updateState(CatState.CUDDLE);
+						}}
+					/>
 				{/each}
 			</div>
 			<div class="bottombar-pad"></div>
@@ -154,7 +171,7 @@
 		width: 100%;
 	}
 	.world {
-		/*background: #222;*/
+		background: #222;
 		flex: 1 1 auto;
 		position: relative;
 	}

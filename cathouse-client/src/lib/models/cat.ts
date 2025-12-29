@@ -1,9 +1,18 @@
 import { rand } from "$lib/helpers/number.helper";
+import cat01GifWalk from '$lib/assets/sprites/cat01_brown_gifs/cat01_walk_8fps.gif';
+import cat01GifSleep from '$lib/assets/sprites/cat01_brown_gifs/cat01_sleep_8fps.gif';
+import cat01GifSit from '$lib/assets/sprites/cat01_brown_gifs/cat01_sit_8fps.gif';
+import cat01GifLie from '$lib/assets/sprites/cat01_brown_gifs/cat01_liedown_8fps.gif';
+import cat01GifRun from '$lib/assets/sprites/cat01_brown_gifs/cat01_run_12fps.gif';
+import cat01GifCuddle from '$lib/assets/sprites/cat01_brown_gifs/cat01_cuddle_8fps.gif';
 
 export enum CatState {
     WALK,
     SLEEP,
-    EAT
+    SIT,
+    LIE,
+    RUN,
+    CUDDLE
 }
 
 export class Cat {
@@ -15,6 +24,7 @@ export class Cat {
     state: CatState = CatState.WALK;
     stateTimer: number = 0;
     name: string;
+    src: string = cat01GifWalk;
     el?: HTMLImageElement;
 
     public constructor(id: number, name: string, x: number, y: number) {
@@ -26,17 +36,28 @@ export class Cat {
         this.updateSpeedAndDirection();
     }
 
-    public updateState() {
+    public updateState(state?: null | CatState) {
         let vals = Object.values(CatState) as CatState[];
         vals = vals.slice(vals.length / 2);
-        this.state = vals[0];
-        this.stateTimer = rand(5, 10);
+        const images = [cat01GifWalk, cat01GifSleep, cat01GifSit, cat01GifLie, cat01GifRun, cat01GifCuddle];
+        let index = Math.floor(Math.floor(Math.random() * vals.length));
+
+        if (state != null) {
+            index = vals.indexOf(state);
+        } else {
+            while (vals[index] === CatState.CUDDLE) {
+                index = Math.floor(Math.floor(Math.random() * vals.length));
+            }
+        }
+
+        this.state = vals[index];
+        this.src = images[index];
+        this.stateTimer = this.state === CatState.CUDDLE ? 2 : rand(5, 10);
         this.updateSpeedAndDirection();
-        //return CatState[Math.floor(Math.random() * vals.length)];
     }
 
     public move(deltaTime: number) {
-        if (this.state === CatState.WALK) {
+        if (this.state === CatState.WALK || this.state === CatState.RUN) {
             this.x += this.vx * deltaTime;
             this.y += this.vy * deltaTime;
         }
@@ -85,7 +106,10 @@ export class Cat {
     }
 
     private updateSpeedAndDirection() {
-        const speed = rand(25, 50);
+        let speed = rand(25, 40);
+        if (this.state === CatState.RUN) {
+            speed = rand(80, 100);
+        }
         const dir = Math.random() * Math.PI * 2;
         this.vx = Math.cos(dir) * speed;
         this.vy = Math.sin(dir) * speed;

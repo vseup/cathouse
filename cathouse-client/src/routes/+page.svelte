@@ -15,7 +15,9 @@
 	let catHeight = CAT_HEIGHT;
 
 	let world: HTMLDivElement;
+	let overlay: HTMLDivElement;
 	let cats: Cat[] = [];
+	let focusedCat: Cat | null = null;
 	let animationFrameId: number;
 
 	let worldWidth = 0;
@@ -40,12 +42,31 @@
 		if (!cat.el) return;
 		const flip = cat.vx < 0 ? -1 : 1;
 		cat.el.style.transform = `translate(${cat.x}px, ${cat.y}px) scaleX(${flip})`;
-		cat.el.style.zIndex = `${Math.round(cat.y)}`;
+		if (cat.id != focusedCat?.id) {
+			cat.el.style.zIndex = `${Math.round(cat.y)}`;
+		}
 	}
 
 	function updateCatSize() {
 		catWidth = Math.min(CAT_WIDTH, worldWidth * 0.1);
 		catHeight = catWidth * (CAT_WIDTH / CAT_HEIGHT);
+	}
+
+	function focusCat(cat: Cat) {
+		if (cat.el == null) return;
+		cat.updateState(CatState.CUDDLE);
+		focusedCat = cat;
+		overlay.style.zIndex = `${worldHeight + 1}`;
+		cat.el.style.zIndex = `${worldHeight + 10}`;
+	}
+
+	function clearFocus() {
+		focusedCat = null;
+		overlay.style.zIndex = `-100`;
+		for (const cat of cats) {
+			if (!cat.el) continue;
+			cat.el.style.zIndex = `${Math.round(cat.y)}`;
+		}
 	}
 
 	onMount(() => {
@@ -107,10 +128,17 @@
 						alt="Cat"
 						bind:this={cat.el}
 						on:click={() => {
-							cat.updateState(CatState.CUDDLE);
+							focusCat(cat);
 						}}
 					/>
 				{/each}
+				<div
+					class="overlay"
+					bind:this={overlay}
+					on:click={() => {
+						clearFocus();
+					}}
+				></div>
 			</div>
 			<div class="sidebar"></div>
 		</div>
@@ -125,10 +153,17 @@
 						alt="Cat"
 						bind:this={cat.el}
 						on:click={() => {
-							cat.updateState(CatState.CUDDLE);
+							focusCat(cat);
 						}}
 					/>
 				{/each}
+				<div
+					class="overlay"
+					bind:this={overlay}
+					on:click={() => {
+						clearFocus();
+					}}
+				></div>
 			</div>
 			<div class="bottombar-pad"></div>
 		</div>
@@ -141,6 +176,7 @@
 		width: 100dvw;
 		height: 100vh;
 		height: 100dvh;
+		background: #222;
 	}
 	.row {
 		display: flex;
@@ -171,9 +207,18 @@
 		width: 100%;
 	}
 	.world {
-		background: #222;
 		flex: 1 1 auto;
 		position: relative;
+	}
+	.overlay {
+		top: 0;
+		left: 0;
+		background: #222;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		opacity: 0.75;
+		z-index: -100;
 	}
 	.cat {
 		position: absolute;

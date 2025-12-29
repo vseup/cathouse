@@ -27,12 +27,13 @@ export class Cat {
     src: string = cat01GifWalk;
     el?: HTMLImageElement;
 
+
     public constructor(id: number, name: string, x: number, y: number) {
         this.id = id;
         this.name = name;
         this.x = x;
         this.y = y;
-        this.stateTimer = rand(2, 6);
+        this.stateTimer = rand(8, 15);
         this.updateSpeedAndDirection();
     }
 
@@ -52,7 +53,7 @@ export class Cat {
 
         this.state = vals[index];
         this.src = images[index];
-        this.stateTimer = this.state === CatState.CUDDLE ? 2 : rand(5, 10);
+        this.stateTimer = this.state === CatState.CUDDLE ? 2 : rand(8, 15);
         this.updateSpeedAndDirection();
     }
 

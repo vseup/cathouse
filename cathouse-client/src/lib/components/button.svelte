@@ -4,7 +4,7 @@
 	export let widthCss: string = 'auto';
 </script>
 
-<button class="button {primary ? 'primary' : 'secondary'}" style="width: {widthCss}">
+<button class="button {primary ? 'primary' : 'secondary'}" style="width: {widthCss}" on:click>
 	{text}
 </button>
 
@@ -12,7 +12,7 @@
 	.button {
 		height: 48px;
 		border-radius: 16px;
-		border: solid 2px #fff;
+		border: solid 1px #fff;
 		font-size: 18px;
 		padding-left: 24px;
 		padding-right: 24px;

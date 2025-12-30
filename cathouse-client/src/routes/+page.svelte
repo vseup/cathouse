@@ -151,8 +151,16 @@
 			<Sidebar
 				donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)}
 				cat={focusedCat}
+				{cats}
 				searchTerm={focusedCat ? focusedCat.name : ''}
 				clear={() => clearFocus()}
+				select={(term) => {
+					const idx = cats.findIndex((el) =>
+						el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+					);
+					if (idx < 0) return;
+					focusCat(cats[idx]);
+				}}
 			/>
 		</div>
 	{:else}

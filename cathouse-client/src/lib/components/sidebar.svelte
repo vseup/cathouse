@@ -7,8 +7,10 @@
 
 	export let donation: number;
 	export let cat: Cat | null = null;
+	export let cats: Cat[];
 	export let searchTerm: string = '';
 	export let clear: () => void;
+	export let select: (term: string) => void;
 
 	const SIDEBAR_WIDTH = 450;
 
@@ -19,7 +21,13 @@
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">
 	<div class="col">
-		<Search bind:searchTerm placeholder="Katze suchen" {clear} />
+		<Search
+			bind:searchTerm
+			placeholder="Katze suchen"
+			{clear}
+			{select}
+			terms={cats.map((c) => c.name)}
+		/>
 		{#if cat}
 			<Spacer height={16} />
 			<div class="wrapper col">

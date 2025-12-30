@@ -29,6 +29,6 @@
 		background-color: #17833d;
 	}
 	.secondary:hover {
-		background-color: #147335;
+		background-color: #126b31;
 	}
 </style>

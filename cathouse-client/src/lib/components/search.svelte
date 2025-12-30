@@ -29,6 +29,7 @@
 		background-color: #fff;
 		border-radius: 5px;
 		padding: 8px;
+		box-sizing: border-box;
 	}
 	#search-input {
 		width: 100%;

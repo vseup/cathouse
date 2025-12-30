@@ -7,9 +7,10 @@
 
 	export let donation: number;
 	export let cat: Cat | null = null;
+	export let searchTerm: string = '';
+	export let clear: () => void;
 
 	const SIDEBAR_WIDTH = 450;
-	let searchTerm = '';
 
 	function toEur(num: number): string {
 		return Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
@@ -18,7 +19,7 @@
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">
 	<div class="col">
-		<Search searchTerm={cat?.name ?? searchTerm} placeholder="Katze suchen" />
+		<Search bind:searchTerm placeholder="Katze suchen" {clear} />
 		{#if cat}
 			<Spacer height={16} />
 			<div class="wrapper col">

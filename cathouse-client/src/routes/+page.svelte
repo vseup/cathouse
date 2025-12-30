@@ -148,7 +148,12 @@
 					}}
 				></div>
 			</div>
-			<Sidebar donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)} cat={focusedCat} />
+			<Sidebar
+				donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)}
+				cat={focusedCat}
+				searchTerm={focusedCat ? focusedCat.name : ''}
+				clear={() => clearFocus()}
+			/>
 		</div>
 	{:else}
 		<div class="bottombar"></div>

@@ -29,6 +29,14 @@
 			<Spacer height={16} />
 			<div class="wrapper col">
 				<span class="name">{cat.name}</span>
+				<img
+					class="cat-img"
+					src={cat.srcIdle}
+					alt="Cat named {cat.name}"
+					style:z-index={2}
+					style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
+				/>
+				<Spacer height={24} />
 				<p class="cat-descr">Spendenbetrag: <b>{toEur(cat.donation)}</b></p>
 				<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
 			</div>
@@ -66,11 +74,15 @@
 </div>
 
 <style>
+	.cat-img {
+		width: 35%;
+		height: auto;
+		image-rendering: pixelated;
+	}
 	#sidebar {
 		width: var(--sidebar-width);
 		height: 100%;
 		background-color: #17823e;
-
 		padding: 24px;
 		justify-content: space-between;
 	}

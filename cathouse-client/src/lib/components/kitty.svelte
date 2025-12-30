@@ -20,9 +20,15 @@
 	{#if focused}
 		<div class="focus-bg-wrapper"><div class="focus-bg" style:z-index={1}></div></div>
 	{/if}
-	<img class="cat-img" src={cat.src} alt="Cat" style:z-index={2} style:transform="scaleX({flip})" />
+	<img
+		class="cat-img"
+		src={cat.src}
+		alt="Cat named {cat.name}"
+		style:z-index={2}
+		style:transform="scaleX({flip})"
+	/>
 	{#if hovered || focused}
-		<div class="name">{cat.name} ({toEur(cat.donation)})</div>
+		<div class="name">{cat.name}</div>
 	{/if}
 	<button
 		class="cat-btn"

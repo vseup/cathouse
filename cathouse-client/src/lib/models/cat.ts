@@ -8,6 +8,8 @@ import cat01GifClean from '$lib/assets/sprites/cat01_brown_gifs/cat01_clean_8fps
 import cat01GifCuddle from '$lib/assets/sprites/cat01_brown_gifs/cat01_cuddle_8fps.gif';
 import cat01GifBaking from '$lib/assets/sprites/cat01_brown_gifs/cat01_baking_8fps.gif';
 
+import cat01GifIdle from '$lib/assets/sprites/cat01_brown_gifs/cat01_idle_blink_8fps.gif';
+
 export enum CatState {
     WALK,
     SLEEP,
@@ -30,6 +32,7 @@ export class Cat {
     stateTimer: number = 0;
     name: string;
     donor?: string;
+    srcIdle: string = cat01GifIdle;
     src: string = cat01GifWalk;
 
 

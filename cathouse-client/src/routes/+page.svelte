@@ -75,7 +75,6 @@
 			worldHeight = world.clientHeight;
 
 			for (const cat of cats) {
-				//if (!cat.el) continue;
 				updateCat(cat, deltaTime, worldWidth, worldHeight);
 			}
 

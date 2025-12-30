@@ -6,9 +6,27 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Material Symbols";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: block;
+    src: url("$lib/assets/icons/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].woff2") format("woff2");
+}
+
 html,
 body {
     font-family: "Inter", sans-serif;
     color: #222;
     font-size: 18px;
+}
+
+p {
+    margin: 0;
+}
+
+.icon {
+    font-family: "Material Symbols";
+    font-size: 24px;
+    line-height: 24px;
 }

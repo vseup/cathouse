@@ -29,7 +29,14 @@
 		const x = rand(0, worldWidth - catWidth);
 		const y = rand(0, worldHeight - catHeight);
 
-		return new Cat(id, `Kitty-${id}`, x, y, rand(1, 100));
+		return new Cat(
+			id,
+			`Kitty-${id}`,
+			x,
+			y,
+			rand(1, 100),
+			id % 2 === 0 ? 'Max Mustermann' : undefined
+		);
 	}
 
 	function updateCat(cat: Cat, deltaTime: number, worldWidth: number, worldHeight: number) {
@@ -129,7 +136,7 @@
 						alt="Cat"
 						bind:this={cat.el}
 						on:click={() => {
-							focusCat(cat);
+							cat === focusedCat ? clearFocus() : focusCat(cat);
 						}}
 					/>
 				{/each}
@@ -141,7 +148,7 @@
 					}}
 				></div>
 			</div>
-			<Sidebar donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)} />
+			<Sidebar donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)} cat={focusedCat} />
 		</div>
 	{:else}
 		<div class="bottombar"></div>
@@ -154,7 +161,7 @@
 						alt="Cat"
 						bind:this={cat.el}
 						on:click={() => {
-							focusCat(cat);
+							cat === focusedCat ? clearFocus() : focusCat(cat);
 						}}
 					/>
 				{/each}

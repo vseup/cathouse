@@ -29,17 +29,19 @@ export class Cat {
     state: CatState = CatState.WALK;
     stateTimer: number = 0;
     name: string;
+    donor?: string;
     src: string = cat01GifWalk;
     el?: HTMLImageElement;
 
 
-    public constructor(id: number, name: string, x: number, y: number, donation: number) {
+    public constructor(id: number, name: string, x: number, y: number, donation: number, donor?: string) {
         this.id = id;
         this.name = name;
         this.x = x;
         this.y = y;
         this.stateTimer = rand(8, 15);
         this.donation = donation;
+        this.donor = donor;
         this.updateSpeedAndDirection();
     }
 

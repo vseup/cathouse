@@ -4,6 +4,7 @@
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
 	import Spacer from './spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
+	import { toEur } from '$lib/helpers/number.helper';
 
 	export let donation: number;
 	export let cat: Cat | null = null;
@@ -13,10 +14,6 @@
 	export let select: (term: string) => void;
 
 	const SIDEBAR_WIDTH = 450;
-
-	function toEur(num: number): string {
-		return Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(num);
-	}
 </script>
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">

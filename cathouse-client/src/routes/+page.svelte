@@ -3,17 +3,14 @@
 	import { rand } from '$lib/helpers/number.helper';
 	import { Cat, CatState } from '$lib/models/cat';
 	import Sidebar from '$lib/components/sidebar.svelte';
+	import Kitty from '$lib/components/kitty.svelte';
 
 	const NUM_CATS = 40;
-
-	const CAT_WIDTH = 24 * 3;
-	const CAT_HEIGHT = 24 * 3;
 
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
 
-	let catWidth = CAT_WIDTH;
-	let catHeight = CAT_HEIGHT;
+	$: catSize = Math.min(Math.max(worldWidth / 16, 40), 64);
 
 	let world: HTMLDivElement;
 	let overlay: HTMLDivElement;
@@ -26,8 +23,8 @@
 	let windowWidth = 0;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
-		const x = rand(0, worldWidth - catWidth);
-		const y = rand(0, worldHeight - catHeight);
+		const x = rand(0, worldWidth - catSize);
+		const y = rand(0, worldHeight - catSize);
 
 		return new Cat(
 			id,
@@ -44,44 +41,25 @@
 		if (cat.stateTimer <= 0) {
 			cat.updateState();
 		}
-		cat.respectBoundaries(worldWidth - catWidth, worldHeight - catHeight);
+		cat.respectBoundaries(worldWidth - catSize, worldHeight - catSize);
 		cat.move(deltaTime);
-
-		if (!cat.el) return;
-		const flip = cat.vx < 0 ? -1 : 1;
-		cat.el.style.transform = `translate(${cat.x}px, ${cat.y}px) scaleX(${flip})`;
-		if (cat.id != focusedCat?.id) {
-			cat.el.style.zIndex = `${Math.round(cat.y)}`;
-		}
-	}
-
-	function updateCatSize() {
-		catWidth = Math.min(CAT_WIDTH, worldWidth * 0.1);
-		catHeight = catWidth * (CAT_WIDTH / CAT_HEIGHT);
 	}
 
 	function focusCat(cat: Cat) {
-		if (cat.el == null) return;
 		cat.updateState(CatState.CUDDLE);
 		focusedCat = cat;
 		overlay.style.zIndex = `${worldHeight + 1}`;
-		cat.el.style.zIndex = `${worldHeight + 10}`;
 	}
 
 	function clearFocus() {
 		focusedCat = null;
 		overlay.style.zIndex = `-100`;
-		for (const cat of cats) {
-			if (!cat.el) continue;
-			cat.el.style.zIndex = `${Math.round(cat.y)}`;
-		}
 	}
 
 	onMount(() => {
 		windowWidth = window.innerWidth;
 		worldWidth = world.clientWidth;
 		worldHeight = world.clientHeight;
-		updateCatSize();
 
 		cats = Array.from({ length: NUM_CATS }, (_, i) => createCat(i, worldWidth, worldHeight));
 
@@ -97,7 +75,7 @@
 			worldHeight = world.clientHeight;
 
 			for (const cat of cats) {
-				if (!cat.el) continue;
+				//if (!cat.el) continue;
 				updateCat(cat, deltaTime, worldWidth, worldHeight);
 			}
 
@@ -111,7 +89,6 @@
 			worldWidth = world.clientWidth;
 			worldHeight = world.clientHeight;
 			windowWidth = window.innerWidth;
-			updateCatSize();
 		};
 		window.addEventListener('resize', handleResize);
 
@@ -123,18 +100,16 @@
 	});
 </script>
 
-<div
-	style={`--cat-width: ${catWidth}px; --cat-height: ${catHeight}px; --sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px`}
->
+<div style={`--sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px`}>
 	{#if windowWidth > SIDEBAR_WIDTH * 2}
 		<div class="world-wrapper row">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}
-					<img
-						class="cat"
-						src={cat.src}
-						alt="Cat"
-						bind:this={cat.el}
+					<Kitty
+						{cat}
+						size={catSize}
+						focused={focusedCat?.id === cat.id}
+						maxY={worldHeight}
 						on:click={() => {
 							cat === focusedCat ? clearFocus() : focusCat(cat);
 						}}
@@ -168,11 +143,11 @@
 		<div class="world-wrapper col">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}
-					<img
-						class="cat"
-						src={cat.src}
-						alt="Cat"
-						bind:this={cat.el}
+					<Kitty
+						{cat}
+						size={catSize}
+						focused={focusedCat?.id === cat.id}
+						maxY={worldHeight}
 						on:click={() => {
 							cat === focusedCat ? clearFocus() : focusCat(cat);
 						}}
@@ -198,14 +173,6 @@
 		height: 100vh;
 		height: 100dvh;
 		background: #222;
-	}
-	.row {
-		display: flex;
-		flex-direction: row;
-	}
-	.col {
-		display: flex;
-		flex-direction: column;
 	}
 	.bottombar {
 		height: var(--bottombar-height);
@@ -233,17 +200,5 @@
 		position: absolute;
 		opacity: 0.75;
 		z-index: -100;
-	}
-	.cat {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: var(--cat-width);
-		height: var(--cat-height);
-		image-rendering: pixelated;
-		transform-origin: center center;
-	}
-	.cat:hover {
-		cursor: pointer !important;
 	}
 </style>

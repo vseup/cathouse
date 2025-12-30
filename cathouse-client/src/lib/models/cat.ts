@@ -31,7 +31,6 @@ export class Cat {
     name: string;
     donor?: string;
     src: string = cat01GifWalk;
-    el?: HTMLImageElement;
 
 
     public constructor(id: number, name: string, x: number, y: number, donation: number, donor?: string) {
@@ -42,7 +41,7 @@ export class Cat {
         this.stateTimer = rand(8, 15);
         this.donation = donation;
         this.donor = donor;
-        this.updateSpeedAndDirection();
+        this.updateState();
     }
 
     public updateState(state?: null | CatState) {

@@ -1,10 +1,11 @@
 <script lang="ts">
 	export let icon: string;
 	export let hidden: boolean = false;
+	export let color: string = '#222';
 </script>
 
 <button class="icon-button {hidden ? 'hidden' : ''}" disabled={hidden} on:click>
-	<div class="icon">{icon}</div></button
+	<div class="icon" style:color>{icon}</div></button
 >
 
 <style>

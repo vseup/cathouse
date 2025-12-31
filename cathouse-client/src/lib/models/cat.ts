@@ -1,25 +1,6 @@
 import { rand } from "$lib/helpers/number.helper";
-import cat01GifWalk from '$lib/assets/sprites/cat01_brown_gifs/cat01_walk_8fps.gif';
-import cat01GifSleep from '$lib/assets/sprites/cat01_brown_gifs/cat01_sleep_8fps.gif';
-import cat01GifSit from '$lib/assets/sprites/cat01_brown_gifs/cat01_sit_8fps.gif';
-import cat01GifLie from '$lib/assets/sprites/cat01_brown_gifs/cat01_liedown_8fps.gif';
-import cat01GifRun from '$lib/assets/sprites/cat01_brown_gifs/cat01_run_12fps.gif';
-import cat01GifClean from '$lib/assets/sprites/cat01_brown_gifs/cat01_clean_8fps.gif';
-import cat01GifCuddle from '$lib/assets/sprites/cat01_brown_gifs/cat01_cuddle_8fps.gif';
-import cat01GifBaking from '$lib/assets/sprites/cat01_brown_gifs/cat01_baking_8fps.gif';
-
-import cat01GifIdle from '$lib/assets/sprites/cat01_brown_gifs/cat01_idle_blink_8fps.gif';
-
-export enum CatState {
-    WALK,
-    SLEEP,
-    SIT,
-    LIE,
-    RUN,
-    CLEAN,
-    BAKING,
-    CUDDLE
-}
+import { getIdleImageByType, getImageByTypeAndState } from "$lib/helpers/cat.helper";
+import { CatState, CatType } from "$lib/constants/cat_sprites";
 
 export class Cat {
     id: number;
@@ -32,11 +13,12 @@ export class Cat {
     stateTimer: number = 0;
     name: string;
     donor?: string;
-    srcIdle: string = cat01GifIdle;
-    src: string = cat01GifWalk;
+    type: CatType;
+    srcIdle: string;
+    src: string;
 
 
-    public constructor(id: number, name: string, x: number, y: number, donation: number, donor?: string) {
+    public constructor(id: number, name: string, x: number, y: number, donation: number, type: CatType, donor?: string) {
         this.id = id;
         this.name = name;
         this.x = x;
@@ -44,13 +26,15 @@ export class Cat {
         this.stateTimer = rand(8, 15);
         this.donation = donation;
         this.donor = donor;
+        this.type = type;
+        this.srcIdle = getIdleImageByType(this.type);
+        this.src = getImageByTypeAndState(this.type, this.state);
         this.updateState();
     }
 
     public updateState(state?: null | CatState) {
         let vals = Object.values(CatState) as CatState[];
         vals = vals.slice(vals.length / 2);
-        const images = [cat01GifWalk, cat01GifSleep, cat01GifSit, cat01GifLie, cat01GifRun, cat01GifClean, cat01GifBaking, cat01GifCuddle];
         let index = Math.floor(Math.floor(Math.random() * vals.length));
 
         if (state != null) {
@@ -62,7 +46,7 @@ export class Cat {
         }
 
         this.state = vals[index];
-        this.src = images[index];
+        this.src = getImageByTypeAndState(this.type, this.state);
         this.stateTimer = this.state === CatState.CUDDLE ? 2 : rand(8, 15);
         this.updateSpeedAndDirection();
     }

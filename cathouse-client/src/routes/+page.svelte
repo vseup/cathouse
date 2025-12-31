@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { rand } from '$lib/helpers/number.helper';
-	import { Cat, CatState } from '$lib/models/cat';
+
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import Kitty from '$lib/components/kitty.svelte';
+	import { CatState, CatType } from '$lib/constants/cat_sprites';
+	import { Cat } from '$lib/models/cat';
 
 	const NUM_CATS = 40;
 
@@ -26,12 +28,16 @@
 		const x = rand(0, worldWidth - catSize);
 		const y = rand(0, worldHeight - catSize);
 
+		const types = Object.values(CatType) as CatType[];
+		const typeIndex = Math.floor(Math.floor(Math.random() * types.length));
+
 		return new Cat(
 			id,
 			`Kitty-${id}`,
 			x,
 			y,
 			rand(1, 100),
+			types[typeIndex],
 			id % 2 === 0 ? 'Max Mustermann' : undefined
 		);
 	}

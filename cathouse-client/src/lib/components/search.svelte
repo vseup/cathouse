@@ -97,6 +97,7 @@
 		overflow-y: scroll;
 		padding: 8px 0px;
 		box-sizing: border-box;
+		z-index: 1;
 	}
 	.preview-value {
 		padding: 8px;

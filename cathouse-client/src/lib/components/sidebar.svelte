@@ -12,6 +12,7 @@
 	export let searchTerm: string = '';
 	export let clear: () => void;
 	export let select: (term: string) => void;
+	export let openParticipate: () => void;
 
 	const SIDEBAR_WIDTH = 450;
 </script>
@@ -33,7 +34,6 @@
 					class="cat-img"
 					src={cat.srcIdle}
 					alt="Cat named {cat.name}"
-					style:z-index={2}
 					style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
 				/>
 				<Spacer height={24} />
@@ -53,7 +53,7 @@
 			Katzenhauses im Tierheim Starnberg!
 		</p>
 		<Spacer height={32} />
-		<Button widthCss="75%" text="Mitmachen!" primary />
+		<Button widthCss="75%" text="Mitmachen!" primary on:click={openParticipate} />
 		<Spacer height={16} />
 		<Button widthCss="75%" text="Spendenmöglichkeiten" />
 		<Spacer height={16} />

@@ -6,6 +6,7 @@
 	import Kitty from '$lib/components/kitty.svelte';
 	import { CatState, CatType } from '$lib/constants/cat_sprites';
 	import { Cat } from '$lib/models/cat';
+	import Participate from '$lib/components/forms/participate/participate.svelte';
 
 	const NUM_CATS = 40;
 
@@ -23,6 +24,8 @@
 	let worldWidth = 0;
 	let worldHeight = 0;
 	let windowWidth = 0;
+
+	let showParticipate = false;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
@@ -105,7 +108,7 @@
 	});
 </script>
 
-<div style={`--sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px`}>
+<div style={`--sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px;`}>
 	{#if windowWidth > SIDEBAR_WIDTH * 2}
 		<div class="world-wrapper row">
 			<div class="world" bind:this={world}>
@@ -141,6 +144,7 @@
 					if (idx < 0) return;
 					focusCat(cats[idx]);
 				}}
+				openParticipate={() => (showParticipate = true)}
 			/>
 		</div>
 	{:else}
@@ -168,6 +172,9 @@
 			</div>
 			<div class="bottombar-pad"></div>
 		</div>
+	{/if}
+	{#if showParticipate}
+		<Participate zIndex={worldHeight + 50} close={() => (showParticipate = false)} />
 	{/if}
 </div>
 

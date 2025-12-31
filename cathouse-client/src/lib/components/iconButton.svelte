@@ -3,9 +3,10 @@
 
 	export let icon: string;
 	export let primary: boolean = false;
+	export let disabled: boolean = false;
 </script>
 
-<button class="button {primary ? 'primary' : 'secondary'}" on:click>
+<button class="button {primary ? 'primary' : 'secondary'}" {disabled} on:click>
 	{#if icon}
 		<Icon {icon} color="#fff" />
 	{/if}

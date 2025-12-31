@@ -88,6 +88,16 @@ import cat09GifCuddle from '$lib/assets/sprites/cat09/cuddle_8fps.gif';
 import cat09GifBaking from '$lib/assets/sprites/cat09/baking_8fps.gif';
 import cat09GifIdle from '$lib/assets/sprites/cat09/idle_blink_8fps.gif';
 
+import cat10GifWalk from '$lib/assets/sprites/cat10/walk_8fps.gif';
+import cat10GifSleep from '$lib/assets/sprites/cat10/sleep_8fps.gif';
+import cat10GifSit from '$lib/assets/sprites/cat10/sit_8fps.gif';
+import cat10GifLie from '$lib/assets/sprites/cat10/liedown_8fps.gif';
+import cat10GifRun from '$lib/assets/sprites/cat10/run_12fps.gif';
+import cat10GifClean from '$lib/assets/sprites/cat10/clean_8fps.gif';
+import cat10GifCuddle from '$lib/assets/sprites/cat10/cuddle_8fps.gif';
+import cat10GifBaking from '$lib/assets/sprites/cat10/baking_8fps.gif';
+import cat10GifIdle from '$lib/assets/sprites/cat10/idle_blink_8fps.gif';
+
 export enum CatState {
     WALK,
     SLEEP,
@@ -108,7 +118,8 @@ export enum CatType {
     CAT06 = "CAT06",
     CAT07 = "CAT07",
     CAT08 = "CAT08",
-    CAT09 = "CAT09"
+    CAT09 = "CAT09",
+    CAT10 = "CAT10"
 }
 
 export const catTypeImagesMap: Map<CatType, string[]> = new Map([
@@ -120,6 +131,7 @@ export const catTypeImagesMap: Map<CatType, string[]> = new Map([
     [CatType.CAT06, [cat06GifWalk, cat06GifSleep, cat06GifSit, cat06GifLie, cat06GifRun, cat06GifClean, cat06GifCuddle, cat06GifBaking, cat06GifIdle]],
     [CatType.CAT07, [cat07GifWalk, cat07GifSleep, cat07GifSit, cat07GifLie, cat07GifRun, cat07GifClean, cat07GifCuddle, cat07GifBaking, cat07GifIdle]],
     [CatType.CAT08, [cat08GifWalk, cat08GifSleep, cat08GifSit, cat08GifLie, cat08GifRun, cat08GifClean, cat08GifCuddle, cat08GifBaking, cat08GifIdle]],
-    [CatType.CAT09, [cat09GifWalk, cat09GifSleep, cat09GifSit, cat09GifLie, cat09GifRun, cat09GifClean, cat09GifCuddle, cat09GifBaking, cat09GifIdle]]
+    [CatType.CAT09, [cat09GifWalk, cat09GifSleep, cat09GifSit, cat09GifLie, cat09GifRun, cat09GifClean, cat09GifCuddle, cat09GifBaking, cat09GifIdle]],
+    [CatType.CAT10, [cat10GifWalk, cat10GifSleep, cat10GifSit, cat10GifLie, cat10GifRun, cat10GifClean, cat10GifCuddle, cat10GifBaking, cat10GifIdle]]
 ])
 

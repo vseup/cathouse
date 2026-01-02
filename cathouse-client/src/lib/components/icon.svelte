@@ -2,10 +2,11 @@
 	export let icon: string;
 	export let hidden: boolean = false;
 	export let color: string = '#222';
+	export let weight: number = 400;
 </script>
 
 <button class="icon-button {hidden ? 'hidden' : ''}" disabled={hidden} on:click>
-	<div class="icon" style:color>{icon}</div></button
+	<div class="icon" style:color style:font-weight={weight}>{icon}</div></button
 >
 
 <style>

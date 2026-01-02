@@ -53,11 +53,11 @@
 			Katzenhauses im Tierheim Starnberg!
 		</p>
 		<Spacer height={32} />
-		<Button widthCss="75%" text="Mitmachen!" primary on:click={openParticipate} />
+		<Button widthCss="75%" primary on:click={openParticipate}>Mitmachen!</Button>
 		<Spacer height={16} />
-		<Button widthCss="75%" text="Spendenmöglichkeiten" />
+		<Button widthCss="75%">Spendenmöglichkeiten</Button>
 		<Spacer height={16} />
-		<Button widthCss="75%" text="mehr erfahren" />
+		<Button widthCss="75%">mehr erfahren</Button>
 		<Spacer height={24} />
 	</div>
 	<div class="col">

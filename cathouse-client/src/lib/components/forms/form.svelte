@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Icon from '../controls/Icon.svelte';
 	import Spacer from '../Spacer.svelte';
 
@@ -6,6 +7,22 @@
 	export let title: string;
 
 	export let close: () => void;
+
+	let content: HTMLDivElement;
+	let scroll: number = 0;
+	let maxScroll: number = 0;
+
+	$: showShadowTop = maxScroll > 0 && scroll > 0;
+	$: showShadowBottom = maxScroll > 0 && scroll < maxScroll;
+
+	function updateScroll() {
+		scroll = content ? content.scrollTop : 0;
+		maxScroll = content ? content.scrollHeight - content.clientHeight : 0;
+	}
+
+	onMount(() => {
+		updateScroll();
+	});
 </script>
 
 <div class="form-bg" style:z-index={zIndex} on:click={close}></div>
@@ -16,7 +33,13 @@
 			<Icon icon="close" on:click={close} />
 		</div>
 		<Spacer height={16} />
-		<div class="form-content">
+		<div
+			class="form-content {showShadowTop ? 'shadow-top' : ''} {showShadowBottom
+				? 'shadow-bottom'
+				: ''}"
+			bind:this={content}
+			on:scroll={updateScroll}
+		>
 			<slot />
 		</div>
 	</div>
@@ -34,6 +57,12 @@
 		overflow-y: scroll;
 		padding: 0px 12px;
 		box-sizing: border-box;
+	}
+	.shadow-top {
+		box-shadow: inset 0 10px 12px -12px rgba(0, 0, 0, 0.35);
+	}
+	.shadow-bottom {
+		box-shadow: inset 0 -10px 12px -12px rgba(0, 0, 0, 0.35);
 	}
 	.form-container {
 		width: 550px;

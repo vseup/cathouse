@@ -17,3 +17,7 @@ export function getImageByTypeAndState(type: CatType, state: CatState): string {
 export function getIdleImageByType(type: CatType) {
     return catTypeImagesMap.get(type)![8];
 }
+
+export function getLoveImageByType(type: CatType) {
+    return catTypeImagesMap.get(type)![6];
+}

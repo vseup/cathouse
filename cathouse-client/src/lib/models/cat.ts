@@ -1,5 +1,5 @@
 import { rand } from "$lib/helpers/number.helper";
-import { getIdleImageByType, getImageByTypeAndState } from "$lib/helpers/cat.helper";
+import { getIdleImageByType, getLoveImageByType, getImageByTypeAndState } from "$lib/helpers/cat.helper";
 import { CatState, CatType } from "$lib/constants/cat_sprites";
 
 export class Cat {
@@ -15,6 +15,7 @@ export class Cat {
     donor?: string;
     type: CatType;
     srcIdle: string;
+    srcLove: string;
     src: string;
 
 
@@ -28,6 +29,7 @@ export class Cat {
         this.donor = donor;
         this.type = type;
         this.srcIdle = getIdleImageByType(this.type);
+        this.srcLove = getLoveImageByType(this.type);
         this.src = getImageByTypeAndState(this.type, this.state);
         this.updateState();
     }

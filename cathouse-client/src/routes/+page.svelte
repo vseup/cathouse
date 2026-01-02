@@ -7,13 +7,14 @@
 	import { CatState, CatType } from '$lib/constants/cat_sprites';
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/forms/participate/participate.svelte';
+	import Success from '$lib/components/forms/participate/success.svelte';
 
 	const NUM_CATS = 40;
 
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
 
-	$: catSize = Math.min(Math.max(worldWidth / 16, 40), 64);
+	$: catSize = Math.min(Math.max(worldWidth / 16, 48), 80);
 
 	let world: HTMLDivElement;
 	let overlay: HTMLDivElement;
@@ -26,6 +27,7 @@
 	let windowWidth = 0;
 
 	let showParticipate = false;
+	let newCat: Cat | null = null;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
@@ -174,7 +176,14 @@
 		</div>
 	{/if}
 	{#if showParticipate}
-		<Participate zIndex={worldHeight + 50} close={() => (showParticipate = false)} />
+		<Participate
+			zIndex={worldHeight + 50}
+			close={() => (showParticipate = false)}
+			onSaved={(c) => (newCat = c)}
+		/>
+	{/if}
+	{#if newCat != null}
+		<Success zIndex={worldHeight + 50} close={() => (newCat = null)} cat={newCat} />
 	{/if}
 </div>
 

@@ -13,7 +13,7 @@
 	let maxScroll: number = 0;
 
 	$: showShadowTop = maxScroll > 0 && scroll > 0;
-	$: showShadowBottom = maxScroll > 0 && scroll < maxScroll;
+	$: showShadowBottom = maxScroll > 0 && scroll < maxScroll - 1;
 
 	function updateScroll() {
 		scroll = content ? content.scrollTop : 0;

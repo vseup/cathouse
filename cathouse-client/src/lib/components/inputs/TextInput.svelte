@@ -1,14 +1,42 @@
 <script lang="ts">
+	import Spacer from '../Spacer.svelte';
+
 	export let text: string;
 	export let minlength: number | null = null;
 	export let maxlength: number | null = null;
 	export let type: string = 'text';
+	export let inputmode:
+		| 'text'
+		| 'search'
+		| 'none'
+		| 'tel'
+		| 'url'
+		| 'email'
+		| 'numeric'
+		| 'decimal'
+		| null
+		| undefined = 'text';
 	export let invalidMessage: string | null = null;
 	export let onBlur: () => void;
 </script>
 
-<div id="text-input-wrapper" class={invalidMessage ? 'invalid' : ''}>
-	<input {type} id="text-input" {minlength} {maxlength} bind:value={text} on:blur={onBlur} />
+<div class="col">
+	<div id="text-input-wrapper" class={invalidMessage ? 'invalid' : ''}>
+		<input
+			{type}
+			{inputmode}
+			id="text-input"
+			{minlength}
+			{maxlength}
+			bind:value={text}
+			on:blur={onBlur}
+			on:input
+		/>
+	</div>
+	{#if invalidMessage}
+		<Spacer height={4} />
+		<p class="fs14" style:color="#ff2b4b">{invalidMessage}</p>
+	{/if}
 </div>
 
 <style>

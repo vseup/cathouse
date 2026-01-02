@@ -3,8 +3,24 @@
 	import { to2digits } from '$lib/helpers/number.helper';
 
 	export let value: string;
+	export function validate(): boolean {
+		if (value == null) {
+			invalidMessage = 'Der Spendenbetrag darf nicht leer sein!';
+			return false;
+		}
+		if (isNaN(parseFloat(value))) {
+			invalidMessage = 'Der Spendenbetrag muss ein valider Eurobetrag sein!';
+			return false;
+		}
+		return true;
+	}
 
 	let invalidMessage: string | null = null;
+
+	function onBlur() {
+		if (isNaN(parseFloat(value))) return;
+		value = to2digits(parseFloat(value.replace(',', '.')));
+	}
 </script>
 
 <InputWithLabelAndDescr
@@ -15,9 +31,9 @@
 	bind:value
 	{invalidMessage}
 	minlength={1}
-	onBlur={() => {
-		value = to2digits(parseFloat(value.replace(',', '.')));
-	}}
+	inputmode="decimal"
+	on:input={() => (invalidMessage = null)}
+	{onBlur}
 />
 
 <style>

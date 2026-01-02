@@ -1,9 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/controls/Button.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
-	import { to2digits } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
 	import Form from '../Form.svelte';
 	import CatName from './CatName.svelte';
@@ -19,12 +17,23 @@
 	const cats: Cat[] = types.map((t) => new Cat(-1, '', -1, -1, -1, t));
 	let catIndex = 0;
 
+	let catNameRef: CatName;
 	let catNameInput: string = '';
+
+	let donationRef: Donation;
 	let donationInput: string = '';
+
 	let donorNameInput: string = '';
 
+	function validate(): boolean {
+		const catNameValid = catNameRef.validate();
+		const donationValid = donationRef.validate();
+		return catNameValid && donationValid;
+	}
+
 	function create() {
-		if (catNameInput.length <= 0 || donationInput.length <= 0) return;
+		const valid = validate();
+		if (!valid) return;
 		let cat = cats[catIndex];
 		cat.name = catNameInput;
 		cat.donation = parseFloat(donationInput);
@@ -44,11 +53,11 @@
 	<Spacer height={24} />
 	<CatCarousel {cats} bind:catIndex />
 	<Spacer height={24} />
-	<CatName bind:name={catNameInput} />
+	<CatName bind:this={catNameRef} bind:name={catNameInput} />
 	<Spacer height={24} />
 	<DonorName bind:name={donorNameInput} />
 	<Spacer height={24} />
-	<Donation bind:value={donationInput} />
+	<Donation bind:this={donationRef} bind:value={donationInput} />
 	<Spacer height={48} />
 	<div class="row">
 		<Button textColor="#222" bgColor="#e1e1e1" bgColorHover="#D9D9D9" on:click={close}>

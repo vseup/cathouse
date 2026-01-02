@@ -2,7 +2,16 @@
 	import InputWithLabelAndDescr from '$lib/components/inputs/InputWithLabelAndDescr.svelte';
 
 	export let name: string;
-	export let invalidMessage: string | null = null;
+	export function validate(): boolean {
+		name = name.trim();
+		if (name.length < 1) {
+			invalidMessage = 'Der Katzenname darf nicht leer sein!';
+			return false;
+		}
+		return true;
+	}
+
+	let invalidMessage: string | null = null;
 </script>
 
 <InputWithLabelAndDescr
@@ -13,6 +22,7 @@
 	minlength={1}
 	maxlength={60}
 	onBlur={() => {}}
+	on:input={() => (invalidMessage = null)}
 />
 
 <style>

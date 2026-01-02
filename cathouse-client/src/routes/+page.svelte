@@ -7,7 +7,7 @@
 	import { CatState, CatType } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/forms/participate/Participate.svelte';
-	import Success from '$lib/components/forms/participate/Success.svelte';
+	import Success from '$lib/components/forms/success/Success.svelte';
 
 	const NUM_CATS = 40;
 

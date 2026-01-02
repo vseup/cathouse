@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Button from '$lib/components/controls/Button.svelte';
-	import IconButton from '$lib/components/controls/IconButton.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
@@ -9,6 +8,7 @@
 	import Form from '../Form.svelte';
 	import CatName from './CatName.svelte';
 	import DonorName from './DonorName.svelte';
+	import CatCarousel from './CatCarousel.svelte';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
@@ -22,24 +22,8 @@
 	let donationInput = '';
 	let donorNameInput = '';
 
-	function next() {
-		if (catIndex === cats.length - 1) {
-			catIndex = 0;
-		} else {
-			catIndex++;
-		}
-	}
-	function prev() {
-		if (catIndex === 0) {
-			catIndex = cats.length - 1;
-		} else {
-			catIndex--;
-		}
-	}
 	function create() {
-		console.log('create');
 		if (catNameInput.length <= 0 || donationInput.length <= 0) return;
-		console.log('inputs ok');
 		let cat = cats[catIndex];
 		cat.name = catNameInput;
 		cat.donation = parseFloat(donationInput);
@@ -57,14 +41,7 @@
 		den Anlass für eine Spende an das Tierheim Starnberg.
 	</p>
 	<Spacer height={24} />
-	<b>Wähle eine Katze:</b>
-	<div class="row" style="align-items: center">
-		<IconButton icon="chevron_left" primary on:click={next} />
-		<div style="flex: 1"></div>
-		<img class="cat-img" src={cats[catIndex].srcIdle} alt="Cat Preview" />
-		<div style="flex: 1"></div>
-		<IconButton icon="chevron_right" primary on:click={prev} />
-	</div>
+	<CatCarousel {cats} bind:catIndex />
 	<Spacer height={24} />
 	<CatName bind:name={catNameInput} />
 	<Spacer height={24} />
@@ -75,7 +52,6 @@
 	<TextInput
 		bind:text={donationInput}
 		onBlur={() => {
-			console.log('blurry');
 			donationInput = to2digits(parseFloat(donationInput.replace(',', '.')));
 		}}
 	/>
@@ -98,10 +74,4 @@
 </Form>
 
 <style>
-	.cat-img {
-		width: 100%;
-		max-width: 150px;
-		height: auto;
-		image-rendering: pixelated;
-	}
 </style>

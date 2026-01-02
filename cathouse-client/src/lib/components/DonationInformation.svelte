@@ -43,7 +43,7 @@
 	<Spacer height={8} />
 	<div class="row" style="align-items: center">
 		<a href="https://www.tierheim-starnberg.de/helfen-und-spenden/spenden/" target="_blank">
-			<p>Tierheim Starnberg: Neubau Katzenhaus</p>
+			<p>Tierheim Starnberg: Spendenmöglichkeiten</p>
 		</a>
 		<Spacer width={8} />
 		<Icon icon="open_in_new" weight={300} />

@@ -3,10 +3,11 @@
 	export let minlength: number | null = null;
 	export let maxlength: number | null = null;
 	export let type: string = 'text';
+	export let invalidMessage: string | null = null;
 	export let onBlur: () => void;
 </script>
 
-<div id="text-input-wrapper">
+<div id="text-input-wrapper" class={invalidMessage ? 'invalid' : ''}>
 	<input {type} id="text-input" {minlength} {maxlength} bind:value={text} on:blur={onBlur} />
 </div>
 
@@ -34,5 +35,8 @@
 		border: none;
 		outline: none;
 		box-shadow: none;
+	}
+	.invalid {
+		border: solid #ff2b4b;
 	}
 </style>

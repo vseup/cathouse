@@ -1,6 +1,6 @@
 import { rand } from "$lib/helpers/number.helper";
 import { getIdleImageByType, getLoveImageByType, getImageByTypeAndState } from "$lib/helpers/cat.helper";
-import { CatState, CatType } from "$lib/constants/cat_sprites";
+import { CatState, CatType } from "$lib/constants/cat.sprites";
 
 export class Cat {
     id: number;

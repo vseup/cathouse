@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Button from '$lib/components/button.svelte';
-	import IconButton from '$lib/components/iconButton.svelte';
-	import Spacer from '$lib/components/spacer.svelte';
-	import TextInput from '$lib/components/textInput.svelte';
-	import { CatType } from '$lib/constants/cat_sprites';
+	import Button from '$lib/components/Button.svelte';
+	import IconButton from '$lib/components/IconButton.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import TextInput from '$lib/components/TextInput.svelte';
+	import { CatType } from '$lib/constants/cat.sprites';
 	import { to2digits } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
-	import Form from '../form.svelte';
+	import Form from '../Form.svelte';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
@@ -50,7 +50,7 @@
 </script>
 
 <Form title="Unterstütze das Tierheim Starnberg beim Bau des neuen Katzenhauses!" {zIndex} {close}>
-	<p class="descr">
+	<p class="fs14">
 		Schenke einer virtuellen Katze ein Zuhause auf dieser Webseite, gib ihr einen Namen und nutze
 		den Anlass für eine Spende an das Tierheim Starnberg.
 	</p>
@@ -66,15 +66,21 @@
 	<Spacer height={24} />
 	<b>Katzenname</b>
 	<Spacer height={8} />
-	<TextInput bind:text={catNameInput} minlength={1} maxlength={60} onBlur={() => {}} />
+	<TextInput
+		bind:text={catNameInput}
+		minlength={1}
+		maxlength={60}
+		invalidMessage="Miau"
+		onBlur={() => {}}
+	/>
 	<Spacer height={8} />
-	<p class="descr">Mit Hilfe des Namens kannst du deine Katze später wiederfinden.</p>
+	<p class="fs14">Mit Hilfe des Namens kannst du deine Katze später wiederfinden.</p>
 	<Spacer height={24} />
 	<b>Dein Name (optional)</b>
 	<Spacer height={8} />
 	<TextInput bind:text={donorNameInput} maxlength={60} onBlur={() => {}} />
 	<Spacer height={8} />
-	<p class="descr">Wenn du möchtest, zeigen wir dich als Unterstützer*in an.</p>
+	<p class="fs14">Wenn du möchtest, zeigen wir dich als Unterstützer*in an.</p>
 	<Spacer height={24} />
 	<b>Spendenbetrag (€)</b>
 	<Spacer height={8} />
@@ -86,7 +92,7 @@
 		}}
 	/>
 	<Spacer height={8} />
-	<p class="descr">
+	<p class="fs14">
 		Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Bitte spende direkt an das
 		Tierheim, damit du sicher sein kannst, dass dein Geld dort ankommt, wo es benötigt wird. Wir
 		vertrauen auf deine Ehrlichkeit.
@@ -109,8 +115,5 @@
 		max-width: 150px;
 		height: auto;
 		image-rendering: pixelated;
-	}
-	.descr {
-		font-size: 14px;
 	}
 </style>

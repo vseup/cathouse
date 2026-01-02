@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from './icon.svelte';
+	import Icon from './Icon.svelte';
 
 	export let searchTerm: string;
 	export let terms: string[] = [];

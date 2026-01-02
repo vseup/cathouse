@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Search from '$lib/components/search.svelte';
-	import Button from '$lib/components/button.svelte';
+	import Search from '$lib/components/Search.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
-	import Spacer from './spacer.svelte';
+	import Spacer from './Spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
 

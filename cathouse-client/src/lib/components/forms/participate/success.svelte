@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Button from '$lib/components/button.svelte';
-	import Icon from '$lib/components/icon.svelte';
-	import Spacer from '$lib/components/spacer.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
-	import Form from '../form.svelte';
+	import Form from '../Form.svelte';
 
 	export let cat: Cat;
 	export let zIndex: number = 1;

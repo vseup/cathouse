@@ -1,4 +1,4 @@
-import { CatState, CatType, catTypeImagesMap } from "$lib/constants/cat_sprites";
+import { CatState, CatType, catTypeImagesMap } from "$lib/constants/cat.sprites";
 
 export function getImageByTypeAndState(type: CatType, state: CatState): string {
     const images = catTypeImagesMap.get(type)!;

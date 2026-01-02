@@ -2,12 +2,12 @@
 	import { onMount } from 'svelte';
 	import { rand } from '$lib/helpers/number.helper';
 
-	import Sidebar from '$lib/components/sidebar.svelte';
-	import Kitty from '$lib/components/kitty.svelte';
-	import { CatState, CatType } from '$lib/constants/cat_sprites';
+	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Kitty from '$lib/components/Kitty.svelte';
+	import { CatState, CatType } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
-	import Participate from '$lib/components/forms/participate/participate.svelte';
-	import Success from '$lib/components/forms/participate/success.svelte';
+	import Participate from '$lib/components/forms/participate/Participate.svelte';
+	import Success from '$lib/components/forms/participate/Success.svelte';
 
 	const NUM_CATS = 40;
 

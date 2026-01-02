@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Icon from '../icon.svelte';
-	import Spacer from '../spacer.svelte';
+	import Icon from '../Icon.svelte';
+	import Spacer from '../Spacer.svelte';
 
 	export let zIndex: number = 1;
 	export let title: string;

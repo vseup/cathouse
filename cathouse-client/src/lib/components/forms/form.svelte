@@ -30,7 +30,8 @@
 	<div class="form-container col" on:click={() => {}}>
 		<div class="row form-title">
 			<h3 style="flex: 1">{title}</h3>
-			<Icon icon="close" on:click={close} />
+			<Spacer width={24} />
+			<Icon icon="close" weight={600} on:click={close} />
 		</div>
 		<Spacer height={16} />
 		<div

@@ -27,10 +27,12 @@
 		Deine Katze wurde erfolgreich erstellt! Du kannst sie ab jetzt auf dieser Webseite besuchen.
 	</p>
 	<Spacer height={8} />
-	<b>
-		Bitte vergiss nicht den Betrag von {toEur(cat.donation)} an das Tierheim Starnberg zu spenden. Vielen
-		Dank!
-	</b>
+	<p>
+		<b>
+			Bitte vergiss nicht den Betrag von {toEur(cat.donation)} an das Tierheim Starnberg zu spenden.
+			Vielen Dank!
+		</b>
+	</p>
 	<Divider />
 	<b>Überweisung</b>
 	<Spacer height={8} />

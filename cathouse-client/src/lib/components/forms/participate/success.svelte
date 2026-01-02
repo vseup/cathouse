@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import Icon from '$lib/components/Icon.svelte';
+	import Button from '$lib/components/controls/Button.svelte';
+	import Icon from '$lib/components/controls/Icon.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';

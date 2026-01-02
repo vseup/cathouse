@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputWithLabelAndDescr from '$lib/components/InputWithLabelAndDescr.svelte';
+	import InputWithLabelAndDescr from '$lib/components/inputs/InputWithLabelAndDescr.svelte';
 
 	export let name: string;
 	export let invalidMessage: string | null = null;

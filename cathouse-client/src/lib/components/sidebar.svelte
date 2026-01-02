@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Search from '$lib/components/Search.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Search from '$lib/components/inputs/Search.svelte';
+	import Button from '$lib/components/controls/Button.svelte';
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
 	import Spacer from './Spacer.svelte';
 	import type { Cat } from '$lib/models/cat';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from '../Icon.svelte';
+	import Icon from '../controls/Icon.svelte';
 	import Spacer from '../Spacer.svelte';
 
 	export let zIndex: number = 1;

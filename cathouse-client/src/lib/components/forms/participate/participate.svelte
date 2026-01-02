@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import IconButton from '$lib/components/IconButton.svelte';
+	import Button from '$lib/components/controls/Button.svelte';
+	import IconButton from '$lib/components/controls/IconButton.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import TextInput from '$lib/components/TextInput.svelte';
+	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
 	import { to2digits } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';

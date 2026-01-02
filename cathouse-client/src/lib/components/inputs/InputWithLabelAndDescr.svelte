@@ -6,6 +6,7 @@
 	export let value: string;
 	export let descr: string;
 
+	export let type: string = 'text';
 	export let minlength: number | null = null;
 	export let maxlength: number | null = null;
 	export let invalidMessage: string | null = null;
@@ -16,7 +17,7 @@
 <div class="col">
 	<b>{label}</b>
 	<Spacer height={8} />
-	<TextInput bind:text={value} {minlength} {maxlength} {invalidMessage} {onBlur} />
+	<TextInput bind:text={value} {type} {minlength} {maxlength} {invalidMessage} {onBlur} />
 	<Spacer height={8} />
 	<p class="fs14">{descr}</p>
 </div>

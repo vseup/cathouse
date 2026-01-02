@@ -9,6 +9,7 @@
 	import CatName from './CatName.svelte';
 	import DonorName from './DonorName.svelte';
 	import CatCarousel from './CatCarousel.svelte';
+	import Donation from './Donation.svelte';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
@@ -18,9 +19,9 @@
 	const cats: Cat[] = types.map((t) => new Cat(-1, '', -1, -1, -1, t));
 	let catIndex = 0;
 
-	let catNameInput = '';
-	let donationInput = '';
-	let donorNameInput = '';
+	let catNameInput: string = '';
+	let donationInput: string = '';
+	let donorNameInput: string = '';
 
 	function create() {
 		if (catNameInput.length <= 0 || donationInput.length <= 0) return;
@@ -47,20 +48,7 @@
 	<Spacer height={24} />
 	<DonorName bind:name={donorNameInput} />
 	<Spacer height={24} />
-	<b>Spendenbetrag (€)</b>
-	<Spacer height={8} />
-	<TextInput
-		bind:text={donationInput}
-		onBlur={() => {
-			donationInput = to2digits(parseFloat(donationInput.replace(',', '.')));
-		}}
-	/>
-	<Spacer height={8} />
-	<p class="fs14">
-		Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Bitte spende direkt an das
-		Tierheim, damit du sicher sein kannst, dass dein Geld dort ankommt, wo es benötigt wird. Wir
-		vertrauen auf deine Ehrlichkeit.
-	</p>
+	<Donation bind:value={donationInput} />
 	<Spacer height={48} />
 	<div class="row">
 		<Button textColor="#222" bgColor="#e1e1e1" bgColorHover="#D9D9D9" on:click={close}>

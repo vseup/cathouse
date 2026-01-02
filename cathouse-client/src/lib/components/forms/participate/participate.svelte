@@ -7,6 +7,7 @@
 	import { to2digits } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
 	import Form from '../Form.svelte';
+	import CatName from './CatName.svelte';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
@@ -64,17 +65,7 @@
 		<IconButton icon="chevron_right" primary on:click={prev} />
 	</div>
 	<Spacer height={24} />
-	<b>Katzenname</b>
-	<Spacer height={8} />
-	<TextInput
-		bind:text={catNameInput}
-		minlength={1}
-		maxlength={60}
-		invalidMessage="Miau"
-		onBlur={() => {}}
-	/>
-	<Spacer height={8} />
-	<p class="fs14">Mit Hilfe des Namens kannst du deine Katze später wiederfinden.</p>
+	<CatName bind:name={catNameInput} />
 	<Spacer height={24} />
 	<b>Dein Name (optional)</b>
 	<Spacer height={8} />

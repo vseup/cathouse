@@ -8,6 +8,7 @@
 	import { Cat } from '$lib/models/cat';
 	import Form from '../Form.svelte';
 	import CatName from './CatName.svelte';
+	import DonorName from './DonorName.svelte';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
@@ -67,11 +68,7 @@
 	<Spacer height={24} />
 	<CatName bind:name={catNameInput} />
 	<Spacer height={24} />
-	<b>Dein Name (optional)</b>
-	<Spacer height={8} />
-	<TextInput bind:text={donorNameInput} maxlength={60} onBlur={() => {}} />
-	<Spacer height={8} />
-	<p class="fs14">Wenn du möchtest, zeigen wir dich als Unterstützer*in an.</p>
+	<DonorName bind:name={donorNameInput} />
 	<Spacer height={24} />
 	<b>Spendenbetrag (€)</b>
 	<Spacer height={8} />

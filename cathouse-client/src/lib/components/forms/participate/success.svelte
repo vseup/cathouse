@@ -5,6 +5,8 @@
 	import { toEur } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
 	import Form from '../Form.svelte';
+	import QrBanking from '$lib/assets/images/qr_banking.jpg';
+	import QrPaypal from '$lib/assets/images/qr_paypal.jpg';
 
 	export let cat: Cat;
 	export let zIndex: number = 1;
@@ -42,6 +44,8 @@
 			<p>IBAN: DE25702501500430056762</p>
 			<p>BIC: BYLADEM1KMS</p>
 		</div>
+		<div style="flex: 1"></div>
+		<img class="qr" src={QrBanking} alt="QR Code mit Bank Informationen des Tierheim Starnbergs" />
 	</div>
 	<Spacer height={24} />
 	<b>Paypal</b>
@@ -58,6 +62,8 @@
 				</div>
 			</Button>
 		</div>
+		<div style="flex: 1"></div>
+		<img class="qr" src={QrPaypal} alt="QR Code mit Paypal Link des Tierheim Starnbergs" />
 	</div>
 	<Spacer height={24} />
 	<b>Mehr Informationen:</b>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let icon: string;
 	export let hidden: boolean = false;
-	export let color: string = '#222';
+	export let color: string = 'var(--color-text-dark)';
 	export let weight: number = 400;
 </script>
 

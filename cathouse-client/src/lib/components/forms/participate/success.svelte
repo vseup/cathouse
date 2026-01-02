@@ -57,7 +57,7 @@
 				<div class="row" style="align-items: center">
 					<p>mit Paypal spenden</p>
 					<Spacer width={10} />
-					<Icon icon="open_in_new" color="#fff" weight={300} />
+					<Icon icon="open_in_new" color="var(--color-text-light)" weight={300} />
 				</div>
 			</Button>
 		</div>

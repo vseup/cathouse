@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { toEur } from '$lib/helpers/number.helper';
 	import type { Cat } from '$lib/models/cat';
 	export let cat: Cat;
 	export let size: number;
@@ -87,10 +86,10 @@
 		left: 50%;
 		transform: translateX(-50%);
 		font-size: 14px;
-		color: #fff;
+		color: var(--color-text-light);
 		padding: 4px;
 		border-radius: 4px;
-		background-color: black;
+		background-color: var(--color-bg-darken-1);
 		text-align: center;
 		text-wrap: nowrap;
 		transform-origin: center center;

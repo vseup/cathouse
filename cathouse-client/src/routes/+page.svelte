@@ -193,12 +193,12 @@
 		width: 100dvw;
 		height: 100vh;
 		height: 100dvh;
-		background: #222;
+		background: var(--color-bg);
 	}
 	.bottombar {
 		height: var(--bottombar-height);
 		width: 100%;
-		background-color: #17823e;
+		background-color: var(--color-green);
 		position: fixed;
 		bottom: 0px;
 		border-top-right-radius: 24px;
@@ -215,7 +215,7 @@
 	.overlay {
 		top: 0;
 		left: 0;
-		background: #222;
+		background: var(--color-bg);
 		width: 100%;
 		height: 100%;
 		position: absolute;

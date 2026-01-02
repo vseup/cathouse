@@ -48,7 +48,7 @@
 			<img id="logo" src={TierheimLogo} alt="Logo Tierheim Starnberg" />
 			<Spacer height={32} />
 		{/if}
-		<p style="text-align: center; color: #fff">
+		<p style="text-align: center; color: var(--color-text-light)">
 			Jede Katze auf dieser Webseite bedeutet eine Spende für den dringend benötigten Neubau des
 			Katzenhauses im Tierheim Starnberg!
 		</p>
@@ -82,7 +82,7 @@
 	#sidebar {
 		width: var(--sidebar-width);
 		height: 100%;
-		background-color: #17823e;
+		background-color: var(--color-green);
 		padding: 24px;
 		justify-content: space-between;
 	}
@@ -100,10 +100,10 @@
 	.wrapper {
 		width: 100%;
 		padding: 24px;
-		background-color: #126b31;
+		background-color: var(--color-green-darken-1);
 		border-radius: 16px;
 		box-sizing: border-box;
-		color: #fff;
+		color: var(--color-text-light);
 	}
 	#donation span {
 		font-weight: 800;
@@ -119,6 +119,6 @@
 	}
 	#note {
 		font-size: 12px;
-		color: #fff;
+		color: var(--color-text-light);
 	}
 </style>

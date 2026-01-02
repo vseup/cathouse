@@ -8,7 +8,7 @@
 
 <button class="button {primary ? 'primary' : 'secondary'}" {disabled} on:click>
 	{#if icon}
-		<Icon {icon} color="#fff" />
+		<Icon {icon} color="var(--color-text-light);" />
 	{/if}
 </button>
 
@@ -17,26 +17,26 @@
 		height: 48px;
 		width: 48px;
 		border-radius: 16px;
-		border: solid 1px #fff;
+		border: solid 1px var(--color-text-light);
 		font-size: 18px;
 		padding-left: 24px;
 		padding-right: 24px;
-		color: #fff;
+		color: var(--color-text-light);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 	.primary {
-		background-color: #222;
+		background-color: var(--color-bg);
 	}
 	.primary:hover {
-		background-color: #101010;
+		background-color: var(--color-bg-darken-1);
 	}
 	.secondary {
-		background-color: #17833d;
+		background-color: var(--color-green);
 	}
 	.secondary:hover {
-		background-color: #126b31;
+		background-color: var(--color-green-darken-1);
 	}
 </style>

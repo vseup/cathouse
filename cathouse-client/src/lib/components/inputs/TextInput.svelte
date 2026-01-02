@@ -35,7 +35,7 @@
 	</div>
 	{#if invalidMessage}
 		<Spacer height={4} />
-		<p class="fs14" style:color="#ff2b4b">{invalidMessage}</p>
+		<p class="fs14" style:color="var(--color-error)">{invalidMessage}</p>
 	{/if}
 </div>
 
@@ -46,7 +46,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		background-color: #e1e1e1;
+		background-color: var(--color-grey);
 		border-radius: 5px;
 		padding: 8px;
 		box-sizing: border-box;
@@ -56,7 +56,7 @@
 		width: 100%;
 		border: none;
 		font-size: 18px;
-		background-color: #e1e1e1;
+		background-color: var(--color-grey);
 	}
 	#text-input:focus,
 	#text-input:focus-visible {
@@ -65,6 +65,6 @@
 		box-shadow: none;
 	}
 	.invalid {
-		border: solid #ff2b4b;
+		border: solid var(--color-error);
 	}
 </style>

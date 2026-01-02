@@ -60,7 +60,12 @@
 	<Donation bind:this={donationRef} bind:value={donationInput} />
 	<Spacer height={48} />
 	<div class="row">
-		<Button textColor="#222" bgColor="#e1e1e1" bgColorHover="#D9D9D9" on:click={close}>
+		<Button
+			textColor="var(--color-text-dark)"
+			bgColor="var(--color-grey)"
+			bgColorHover="var(--color-grey-darken-1)"
+			on:click={close}
+		>
 			Abbrechen
 		</Button>
 		<Spacer width={24} />

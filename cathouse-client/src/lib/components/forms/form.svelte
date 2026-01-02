@@ -69,7 +69,7 @@
 		width: 550px;
 		max-width: 100%;
 		max-height: calc(100% - 48px);
-		background-color: #fff;
+		background-color: var(--color-bg-light);
 		box-sizing: border-box;
 		padding: 24px 12px;
 		border-radius: 24px;

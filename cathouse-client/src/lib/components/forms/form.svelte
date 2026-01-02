@@ -11,23 +11,37 @@
 <div class="form-bg" style:z-index={zIndex} on:click={close}></div>
 <div class="form-wrapper" style:z-index={zIndex + 1} on:click|stopPropagation>
 	<div class="form-container col" on:click={() => {}}>
-		<div class="row" style="align-items: start">
+		<div class="row form-title">
 			<h3 style="flex: 1">{title}</h3>
 			<Icon icon="close" on:click={close} />
 		</div>
 		<Spacer height={16} />
-		<slot />
+		<div class="form-content">
+			<slot />
+		</div>
 	</div>
 </div>
 
 <style>
+	.form-title {
+		align-items: start;
+		padding: 0px 12px;
+		box-sizing: border-box;
+	}
+	.form-content {
+		height: 100%;
+		max-height: 100%;
+		overflow-y: scroll;
+		padding: 0px 12px;
+		box-sizing: border-box;
+	}
 	.form-container {
 		width: 550px;
 		max-width: 100%;
-		max-height: 100%;
+		max-height: calc(100% - 48px);
 		background-color: #fff;
 		box-sizing: border-box;
-		padding: 24px;
+		padding: 24px 12px;
 		border-radius: 24px;
 	}
 	.form-wrapper {

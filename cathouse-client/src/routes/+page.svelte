@@ -30,7 +30,6 @@
 
 	let showParticipate = false;
 	let newCat: Cat | null = null;
-	let showDonations = false;
 	let showLearnMore = false;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
@@ -151,7 +150,6 @@
 					focusCat(cats[idx]);
 				}}
 				openParticipate={() => (showParticipate = true)}
-				openDonations={() => (showDonations = true)}
 				openLearnMore={() => (showLearnMore = true)}
 			/>
 		</div>
@@ -190,9 +188,6 @@
 	{/if}
 	{#if newCat != null}
 		<Success zIndex={worldHeight + 50} close={() => (newCat = null)} cat={newCat} />
-	{/if}
-	{#if showDonations}
-		<DonationsModal zIndex={worldHeight + 50} close={() => (showDonations = false)} />
 	{/if}
 	{#if showLearnMore}
 		<MoreModal zIndex={worldHeight + 50} close={() => (showLearnMore = false)} />

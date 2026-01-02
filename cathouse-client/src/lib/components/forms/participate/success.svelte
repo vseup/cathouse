@@ -29,8 +29,8 @@
 		<Spacer height={24} />
 	</div>
 	<b>
-		Bitte vergiss nicht den Betrag von {toEur(cat.donation)} an das Tierheim Starnberg zu spenden! Vielen
-		Dank.
+		Bitte vergiss nicht den Betrag von {toEur(cat.donation)} an das Tierheim Starnberg zu spenden. Vielen
+		Dank!
 	</b>
 	<Spacer height={24} />
 	<b>Überweisung</b>

@@ -37,7 +37,7 @@
 		hidden={searchTerm.length === 0}
 		on:click={() => {
 			searchTerm = '';
-			entered = false;
+			entered = true;
 			clear();
 		}}
 	/>

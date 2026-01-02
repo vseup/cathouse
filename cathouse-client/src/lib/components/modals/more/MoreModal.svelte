@@ -41,7 +41,7 @@
 	</p>
 	<Spacer height={8} />
 	<p>
-		Jedes virtuelle Kätzchen representiert die Spende. Umso mehr es hier wimmelt, umso näher kommen
+		Jedes virtuelle Kätzchen repräsentiert die Spende. Umso mehr es hier wimmelt, umso näher kommen
 		wir dem Ziel des neu erbauten Katzenhauses.
 	</p>
 	<Spacer height={8} />

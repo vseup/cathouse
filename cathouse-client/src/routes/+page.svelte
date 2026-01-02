@@ -8,6 +8,7 @@
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/forms/participate/Participate.svelte';
 	import Success from '$lib/components/forms/success/Success.svelte';
+	import DonationsForm from '$lib/components/forms/donations/DonationsForm.svelte';
 
 	const NUM_CATS = 40;
 
@@ -28,6 +29,7 @@
 
 	let showParticipate = false;
 	let newCat: Cat | null = null;
+	let showDonations = false;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
@@ -147,6 +149,7 @@
 					focusCat(cats[idx]);
 				}}
 				openParticipate={() => (showParticipate = true)}
+				openDonations={() => (showDonations = true)}
 			/>
 		</div>
 	{:else}
@@ -184,6 +187,9 @@
 	{/if}
 	{#if newCat != null}
 		<Success zIndex={worldHeight + 50} close={() => (newCat = null)} cat={newCat} />
+	{/if}
+	{#if showDonations}
+		<DonationsForm zIndex={worldHeight + 50} close={() => (showDonations = false)} />
 	{/if}
 </div>
 

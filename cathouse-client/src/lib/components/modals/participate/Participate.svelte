@@ -3,7 +3,7 @@
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
-	import Form from '../Form.svelte';
+	import Modal from '../Modal.svelte';
 	import CatName from './CatName.svelte';
 	import DonorName from './DonorName.svelte';
 	import CatCarousel from './CatCarousel.svelte';
@@ -45,7 +45,7 @@
 	}
 </script>
 
-<Form title="Unterstütze das Tierheim Starnberg beim Bau des neuen Katzenhauses!" {zIndex} {close}>
+<Modal title="Unterstütze das Tierheim Starnberg beim Bau des neuen Katzenhauses!" {zIndex} {close}>
 	<p class="fs14">
 		Schenke einer virtuellen Katze ein Zuhause auf dieser Webseite, gib ihr einen Namen und nutze
 		den Anlass für eine Spende an das Tierheim Starnberg.
@@ -73,7 +73,7 @@
 			<Button widthCss={'100%'} primary on:click={create}>Katze erstellen</Button>
 		</div>
 	</div>
-</Form>
+</Modal>
 
 <style>
 </style>

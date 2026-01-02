@@ -3,7 +3,7 @@
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
-	import Form from '../Form.svelte';
+	import Modal from '../Modal.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import DonationInformation from '$lib/components/DonationInformation.svelte';
 
@@ -12,7 +12,7 @@
 	export let close: () => void;
 </script>
 
-<Form
+<Modal
 	title="{cat.name} bedankt sich für deinen Beitrag zum Bau des neuen Katzenhauses!"
 	{zIndex}
 	{close}
@@ -35,7 +35,7 @@
 	<DonationInformation />
 	<Spacer height={48} />
 	<Button widthCss={'100%'} primary on:click={close}>Schließen</Button>
-</Form>
+</Modal>
 
 <style>
 	.cat-img {

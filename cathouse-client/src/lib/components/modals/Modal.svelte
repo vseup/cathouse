@@ -25,17 +25,17 @@
 	});
 </script>
 
-<div class="form-bg" style:z-index={zIndex} on:click={close}></div>
-<div class="form-wrapper" style:z-index={zIndex + 1} on:click|stopPropagation>
-	<div class="form-container col" on:click={() => {}}>
-		<div class="row form-title">
+<div class="modal-bg" style:z-index={zIndex} on:click={close}></div>
+<div class="modal-wrapper" style:z-index={zIndex + 1} on:click|stopPropagation>
+	<div class="modal-container col" on:click={() => {}}>
+		<div class="row modal-title">
 			<h3 style="flex: 1">{title}</h3>
 			<Spacer width={24} />
 			<Icon icon="close" weight={600} on:click={close} />
 		</div>
 		<Spacer height={16} />
 		<div
-			class="form-content {showShadowTop ? 'shadow-top' : ''} {showShadowBottom
+			class="modal-content {showShadowTop ? 'shadow-top' : ''} {showShadowBottom
 				? 'shadow-bottom'
 				: ''}"
 			bind:this={content}
@@ -47,12 +47,12 @@
 </div>
 
 <style>
-	.form-title {
+	.modal-title {
 		align-items: start;
 		padding: 0px 12px;
 		box-sizing: border-box;
 	}
-	.form-content {
+	.modal-content {
 		height: 100%;
 		max-height: 100%;
 		overflow-y: scroll;
@@ -65,7 +65,7 @@
 	.shadow-bottom {
 		box-shadow: inset 0 -10px 12px -12px rgba(0, 0, 0, 0.35);
 	}
-	.form-container {
+	.modal-container {
 		width: 550px;
 		max-width: 100%;
 		max-height: calc(100% - 48px);
@@ -74,7 +74,7 @@
 		padding: 24px 12px;
 		border-radius: 24px;
 	}
-	.form-wrapper {
+	.modal-wrapper {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -86,7 +86,7 @@
 		align-items: center;
 		justify-content: center;
 	}
-	.form-bg {
+	.modal-bg {
 		position: fixed;
 		top: 0;
 		left: 0;

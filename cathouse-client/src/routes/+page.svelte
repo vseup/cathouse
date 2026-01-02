@@ -6,9 +6,9 @@
 	import Kitty from '$lib/components/Kitty.svelte';
 	import { CatState, CatType } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
-	import Participate from '$lib/components/forms/participate/Participate.svelte';
-	import Success from '$lib/components/forms/success/Success.svelte';
-	import DonationsForm from '$lib/components/forms/donations/DonationsForm.svelte';
+	import Participate from '$lib/components/modals/participate/Participate.svelte';
+	import Success from '$lib/components/modals/success/Success.svelte';
+	import DonationsModal from '$lib/components/modals/donations/DonationsModal.svelte';
 
 	const NUM_CATS = 40;
 
@@ -189,7 +189,7 @@
 		<Success zIndex={worldHeight + 50} close={() => (newCat = null)} cat={newCat} />
 	{/if}
 	{#if showDonations}
-		<DonationsForm zIndex={worldHeight + 50} close={() => (showDonations = false)} />
+		<DonationsModal zIndex={worldHeight + 50} close={() => (showDonations = false)} />
 	{/if}
 </div>
 

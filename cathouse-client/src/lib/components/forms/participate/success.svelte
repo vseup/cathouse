@@ -7,6 +7,7 @@
 	import Form from '../Form.svelte';
 	import QrBanking from '$lib/assets/images/qr_banking.jpg';
 	import QrPaypal from '$lib/assets/images/qr_paypal.jpg';
+	import Divider from '$lib/components/Divider.svelte';
 
 	export let cat: Cat;
 	export let zIndex: number = 1;
@@ -25,16 +26,12 @@
 	<p>
 		Deine Katze wurde erfolgreich erstellt! Du kannst sie ab jetzt auf dieser Webseite besuchen.
 	</p>
-	<div class="col">
-		<Spacer height={24} />
-		<div class="divider"></div>
-		<Spacer height={24} />
-	</div>
+	<Spacer height={8} />
 	<b>
 		Bitte vergiss nicht den Betrag von {toEur(cat.donation)} an das Tierheim Starnberg zu spenden. Vielen
 		Dank!
 	</b>
-	<Spacer height={24} />
+	<Divider />
 	<b>Überweisung</b>
 	<Spacer height={8} />
 	<div class="row">
@@ -47,7 +44,7 @@
 		<div style="flex: 1"></div>
 		<img class="qr" src={QrBanking} alt="QR Code mit Bank Informationen des Tierheim Starnbergs" />
 	</div>
-	<Spacer height={24} />
+	<Divider />
 	<b>Paypal</b>
 	<Spacer height={8} />
 	<div class="row">
@@ -65,7 +62,7 @@
 		<div style="flex: 1"></div>
 		<img class="qr" src={QrPaypal} alt="QR Code mit Paypal Link des Tierheim Starnbergs" />
 	</div>
-	<Spacer height={24} />
+	<Divider />
 	<b>Mehr Informationen:</b>
 	<Spacer height={8} />
 	<div class="row" style="align-items: center">
@@ -99,10 +96,5 @@
 	}
 	.iban {
 		line-height: 1.4;
-	}
-	.divider {
-		height: 1px;
-		width: 100%;
-		background-color: #d6d6d6;
 	}
 </style>

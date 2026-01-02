@@ -14,6 +14,7 @@
 	export let select: (term: string) => void;
 	export let openParticipate: () => void;
 	export let openDonations: () => void;
+	export let openLearnMore: () => void;
 
 	const SIDEBAR_WIDTH = 450;
 </script>
@@ -58,7 +59,7 @@
 		<Spacer height={16} />
 		<Button widthCss="75%" on:click={openDonations}>Spendenmöglichkeiten</Button>
 		<Spacer height={16} />
-		<Button widthCss="75%">mehr erfahren</Button>
+		<Button widthCss="75%" on:click={openLearnMore}>mehr erfahren</Button>
 		<Spacer height={24} />
 	</div>
 	<div class="col">

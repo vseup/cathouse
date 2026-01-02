@@ -9,6 +9,7 @@
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
 	import Success from '$lib/components/modals/success/Success.svelte';
 	import DonationsModal from '$lib/components/modals/donations/DonationsModal.svelte';
+	import MoreModal from '$lib/components/modals/more/MoreModal.svelte';
 
 	const NUM_CATS = 40;
 
@@ -30,6 +31,7 @@
 	let showParticipate = false;
 	let newCat: Cat | null = null;
 	let showDonations = false;
+	let showLearnMore = false;
 
 	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
@@ -150,6 +152,7 @@
 				}}
 				openParticipate={() => (showParticipate = true)}
 				openDonations={() => (showDonations = true)}
+				openLearnMore={() => (showLearnMore = true)}
 			/>
 		</div>
 	{:else}
@@ -190,6 +193,9 @@
 	{/if}
 	{#if showDonations}
 		<DonationsModal zIndex={worldHeight + 50} close={() => (showDonations = false)} />
+	{/if}
+	{#if showLearnMore}
+		<MoreModal zIndex={worldHeight + 50} close={() => (showLearnMore = false)} />
 	{/if}
 </div>
 

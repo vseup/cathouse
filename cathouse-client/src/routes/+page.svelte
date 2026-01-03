@@ -41,7 +41,7 @@
 		const y = rand(0, worldHeight - catSize);
 
 		const types = Object.values(CatType) as CatType[];
-		const typeIndex = Math.floor(Math.floor(Math.random() * types.length));
+		const typeIndex = Math.floor(Math.random() * types.length);
 
 		return new Cat(
 			id,

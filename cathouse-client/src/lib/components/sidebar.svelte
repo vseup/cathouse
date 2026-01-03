@@ -5,6 +5,7 @@
 	import Spacer from './Spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
+	import { SIDEBAR_WIDTH } from '$lib/constants/layout';
 
 	export let donation: number;
 	export let cat: Cat | null = null;
@@ -14,8 +15,6 @@
 	export let select: (term: string) => void;
 	export let openParticipate: () => void;
 	export let openLearnMore: () => void;
-
-	const SIDEBAR_WIDTH = 450;
 </script>
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">

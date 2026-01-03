@@ -9,16 +9,15 @@
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
 	import Success from '$lib/components/modals/success/Success.svelte';
 	import MoreModal from '$lib/components/modals/more/MoreModal.svelte';
-
-	const NUM_CATS = 40;
-
-	const SIDEBAR_WIDTH = 450;
-	const BOTTOMBAR_HEIGHT = 220;
-	const SIDEBAR_BREAKPOINT = SIDEBAR_WIDTH * 2;
-
-	const CAT_SIZE_DIVISOR = 16;
-	const CAT_SIZE_MIN = 48;
-	const CAT_SIZE_MAX = 80;
+	import {
+		BOTTOMBAR_HEIGHT,
+		CAT_SIZE_DIVISOR,
+		CAT_SIZE_MAX,
+		CAT_SIZE_MIN,
+		NUM_CATS,
+		SIDEBAR_BREAKPOINT,
+		SIDEBAR_WIDTH
+	} from '$lib/constants/layout';
 
 	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
 	$: totalDonation = cats.reduce((sum, cat) => sum + cat.donation, 0);

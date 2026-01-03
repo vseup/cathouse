@@ -27,7 +27,9 @@
 		Da die aktuelle Situation für Menschen und Tiere auf Dauer nicht mehr tragbar ist und so ein
 		Umbau massive Kosten mit sich bringt, ist das Tierheim auf deine Spende angewiesen.
 	</p>
-	<Spacer height={24} />
+	<Divider />
+	<DonationInformation />
+	<Divider />
 	<b>Über diese Webseite:</b>
 	<Spacer height={8} />
 	<p>
@@ -41,13 +43,6 @@
 	</p>
 	<Spacer height={8} />
 	<p>Für mehr Informationen zum Neubau wende dich bitte direkt an das Tierheim Starnberg.</p>
-	<Spacer height={8} />
-	<p>
-		Wenn du helfen möchtest, spende bitte direkt an das Tierheim, damit du sicher sein kannst, dass
-		dein Geld dort ankommt, wo es benötigt wird.
-	</p>
-	<Divider />
-	<DonationInformation />
 	<Spacer height={48} />
 	<Button widthCss={'100%'} primary on:click={close}>Schließen</Button>
 </Modal>

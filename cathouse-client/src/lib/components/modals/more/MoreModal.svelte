@@ -27,11 +27,6 @@
 		Da die aktuelle Situation für Menschen und Tiere auf Dauer nicht mehr tragbar ist und so ein
 		Umbau massive Kosten mit sich bringt, ist das Tierheim auf deine Spende angewiesen.
 	</p>
-	<Spacer height={8} />
-	<p>
-		Diese Webseite wurde von einer privaten Unterstützerin erstellt und soll auf die Situation
-		aufmerksam machen, zum Spenden motivieren und visualisieren, was gemeinsam erreicht werden kann.
-	</p>
 	<Spacer height={24} />
 	<b>Über diese Webseite:</b>
 	<Spacer height={8} />

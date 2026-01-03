@@ -15,6 +15,7 @@
 
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
+	const SIDEBAR_BREAKPOINT = SIDEBAR_WIDTH * 2;
 
 	const CAT_SIZE_DIVISOR = 16;
 	const CAT_SIZE_MIN = 48;
@@ -119,7 +120,7 @@
 </script>
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px;`}>
-	{#if windowWidth > SIDEBAR_WIDTH * 2}
+	{#if windowWidth > SIDEBAR_BREAKPOINT}
 		<div class="world-wrapper row">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}

@@ -16,7 +16,11 @@
 	const SIDEBAR_WIDTH = 450;
 	const BOTTOMBAR_HEIGHT = 220;
 
-	$: catSize = Math.min(Math.max(worldWidth / 16, 48), 80);
+	const CAT_SIZE_DIVISOR = 16;
+	const CAT_SIZE_MIN = 48;
+	const CAT_SIZE_MAX = 80;
+
+	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
 
 	let world: HTMLDivElement;
 	let overlay: HTMLDivElement;

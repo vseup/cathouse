@@ -8,7 +8,6 @@
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
 	import Success from '$lib/components/modals/success/Success.svelte';
-	import DonationsModal from '$lib/components/modals/donations/DonationsModal.svelte';
 	import MoreModal from '$lib/components/modals/more/MoreModal.svelte';
 
 	const NUM_CATS = 40;

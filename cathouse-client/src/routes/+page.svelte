@@ -21,6 +21,7 @@
 	const CAT_SIZE_MAX = 80;
 
 	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
+	$: totalDonation = cats.reduce((sum, cat) => sum + cat.donation, 0);
 
 	let world: HTMLDivElement;
 	let overlay: HTMLDivElement;
@@ -141,7 +142,7 @@
 				></div>
 			</div>
 			<Sidebar
-				donation={cats.map((c) => c.donation).reduce((a, b) => a + b, 0)}
+				donation={totalDonation}
 				cat={focusedCat}
 				{cats}
 				searchTerm={focusedCat ? focusedCat.name : ''}

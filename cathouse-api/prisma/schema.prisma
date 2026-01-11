@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+//docker compose --profile dev exec api-dev npx prisma migrate dev --name create_cat
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Cat {
+  id        String   @id @default(uuid()) @db.Uuid
+  type      CatType
+  name      String
+  donor     String?
+  donation  Float
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("cat")
+}
+
+enum CatType {
+  CAT01
+  CAT02
+  CAT03
+  CAT04
+  CAT05
+  CAT06
+  CAT07
+  CAT08
+  CAT09
+  CAT10
+}

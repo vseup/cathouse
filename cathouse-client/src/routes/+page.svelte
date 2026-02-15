@@ -36,19 +36,10 @@
 	let newCat: Cat | null = null;
 	let showLearnMore = false;
 
-	function createCatFromApi(
-		cat: CatApiResponse,
-		id: number,
-		worldWidth: number,
-		worldHeight: number
-	): Cat {
+	function createCatFromApi(cat: CatApiResponse, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
 		const y = rand(0, worldHeight - catSize);
-		return new Cat(id, cat.name, x, y, cat.donation, cat.type, cat.donor ?? undefined);
-	}
-
-	function getNextLocalCatId() {
-		return cats.reduce((max, cat) => Math.max(max, cat.id), -1) + 1;
+		return new Cat(cat.id, cat.name, x, y, cat.donation, cat.type, cat.donor ?? undefined);
 	}
 
 	async function saveCat(cat: Cat) {
@@ -59,7 +50,7 @@
 			donor: cat.donor
 		});
 
-		const createdCat = createCatFromApi(created, getNextLocalCatId(), worldWidth, worldHeight);
+		const createdCat = createCatFromApi(created, worldWidth, worldHeight);
 		cats = [createdCat, ...cats];
 		newCat = createdCat;
 	}
@@ -71,7 +62,7 @@
 				throw new Error('Invalid cats response format');
 			}
 
-			return data.map((cat, index) => createCatFromApi(cat, index, worldWidth, worldHeight));
+			return data.map((cat) => createCatFromApi(cat, worldWidth, worldHeight));
 		} catch (error) {
 			console.error(error);
 			return null;

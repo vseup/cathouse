@@ -3,7 +3,7 @@ import { getIdleImageByType, getLoveImageByType, getImageByTypeAndState } from "
 import { CatState, CatType } from "$lib/constants/cat.sprites";
 
 export class Cat {
-    id: number;
+    id: string;
     x: number = 0;
     y: number = 0;
     vx: number = 0;
@@ -19,7 +19,7 @@ export class Cat {
     src: string;
 
 
-    public constructor(id: number, name: string, x: number, y: number, donation: number, type: CatType, donor?: string) {
+    public constructor(id: string, name: string, x: number, y: number, donation: number, type: CatType, donor?: string) {
         this.id = id;
         this.name = name;
         this.x = x;

@@ -14,7 +14,7 @@
 	export let onSaved: (cat: Cat) => Promise<void>;
 
 	const types = Object.values(CatType) as CatType[];
-	const cats: Cat[] = types.map((t) => new Cat(-1, '', -1, -1, -1, t));
+	const cats: Cat[] = types.map((t, i) => new Cat(`preview-${i}`, '', -1, -1, -1, t));
 	let catIndex = 0;
 
 	let catNameRef: CatName;
@@ -52,7 +52,7 @@
 		const parsedDonation = parseFloat(donationInput.replace(',', '.'));
 		const donorName = donorNameInput.trim();
 		const cat = new Cat(
-			-1,
+			'pending-create',
 			catNameInput.trim(),
 			-1,
 			-1,

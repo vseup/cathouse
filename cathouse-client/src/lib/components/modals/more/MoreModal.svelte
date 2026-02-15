@@ -13,15 +13,7 @@
 	<Spacer height={16} />
 	<b>Ausgangssituation im Jahr 2025:</b>
 	<Spacer height={8} />
-	<p>
-		Das Katzenhaus im Tierheim Starnberg muss dringend erneuert werden, denn es fehlt an allen Ecken
-		und Enden: kein fließendes Wasser, keine Versorgungsräume, zu kleine Zimmer, teils ohne Auslauf.
-	</p>
-	<Spacer height={8} />
-	<p>
-		Damit eine Unterbringung künftig genehmigungsfähig und tiergerecht ist, braucht es einen Neubau
-		mit klar getrennten Bereichen und eigenen Eingängen.
-	</p>
+	<p>Das Katzenhaus im Tierheim Starnberg muss dringend erneuert werden.</p>
 	<Spacer height={8} />
 	<p>
 		Da die aktuelle Situation für Menschen und Tiere auf Dauer nicht mehr tragbar ist und so ein

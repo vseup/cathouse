@@ -4,7 +4,8 @@
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Kitty from '$lib/components/Kitty.svelte';
-	import { CatState, CatType } from '$lib/constants/cat.sprites';
+	import { getCats, type ApiCat } from '$lib/api/cats';
+	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
 	import Success from '$lib/components/modals/success/Success.svelte';
@@ -14,7 +15,6 @@
 		CAT_SIZE_DIVISOR,
 		CAT_SIZE_MAX,
 		CAT_SIZE_MIN,
-		NUM_CATS,
 		SIDEBAR_BREAKPOINT,
 		SIDEBAR_WIDTH
 	} from '$lib/constants/layout';
@@ -36,22 +36,24 @@
 	let newCat: Cat | null = null;
 	let showLearnMore = false;
 
-	function createCat(id: number, worldWidth: number, worldHeight: number): Cat {
+	function createCatFromApi(cat: ApiCat, id: number, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
 		const y = rand(0, worldHeight - catSize);
+		return new Cat(id, cat.name, x, y, cat.donation, cat.type, cat.donor ?? undefined);
+	}
 
-		const types = Object.values(CatType) as CatType[];
-		const typeIndex = Math.floor(Math.random() * types.length);
+	async function loadCatsFromApi(worldWidth: number, worldHeight: number) {
+		try {
+			const data = await getCats();
+			if (!Array.isArray(data)) {
+				throw new Error('Invalid cats response format');
+			}
 
-		return new Cat(
-			id,
-			`Kitty-${id}`,
-			x,
-			y,
-			rand(1, 100),
-			types[typeIndex],
-			id % 2 === 0 ? 'Max Mustermann' : undefined
-		);
+			return data.map((cat, index) => createCatFromApi(cat, index, worldWidth, worldHeight));
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
 	}
 
 	function updateCat(cat: Cat, deltaTime: number, worldWidth: number, worldHeight: number) {
@@ -79,7 +81,13 @@
 		worldWidth = world.clientWidth;
 		worldHeight = world.clientHeight;
 
-		cats = Array.from({ length: NUM_CATS }, (_, i) => createCat(i, worldWidth, worldHeight));
+		loadCatsFromApi(worldWidth, worldHeight).then((apiCats) => {
+			if (apiCats != null) {
+				cats = apiCats;
+				return;
+			}
+			cats = [];
+		});
 
 		let last = performance.now();
 		let running = true;

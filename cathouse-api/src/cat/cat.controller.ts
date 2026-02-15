@@ -29,8 +29,9 @@ export class CatController {
   }
 
   @Get('total-donations')
-  getTotalDonations() {
-    return this.catService.getTotalDonations();
+  async getTotalDonations() {
+    const totalDonations = await this.catService.getTotalDonations();
+    return { totalDonations };
   }
 
   @Get(':id')

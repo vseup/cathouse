@@ -1,4 +1,4 @@
-.PHONY: help dev dev-detached up down down-volumes build clean logs logs-api logs-client logs-db db-migrate db-seed ps restart restart-api restart-client
+.PHONY: help dev dev-d up down down-v build clean logs logs-api logs-client logs-db db-migrate db-seed ps restart restart-api restart-client
 
 help: ## Show help message
 	@echo 'Usage: make [target]'
@@ -9,15 +9,15 @@ help: ## Show help message
 dev: ## Start development environment
 	docker compose --env-file .env.dev up --build
 
-dev-detached: ## Start development environment in background
+dev-d: ## Start development environment in background
 	docker compose --env-file .env.dev up --build -d
 
-up: dev-detached db-migrate db-seed
+up: dev-d db-migrate db-seed
 
 down: ## Stop all services
 	docker compose down
 
-down-volumes: ## Stop all services and remove volumes (deletes data!)
+down-v: ## Stop all services and remove volumes (deletes data!)
 	docker compose down -v
 
 build: ## Build all images

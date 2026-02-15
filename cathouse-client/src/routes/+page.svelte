@@ -4,7 +4,7 @@
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Kitty from '$lib/components/Kitty.svelte';
-	import { getCats, type ApiCat } from '$lib/api/cats';
+	import { createCat, getCats, type CatApiResponse } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
@@ -36,10 +36,32 @@
 	let newCat: Cat | null = null;
 	let showLearnMore = false;
 
-	function createCatFromApi(cat: ApiCat, id: number, worldWidth: number, worldHeight: number): Cat {
+	function createCatFromApi(
+		cat: CatApiResponse,
+		id: number,
+		worldWidth: number,
+		worldHeight: number
+	): Cat {
 		const x = rand(0, worldWidth - catSize);
 		const y = rand(0, worldHeight - catSize);
 		return new Cat(id, cat.name, x, y, cat.donation, cat.type, cat.donor ?? undefined);
+	}
+
+	function getNextLocalCatId() {
+		return cats.reduce((max, cat) => Math.max(max, cat.id), -1) + 1;
+	}
+
+	async function saveCat(cat: Cat) {
+		const created = await createCat({
+			type: cat.type,
+			name: cat.name,
+			donation: cat.donation,
+			donor: cat.donor
+		});
+
+		const createdCat = createCatFromApi(created, getNextLocalCatId(), worldWidth, worldHeight);
+		cats = [createdCat, ...cats];
+		newCat = createdCat;
 	}
 
 	async function loadCatsFromApi(worldWidth: number, worldHeight: number) {
@@ -195,7 +217,7 @@
 		<Participate
 			zIndex={worldHeight + 50}
 			close={() => (showParticipate = false)}
-			onSaved={(c) => (newCat = c)}
+			onSaved={saveCat}
 		/>
 	{/if}
 	{#if newCat != null}

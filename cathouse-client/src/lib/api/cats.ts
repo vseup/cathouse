@@ -1,7 +1,7 @@
-import { getJson } from '$lib/api/client';
+import { getJson, postJson } from '$lib/api/client';
 import { CatType } from '$lib/constants/cat.sprites';
 
-export type ApiCat = {
+export type CatApiResponse = {
 	id: string;
 	type: CatType;
 	name: string;
@@ -9,6 +9,17 @@ export type ApiCat = {
 	donation: number;
 };
 
+export type CatApiCreateRequest = {
+	type: CatType;
+	name: string;
+	donor?: string;
+	donation: number;
+};
+
 export async function getCats() {
-	return getJson<ApiCat[]>('/cats');
+	return getJson<CatApiResponse[]>('/cats');
+}
+
+export async function createCat(payload: CatApiCreateRequest) {
+	return postJson<CatApiResponse>('/cats', payload);
 }

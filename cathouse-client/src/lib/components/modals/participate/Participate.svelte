@@ -11,7 +11,7 @@
 
 	export let zIndex: number = 1;
 	export let close: () => void;
-	export let onSaved: (cat: Cat) => void;
+	export let onSaved: (cat: Cat) => Promise<void>;
 
 	const types = Object.values(CatType) as CatType[];
 	const cats: Cat[] = types.map((t) => new Cat(-1, '', -1, -1, -1, t));
@@ -24,6 +24,8 @@
 	let donationInput: string = '';
 
 	let donorNameInput: string = '';
+	let isSaving = false;
+	let saveError: string | null = null;
 
 	function validate(): boolean {
 		const catNameValid = catNameRef.validate();
@@ -31,17 +33,43 @@
 		return catNameValid && donationValid;
 	}
 
-	function create() {
+	function getSaveErrorMessage(error: unknown): string {
+		if (error instanceof Error) {
+			return error.message;
+		}
+
+		return 'Deine Katze konnte nicht gespeichert werden. Bitte versuche es erneut.';
+	}
+
+	async function create() {
+		if (isSaving) return;
+		saveError = null;
+
 		const valid = validate();
 		if (!valid) return;
-		let cat = cats[catIndex];
-		cat.name = catNameInput;
-		cat.donation = parseFloat(donationInput);
-		if (donorNameInput.length > 0) {
-			cat.donor = donorNameInput;
+
+		const selectedType = cats[catIndex].type;
+		const parsedDonation = parseFloat(donationInput.replace(',', '.'));
+		const donorName = donorNameInput.trim();
+		const cat = new Cat(
+			-1,
+			catNameInput.trim(),
+			-1,
+			-1,
+			parsedDonation,
+			selectedType,
+			donorName.length > 0 ? donorName : undefined
+		);
+
+		try {
+			isSaving = true;
+			await onSaved(cat);
+			close();
+		} catch (error) {
+			saveError = getSaveErrorMessage(error);
+		} finally {
+			isSaving = false;
 		}
-		onSaved(cat);
-		close();
 	}
 </script>
 
@@ -58,22 +86,34 @@
 	<DonorName bind:name={donorNameInput} />
 	<Spacer height={24} />
 	<Donation bind:this={donationRef} bind:value={donationInput} />
-	<Spacer height={48} />
+	{#if saveError != null}
+		<Spacer height={16} />
+		<p class="error-message">{saveError}</p>
+	{/if}
+	<Spacer height={24} />
 	<div class="row">
 		<Button
 			textColor="var(--color-text-dark)"
 			bgColor="var(--color-grey)"
 			bgColorHover="var(--color-grey-darken-1)"
-			on:click={close}
+			on:click={() => {
+				if (!isSaving) close();
+			}}
 		>
 			Abbrechen
 		</Button>
 		<Spacer width={24} />
 		<div style="flex: 1;">
-			<Button widthCss={'100%'} primary on:click={create}>Katze erstellen</Button>
+			<Button widthCss={'100%'} primary on:click={create}
+				>{isSaving ? 'Speichern...' : 'Katze erstellen'}</Button
+			>
 		</div>
 	</div>
 </Modal>
 
 <style>
+	.error-message {
+		color: var(--color-error);
+		font-size: 14px;
+	}
 </style>

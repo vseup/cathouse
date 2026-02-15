@@ -4,29 +4,15 @@ Simple web app where people can name and spawn their favourite cat after making 
 
 For a nice cat animation sprites starter kit see: https://seethingswarm.itch.io/catset.
 
-## Development
+## Essential Commands
 
-frontend: 
+```bash
+# Start development environment, migrate and seed db
+make up
 
-```sh
-cd cathouse-client
+# Stop all services
+make down
 
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Show all available commands
+make help
 ```
-
-## Building
-
-To create a production version of the frontend:
-
-```sh
-cd cathouse-client
-
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

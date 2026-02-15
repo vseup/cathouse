@@ -12,7 +12,7 @@
 	export let cats: Cat[];
 	export let searchTerm: string = '';
 	export let clear: () => void;
-	export let select: (term: string) => void;
+	export let select: (term: string) => boolean;
 	export let openParticipate: () => void;
 	export let openLearnMore: () => void;
 </script>

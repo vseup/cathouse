@@ -1,62 +1,126 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { Prisma } from '../generated/prisma/client';
+
+const CAT_NAME_ALREADY_TAKEN_MESSAGE = 'Der Katzenname ist bereits vergeben.';
 
 @Injectable()
 export class CatService {
-    constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) { }
 
-    async create(createCatDto: CreateCatDto) {
-        return this.prisma.client.cat.create({
-            data: createCatDto,
-        });
+  async create(createCatDto: CreateCatDto) {
+    const name = await this.assertCaseInsensitiveUniqueName(createCatDto.name);
+
+    try {
+      return await this.prisma.client.cat.create({
+        data: {
+          ...createCatDto,
+          name,
+        },
+      });
+    } catch (error) {
+      this.throwOnUniqueViolation(error);
+    }
+  }
+
+  async findAll() {
+    return this.prisma.client.cat.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
+  async findOne(id: string) {
+    const cat = await this.prisma.client.cat.findUnique({
+      where: { id },
+    });
+
+    if (!cat) {
+      throw new NotFoundException(`Cat with ID ${id} not found`);
     }
 
-    async findAll() {
-        return this.prisma.client.cat.findMany({
-            orderBy: {
-                createdAt: 'desc',
-            },
-        });
+    return cat;
+  }
+
+  async update(id: string, updateCatDto: UpdateCatDto) {
+    await this.findOne(id);
+
+    const data: UpdateCatDto = { ...updateCatDto };
+    if (data.name != null) {
+      data.name = await this.assertCaseInsensitiveUniqueName(data.name, id);
     }
 
-    async findOne(id: string) {
-        const cat = await this.prisma.client.cat.findUnique({
-            where: { id },
-        });
+    try {
+      return await this.prisma.client.cat.update({
+        where: { id },
+        data,
+      });
+    } catch (error) {
+      this.throwOnUniqueViolation(error);
+    }
+  }
 
-        if (!cat) {
-            throw new NotFoundException(`Cat with ID ${id} not found`);
-        }
+  async remove(id: string) {
+    await this.findOne(id);
 
-        return cat;
+    return this.prisma.client.cat.delete({
+      where: { id },
+    });
+  }
+
+  async getTotalDonations(): Promise<number> {
+    const result = await this.prisma.client.cat.aggregate({
+      _sum: {
+        donation: true,
+      },
+    });
+
+    return result._sum.donation ?? 0;
+  }
+
+  private async assertCaseInsensitiveUniqueName(
+    name: string,
+    excludeCatId?: string,
+  ): Promise<string> {
+    const normalizedName = name.trim();
+    if (normalizedName.length === 0) {
+      throw new BadRequestException('Der Katzenname darf nicht leer sein.');
     }
 
-    async update(id: string, updateCatDto: UpdateCatDto) {
-        await this.findOne(id);
+    const existingCat = await this.prisma.client.cat.findFirst({
+      where: {
+        name: {
+          equals: normalizedName,
+          mode: 'insensitive',
+        },
+        ...(excludeCatId != null ? { id: { not: excludeCatId } } : {}),
+      },
+      select: { id: true },
+    });
 
-        return this.prisma.client.cat.update({
-            where: { id },
-            data: updateCatDto,
-        });
+    if (existingCat != null) {
+      throw new ConflictException(CAT_NAME_ALREADY_TAKEN_MESSAGE);
     }
 
-    async remove(id: string) {
-        await this.findOne(id);
+    return normalizedName;
+  }
 
-        return this.prisma.client.cat.delete({
-            where: { id },
-        });
+  private throwOnUniqueViolation(error: unknown): never {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === 'P2002'
+    ) {
+      throw new ConflictException(CAT_NAME_ALREADY_TAKEN_MESSAGE);
     }
 
-    async getTotalDonations(): Promise<number> {
-        const result = await this.prisma.client.cat.aggregate({
-            _sum: {
-                donation: true,
-            },
-        });
-
-        return result._sum.donation ?? 0;
-    }
+    throw error;
+  }
 }

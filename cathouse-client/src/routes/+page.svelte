@@ -4,7 +4,7 @@
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Kitty from '$lib/components/Kitty.svelte';
-	import { createCat, getCats, type CatApiResponse } from '$lib/api/cats';
+	import { createCat, getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
@@ -20,11 +20,11 @@
 	} from '$lib/constants/layout';
 
 	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
-	$: totalDonation = cats.reduce((sum, cat) => sum + cat.donation, 0);
 
 	let world: HTMLDivElement;
 	let overlay: HTMLDivElement;
 	let cats: Cat[] = [];
+	let totalDonation = 0;
 	let focusedCat: Cat | null = null;
 	let animationFrameId: number;
 
@@ -53,6 +53,7 @@
 		const createdCat = createCatFromApi(created, worldWidth, worldHeight);
 		cats = [createdCat, ...cats];
 		newCat = createdCat;
+		await loadTotalDonationsFromApi();
 	}
 
 	async function loadCatsFromApi(worldWidth: number, worldHeight: number) {
@@ -66,6 +67,15 @@
 		} catch (error) {
 			console.error(error);
 			return null;
+		}
+	}
+
+	async function loadTotalDonationsFromApi() {
+		try {
+			const total = await getTotalDonations();
+			totalDonation = total;
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
@@ -101,6 +111,7 @@
 			}
 			cats = [];
 		});
+		loadTotalDonationsFromApi();
 
 		let last = performance.now();
 		let running = true;
@@ -171,8 +182,9 @@
 					const idx = cats.findIndex((el) =>
 						el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
 					);
-					if (idx < 0) return;
+					if (idx < 0) return false;
 					focusCat(cats[idx]);
+					return true;
 				}}
 				openParticipate={() => (showParticipate = true)}
 				openLearnMore={() => (showLearnMore = true)}

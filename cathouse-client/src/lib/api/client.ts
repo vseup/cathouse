@@ -94,9 +94,14 @@ function buildHttpErrorMessage(status: number, path: string, payload: unknown) {
 
 async function parseJsonOrNull(response: Response): Promise<unknown> {
 	const contentType = response.headers.get('content-type') ?? '';
-	if (!contentType.includes('application/json')) {
+	if (contentType.includes('application/json')) {
+		return await response.json();
+	}
+
+	const text = await response.text();
+	if (text.trim().length === 0) {
 		return null;
 	}
 
-	return await response.json();
+	return text;
 }

@@ -4,11 +4,14 @@
 	export let searchTerm: string;
 	export let terms: string[] = [];
 	export let placeholder: string = 'Search';
+	export let showSearchIconWhenEmpty: boolean = false;
 	export let clear: () => void;
 	export let select: (term: string) => boolean;
 
 	$: entered = true;
 	$: empty = searchTerm.length === 0;
+	$: icon = showSearchIconWhenEmpty && empty ? 'search' : 'close';
+	$: hideIcon = !showSearchIconWhenEmpty && empty;
 	$: filteredTerms = terms.filter((el) =>
 		el.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
 	);
@@ -50,9 +53,14 @@
 	/>
 
 	<Icon
-		icon="close"
-		hidden={searchTerm.length === 0}
+		{icon}
+		hidden={hideIcon}
 		on:click={() => {
+			if (icon === 'search') {
+				search();
+				return;
+			}
+
 			searchTerm = '';
 			entered = true;
 			noMatch = false;

@@ -3,6 +3,7 @@
 	import { rand } from '$lib/helpers/number.helper';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import BottomBar from '$lib/components/BottomBar.svelte';
 	import Kitty from '$lib/components/Kitty.svelte';
 	import { createCat, getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
@@ -35,6 +36,14 @@
 	let showParticipate = false;
 	let newCat: Cat | null = null;
 	let showLearnMore = false;
+
+	function openDonationOptions() {
+		window.open(
+			'https://www.tierheim-starnberg.de/helfen-und-spenden/spenden/',
+			'_blank',
+			'noopener,noreferrer'
+		);
+	}
 
 	function createCatFromApi(cat: CatApiResponse, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
@@ -191,7 +200,25 @@
 			/>
 		</div>
 	{:else}
-		<div class="bottombar"></div>
+		<BottomBar
+			donation={totalDonation}
+			zIndex={worldHeight + 20}
+			{cats}
+			cat={focusedCat}
+			searchTerm={focusedCat ? focusedCat.name : ''}
+			clear={() => clearFocus()}
+			select={(term) => {
+				const idx = cats.findIndex((el) =>
+					el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+				);
+				if (idx < 0) return false;
+				focusCat(cats[idx]);
+				return true;
+			}}
+			openParticipate={() => (showParticipate = true)}
+			openDonationOptions={openDonationOptions}
+			openLearnMore={() => (showLearnMore = true)}
+		/>
 		<div class="world-wrapper col">
 			<div class="world" bind:this={world}>
 				{#each cats as cat (cat.id)}
@@ -238,15 +265,6 @@
 		height: 100vh;
 		height: 100dvh;
 		background: var(--color-bg);
-	}
-	.bottombar {
-		height: var(--bottombar-height);
-		width: 100%;
-		background-color: var(--color-green);
-		position: fixed;
-		bottom: 0px;
-		border-top-right-radius: 24px;
-		border-top-left-radius: 24px;
 	}
 	.bottombar-pad {
 		height: var(--bottombar-height);

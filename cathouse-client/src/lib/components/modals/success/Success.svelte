@@ -32,7 +32,7 @@
 		</b>
 	</p>
 	<Divider />
-	<DonationInformation />
+		<DonationInformation amount={cat.donation} />
 	<Spacer height={48} />
 	<Button widthCss={'100%'} primary on:click={close}>Schließen</Button>
 </Modal>

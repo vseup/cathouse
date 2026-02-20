@@ -4,6 +4,24 @@
 	import Spacer from '$lib/components/Spacer.svelte';
 	import QrPaypal from '$lib/assets/images/qr_paypal.jpg';
 	import Divider from '$lib/components/Divider.svelte';
+
+	export let amount: number | null = null;
+
+	function buildPaypalDonationUrl() {
+		const baseUrl = 'https://www.paypal.com/paypalme/Tierheimstarnberg';
+
+		if (amount != null && Number.isFinite(amount) && amount > 0) {
+			const roundedAmount = Math.floor(amount);
+			const amountAndCurrency = `${roundedAmount}EUR`;
+			return `${baseUrl}/${amountAndCurrency}`;
+		}
+
+		return baseUrl;
+	}
+
+	function openPaypalDonation() {
+		window.open(buildPaypalDonationUrl(), '_blank', 'noopener,noreferrer');
+	}
 </script>
 
 <div class="col">
@@ -13,7 +31,7 @@
 		<div class="col">
 			<p>info@tierheim-starnberg.de</p>
 			<Spacer height={8} />
-			<Button>
+			<Button on:click={openPaypalDonation}>
 				<div class="row" style="align-items: center">
 					<p>mit Paypal spenden</p>
 					<Spacer width={10} />

@@ -206,19 +206,19 @@
 				<span>{toEur(donation)}</span>
 			</div>
 			<Spacer height={16} />
-				<p id="note">
-					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
-					gemacht wurden.
-				</p>
-				<Spacer height={10} />
-				<div class="legal-links row">
-					<a href="/privacy">Datenschutz</a>
-					<span>|</span>
-					<a href="/imprint">Impressum</a>
-				</div>
+			<p id="note">
+				*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
+				gemacht wurden.
+			</p>
+			<Spacer height={10} />
+			<div class="legal-links row">
+				<a href="/privacy">Datenschutz</a>
+				<span>|</span>
+				<a href="/imprint">Impressum</a>
 			</div>
-		{:else}
-			<div class="content col collapsed-content">
+		</div>
+	{:else}
+		<div class="content col collapsed-content">
 			{#if !cat}
 				<p class="description">
 					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
@@ -231,18 +231,19 @@
 				</div>
 				<Spacer width={16} />
 				<IconButton icon="more_vert" on:click={toggleExpanded} />
-				</div>
-				<Spacer height={14} />
-				<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
-				<Spacer height={8} />
-				<div class="legal-links row">
-					<a href="/privacy">Datenschutz</a>
-					<span>|</span>
-					<a href="/imprint">Impressum</a>
-				</div>
 			</div>
-		{/if}
-	</div>
+			<Spacer height={14} />
+			<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
+			<Spacer height={16} />
+			<div class="legal-links row">
+				<a href="/privacy">Datenschutz</a>
+				<span>|</span>
+				<a href="/imprint">Impressum</a>
+			</div>
+			<Spacer height={14} />
+		</div>
+	{/if}
+</div>
 
 <style>
 	.bottombar {
@@ -254,7 +255,7 @@
 		border-top-left-radius: 24px;
 		border-top-right-radius: 24px;
 		box-sizing: border-box;
-		padding: 8px 24px 20px;
+		padding: 8px 24px 0px;
 		overflow: hidden;
 		transition:
 			height 420ms cubic-bezier(0.32, 0.72, 0, 1),
@@ -273,13 +274,15 @@
 		border: none;
 		display: flex;
 		justify-content: center;
-		padding: 8px 0 14px;
+		align-items: center;
+		min-height: 52px;
+		padding: 12px 0 18px;
 		cursor: pointer;
 		touch-action: none;
 	}
 	.handle {
-		width: 82px;
-		height: 5px;
+		width: 96px;
+		height: 6px;
 		border-radius: 4px;
 		background-color: rgba(255, 255, 255, 0.35);
 	}
@@ -313,6 +316,9 @@
 		font-size: 14px;
 		color: var(--color-text-light);
 		text-align: center;
+	}
+	.collapsed-content {
+		padding-bottom: 12px;
 	}
 	.cat-details {
 		width: 100%;
@@ -350,22 +356,25 @@
 		font-size: 48px;
 		line-height: 70px;
 	}
-		#note {
-			font-size: 12px;
-			color: var(--color-text-light);
-		}
-		.legal-links {
-			gap: 8px;
-			font-size: 12px;
-			color: var(--color-text-light);
-			justify-content: center;
-			width: 100%;
-		}
-		.legal-links a {
-			color: var(--color-text-light);
-			text-decoration: underline;
-		}
-		.legal-links a:visited {
-			color: var(--color-text-light);
-		}
-	</style>
+	#note {
+		font-size: 12px;
+		color: var(--color-text-light);
+	}
+	.legal-links {
+		gap: 8px;
+		flex-wrap: wrap;
+		font-size: 12px;
+		line-height: 1.3;
+		color: var(--color-text-light);
+		justify-content: center;
+		width: 100%;
+		padding-bottom: 18px;
+	}
+	.legal-links a {
+		color: var(--color-text-light);
+		text-decoration: underline;
+	}
+	.legal-links a:visited {
+		color: var(--color-text-light);
+	}
+</style>

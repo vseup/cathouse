@@ -46,6 +46,7 @@ services:
     environment:
       NODE_ENV: production
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:3000}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-cats.verenapues.com}
       LEGAL_IMPRINT_OWNER_NAME: ${LEGAL_IMPRINT_OWNER_NAME:-}
       LEGAL_IMPRINT_STREET: ${LEGAL_IMPRINT_STREET:-}
       LEGAL_IMPRINT_HOUSE_NUMBER: ${LEGAL_IMPRINT_HOUSE_NUMBER:-}

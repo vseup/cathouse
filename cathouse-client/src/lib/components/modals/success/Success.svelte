@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/controls/Button.svelte';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import Spacer from '$lib/components/spacer.svelte';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { Cat } from '$lib/models/cat';
 	import Modal from '../Modal.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Spacer from '../Spacer.svelte';
+	import Spacer from '../spacer.svelte';
 
 	export let text: string;
 	export let minlength: number | null = null;

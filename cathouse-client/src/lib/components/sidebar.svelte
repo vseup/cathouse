@@ -2,7 +2,7 @@
 	import Search from '$lib/components/inputs/Search.svelte';
 	import Button from '$lib/components/controls/Button.svelte';
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
-	import Spacer from './Spacer.svelte';
+	import Spacer from './spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { SIDEBAR_WIDTH } from '$lib/constants/layout';

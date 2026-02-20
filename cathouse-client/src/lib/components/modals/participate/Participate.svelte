@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/controls/Button.svelte';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import Spacer from '$lib/components/spacer.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
 	import Modal from '../Modal.svelte';

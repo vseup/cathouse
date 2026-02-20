@@ -3,7 +3,7 @@
 	import Search from '$lib/components/inputs/Search.svelte';
 	import Button from '$lib/components/controls/Button.svelte';
 	import IconButton from '$lib/components/controls/IconButton.svelte';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import Spacer from '$lib/components/spacer.svelte';
 	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/controls/Button.svelte';
 	import Icon from '$lib/components/controls/Icon.svelte';
-	import Spacer from '$lib/components/Spacer.svelte';
+	import Spacer from '$lib/components/spacer.svelte';
 	import QrPaypal from '$lib/assets/images/qr_paypal.jpg';
 	import Divider from '$lib/components/Divider.svelte';
 

@@ -1,5 +1,5 @@
 <script>
-	import Spacer from './Spacer.svelte';
+	import Spacer from './spacer.svelte';
 </script>
 
 <div class="col">

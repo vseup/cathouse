@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Spacer from '$lib/components/Spacer.svelte';
+	import Spacer from '$lib/components/spacer.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 
 	export let label: string;

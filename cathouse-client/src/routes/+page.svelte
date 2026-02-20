@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 	import { rand } from '$lib/helpers/number.helper';
 
-	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Sidebar from '$lib/components/sidebar.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
-	import Kitty from '$lib/components/Kitty.svelte';
+	import Kitty from '$lib/components/kitty.svelte';
 	import { createCat, getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';

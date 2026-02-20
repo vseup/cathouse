@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { SIDEBAR_BREAKPOINT } from '$lib/constants/layout';
 	import Icon from '../controls/Icon.svelte';
-	import Spacer from '../Spacer.svelte';
+	import Spacer from '../spacer.svelte';
 
 	export let zIndex: number = 1;
 	export let title: string;
@@ -30,8 +30,8 @@
 
 <div class="modal-bg" style:z-index={zIndex} on:click={close}></div>
 <svelte:window bind:innerWidth />
-<div class="modal-wrapper {isMobileModal ? 'mobile' : ''}" style:z-index={zIndex + 1} on:click|stopPropagation>
-	<div class="modal-container col {isMobileModal ? 'mobile' : ''}" on:click={() => {}}>
+<div class="modal-wrapper {isMobileModal ? 'mobile' : ''}" style:z-index={zIndex + 1}>
+	<div class="modal-container col {isMobileModal ? 'mobile' : ''}">
 		<div class="row modal-title">
 			<h3 style="flex: 1">{title}</h3>
 			<Spacer width={24} />

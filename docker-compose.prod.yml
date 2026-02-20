@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: cathouse-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-cathouse}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-cathouse}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - cathouse-network
+
+  api:
+    build:
+      context: ./cathouse-api
+      dockerfile: Dockerfile.prod
+    container_name: cathouse-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/cathouse}
+      CORS_ORIGIN: ${CORS_ORIGIN:-}
+    ports:
+      - "${API_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - cathouse-network
+
+  client:
+    build:
+      context: ./cathouse-client
+      dockerfile: Dockerfile.prod
+    container_name: cathouse-client
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:3000}
+    ports:
+      - "${CLIENT_PORT:-4173}:4173"
+    networks:
+      - cathouse-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  cathouse-network:
+    driver: bridge

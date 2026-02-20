@@ -7,10 +7,10 @@ help: ## Show help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 dev: ## Start development environment
-	docker compose --env-file .env.dev up --build
+	docker compose --env-file .env.dev.example up --build
 
 dev-d: ## Start development environment in background
-	docker compose --env-file .env.dev up --build -d
+	docker compose --env-file .env.dev.example up --build -d
 
 up: dev-d db-migrate db-seed
 
@@ -39,10 +39,10 @@ logs-db: ## Show database logs
 	docker compose logs -f postgres
 
 db-migrate: ## Run database migrations (development)
-	docker compose --env-file .env.dev exec api-dev npx prisma migrate dev
+	docker compose --env-file .env.dev.example exec api-dev npx prisma migrate dev
 
 db-seed: ## Seed database (development)
-	docker compose --env-file .env.dev exec api-dev npx prisma db seed
+	docker compose --env-file .env.dev.example exec api-dev npx prisma db seed
 
 ps: ## Show running containers
 	docker compose ps
@@ -51,7 +51,7 @@ restart: ## Restart all services
 	docker compose restart
 
 restart-api: ## Restart API service
-	docker compose --env-file .env.dev restart api-dev
+	docker compose --env-file .env.dev.example restart api-dev
 
 restart-client: ## Restart client service
-	docker compose --env-file .env.dev restart client-dev
+	docker compose --env-file .env.dev.example restart client-dev

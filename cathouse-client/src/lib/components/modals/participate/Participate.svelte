@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/controls/Button.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { CatType } from '$lib/constants/cat.sprites';
@@ -13,6 +14,7 @@
 	export let close: () => void;
 	export let onSaved: (cat: Cat) => Promise<void>;
 
+	const PARTICIPATE_DRAFT_KEY = 'participate-form-draft-v1';
 	const types = Object.values(CatType) as CatType[];
 	const cats: Cat[] = types.map((t, i) => new Cat(`preview-${i}`, '', -1, -1, -1, t));
 	let catIndex = 0;
@@ -26,12 +28,93 @@
 	let donorNameInput: string = '';
 	let isSaving = false;
 	let saveError: string | null = null;
+	let acceptedConsent = false;
+	let consentError: string | null = null;
+	let previousHasDonorName = false;
+	let isRestoringDraft = false;
+
+	$: hasDonorName = donorNameInput.trim().length > 0;
+	$: if (!isRestoringDraft && hasDonorName !== previousHasDonorName) {
+		acceptedConsent = false;
+		consentError = null;
+		previousHasDonorName = hasDonorName;
+	}
 
 	function validate(): boolean {
 		const catNameValid = catNameRef.validate();
 		const donationValid = donationRef.validate();
-		return catNameValid && donationValid;
+		const consentValid = validateConsent();
+		return catNameValid && donationValid && consentValid;
 	}
+
+	function validateConsent(): boolean {
+		if (!acceptedConsent) {
+			consentError = hasDonorName
+				? 'Bitte stimme der Speicherung und Anzeige deines Namens in der Datenschutzerklärung zu.'
+				: 'Bitte bestätige, dass du die Datenschutzerklärung gelesen hast.';
+			return false;
+		}
+		consentError = null;
+		return true;
+	}
+
+	type ParticipateDraft = {
+		catIndex: number;
+		catNameInput: string;
+		donationInput: string;
+		donorNameInput: string;
+		acceptedConsent: boolean;
+	};
+
+	function persistDraft() {
+		const draft: ParticipateDraft = {
+			catIndex,
+			catNameInput,
+			donationInput,
+			donorNameInput,
+			acceptedConsent
+		};
+		sessionStorage.setItem(PARTICIPATE_DRAFT_KEY, JSON.stringify(draft));
+	}
+
+	function clearDraft() {
+		sessionStorage.removeItem(PARTICIPATE_DRAFT_KEY);
+	}
+
+	function restoreDraft(rawDraft: string) {
+		const parsed: unknown = JSON.parse(rawDraft);
+		if (parsed == null || typeof parsed !== 'object') return;
+
+		const draft = parsed as Partial<ParticipateDraft>;
+		isRestoringDraft = true;
+
+		if (typeof draft.catIndex === 'number' && Number.isFinite(draft.catIndex)) {
+			catIndex = Math.min(Math.max(Math.trunc(draft.catIndex), 0), cats.length - 1);
+		}
+		if (typeof draft.catNameInput === 'string') catNameInput = draft.catNameInput;
+		if (typeof draft.donationInput === 'string') donationInput = draft.donationInput;
+		if (typeof draft.donorNameInput === 'string') donorNameInput = draft.donorNameInput;
+		if (typeof draft.acceptedConsent === 'boolean') acceptedConsent = draft.acceptedConsent;
+
+		previousHasDonorName = donorNameInput.trim().length > 0;
+		isRestoringDraft = false;
+	}
+
+	function closeAndClearDraft() {
+		clearDraft();
+		close();
+	}
+
+	onMount(() => {
+		const rawDraft = sessionStorage.getItem(PARTICIPATE_DRAFT_KEY);
+		if (rawDraft == null) return;
+
+		try {
+			restoreDraft(rawDraft);
+		} catch {
+			clearDraft();
+		}
+	});
 
 	function getSaveErrorMessage(error: unknown): string {
 		if (error instanceof Error) {
@@ -64,6 +147,7 @@
 		try {
 			isSaving = true;
 			await onSaved(cat);
+			clearDraft();
 			close();
 		} catch (error) {
 			saveError = getSaveErrorMessage(error);
@@ -73,7 +157,11 @@
 	}
 </script>
 
-<Modal title="Unterstütze das Tierheim Starnberg beim Bau des neuen Katzenhauses!" {zIndex} {close}>
+<Modal
+	title="Unterstütze das Tierheim Starnberg beim Bau des neuen Katzenhauses!"
+	{zIndex}
+	close={closeAndClearDraft}
+>
 	<p class="fs14">
 		Schenke einer virtuellen Katze ein Zuhause auf dieser Webseite, gib ihr einen Namen und nutze
 		den Anlass für eine Spende an das Tierheim Starnberg.
@@ -86,6 +174,22 @@
 	<DonorName bind:name={donorNameInput} />
 	<Spacer height={24} />
 	<Donation bind:this={donationRef} bind:value={donationInput} />
+	<Spacer height={16} />
+	<label class="checkbox-row fs14">
+		<input type="checkbox" bind:checked={acceptedConsent} on:change={() => (consentError = null)} />
+		<span>
+			Ich habe die
+			<a href="/privacy?from=participate" on:click={persistDraft}>Datenschutzerklärung</a>
+			gelesen
+			{#if hasDonorName}
+				und stimme zu, dass mein angegebener Name gespeichert und öffentlich angezeigt wird
+			{/if}.
+		</span>
+	</label>
+	{#if consentError != null}
+		<Spacer height={8} />
+		<p class="error-message">{consentError}</p>
+	{/if}
 	{#if saveError != null}
 		<Spacer height={16} />
 		<p class="error-message">{saveError}</p>
@@ -97,7 +201,7 @@
 			bgColor="var(--color-grey)"
 			bgColorHover="var(--color-grey-darken-1)"
 			on:click={() => {
-				if (!isSaving) close();
+				if (!isSaving) closeAndClearDraft();
 			}}
 		>
 			Abbrechen
@@ -115,5 +219,17 @@
 	.error-message {
 		color: var(--color-error);
 		font-size: 14px;
+	}
+	.legal-note {
+		line-height: 1.5;
+	}
+	.checkbox-row {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+		line-height: 1.5;
+	}
+	.checkbox-row input {
+		margin-top: 3px;
 	}
 </style>

@@ -206,13 +206,19 @@
 				<span>{toEur(donation)}</span>
 			</div>
 			<Spacer height={16} />
-			<p id="note">
-				*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
-				gemacht wurden.
-			</p>
-		</div>
-	{:else}
-		<div class="content col collapsed-content">
+				<p id="note">
+					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
+					gemacht wurden.
+				</p>
+				<Spacer height={10} />
+				<div class="legal-links row">
+					<a href="/privacy">Datenschutz</a>
+					<span>|</span>
+					<a href="/imprint">Impressum</a>
+				</div>
+			</div>
+		{:else}
+			<div class="content col collapsed-content">
 			{#if !cat}
 				<p class="description">
 					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
@@ -225,12 +231,18 @@
 				</div>
 				<Spacer width={16} />
 				<IconButton icon="more_vert" on:click={toggleExpanded} />
+				</div>
+				<Spacer height={14} />
+				<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
+				<Spacer height={8} />
+				<div class="legal-links row">
+					<a href="/privacy">Datenschutz</a>
+					<span>|</span>
+					<a href="/imprint">Impressum</a>
+				</div>
 			</div>
-			<Spacer height={14} />
-			<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
-		</div>
-	{/if}
-</div>
+		{/if}
+	</div>
 
 <style>
 	.bottombar {
@@ -338,8 +350,22 @@
 		font-size: 48px;
 		line-height: 70px;
 	}
-	#note {
-		font-size: 12px;
-		color: var(--color-text-light);
-	}
-</style>
+		#note {
+			font-size: 12px;
+			color: var(--color-text-light);
+		}
+		.legal-links {
+			gap: 8px;
+			font-size: 12px;
+			color: var(--color-text-light);
+			justify-content: center;
+			width: 100%;
+		}
+		.legal-links a {
+			color: var(--color-text-light);
+			text-decoration: underline;
+		}
+		.legal-links a:visited {
+			color: var(--color-text-light);
+		}
+	</style>

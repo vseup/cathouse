@@ -7,7 +7,7 @@
 
 <InputWithLabelAndDescr
 	label="Dein Name (optional)"
-	descr="Wenn du möchtest, zeigen wir dich als Unterstützer*in an."
+	descr="Wenn du möchtest, zeigen wir dich als Unterstützer*in an, dafür kannst du auch einen Spitznamen verwenden."
 	bind:value={name}
 	{invalidMessage}
 	minlength={1}

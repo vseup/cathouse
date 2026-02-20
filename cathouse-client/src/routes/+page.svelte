@@ -112,6 +112,14 @@
 		windowWidth = window.innerWidth;
 		worldWidth = world.clientWidth;
 		worldHeight = world.clientHeight;
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.get('resumeParticipate') === '1') {
+			showParticipate = true;
+			searchParams.delete('resumeParticipate');
+			const nextSearch = searchParams.toString();
+			const nextUrl = `${window.location.pathname}${nextSearch.length > 0 ? `?${nextSearch}` : ''}${window.location.hash}`;
+			window.history.replaceState(window.history.state, '', nextUrl);
+		}
 
 		loadCatsFromApi(worldWidth, worldHeight).then((apiCats) => {
 			if (apiCats != null) {

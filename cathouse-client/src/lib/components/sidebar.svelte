@@ -58,18 +58,24 @@
 		<Button widthCss="75%" on:click={openLearnMore}>mehr erfahren</Button>
 		<Spacer height={24} />
 	</div>
-	<div class="col">
-		<div id="donation" class="wrapper col">
-			<div>bereits gesammelt*:</div>
-			<span> {toEur(donation)} </span>
+		<div class="col">
+			<div id="donation" class="wrapper col">
+				<div>bereits gesammelt*:</div>
+				<span> {toEur(donation)} </span>
+			</div>
+			<Spacer height={16} />
+			<p id="note">
+				*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
+				gemacht wurden.
+			</p>
+			<Spacer height={10} />
+			<div class="legal-links row">
+				<a href="/privacy">Datenschutz</a>
+				<span>|</span>
+				<a href="/imprint">Impressum</a>
+			</div>
 		</div>
-		<Spacer height={16} />
-		<p id="note">
-			*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
-			gemacht wurden.
-		</p>
 	</div>
-</div>
 
 <style>
 	.cat-img {
@@ -115,8 +121,20 @@
 	.cat-descr {
 		font-size: 14px;
 	}
-	#note {
-		font-size: 12px;
-		color: var(--color-text-light);
-	}
-</style>
+		#note {
+			font-size: 12px;
+			color: var(--color-text-light);
+		}
+		.legal-links {
+			gap: 8px;
+			font-size: 12px;
+			color: var(--color-text-light);
+		}
+		.legal-links a {
+			color: var(--color-text-light);
+			text-decoration: underline;
+		}
+		.legal-links a:visited {
+			color: var(--color-text-light);
+		}
+	</style>

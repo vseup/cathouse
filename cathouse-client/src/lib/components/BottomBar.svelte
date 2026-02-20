@@ -16,7 +16,6 @@
 	export let clear: () => void;
 	export let select: (term: string) => boolean;
 	export let openParticipate: () => void;
-	export let openDonationOptions: () => void;
 	export let openLearnMore: () => void;
 
 	let expanded = false;
@@ -25,6 +24,7 @@
 	let dragStartHeight = 0;
 	let suppressNextClick = false;
 	let sheetElement: HTMLDivElement;
+	let lastAutoExpandedCat: Cat | null = null;
 
 	let collapsedHeight = 220;
 	let expandedHeight = 220;
@@ -34,11 +34,15 @@
 	const EXPAND_SNAP_RATIO = 0.45;
 
 	$: showExpandedContent = sheetHeight > collapsedHeight + 40;
-	$: if (cat != null && !expanded) {
+	$: if (cat != null && cat !== lastAutoExpandedCat) {
 		expanded = true;
+		lastAutoExpandedCat = cat;
 		if (!dragging) {
 			sheetHeight = expandedHeight;
 		}
+	}
+	$: if (cat == null) {
+		lastAutoExpandedCat = null;
 	}
 
 	function clamp(value: number, min: number, max: number) {
@@ -70,6 +74,11 @@
 	function toggleExpanded() {
 		expanded = !expanded;
 		sheetHeight = expanded ? expandedHeight : collapsedHeight;
+	}
+
+	function collapse() {
+		expanded = false;
+		sheetHeight = collapsedHeight;
 	}
 
 	function onHandleClick() {
@@ -111,13 +120,25 @@
 		dragStartY = null;
 	}
 
+	function onWindowPointerDown(event: PointerEvent) {
+		if (!expanded || dragging || !sheetElement) return;
+
+		const target = event.target;
+		if (!(target instanceof Node)) return;
+		if (sheetElement.contains(target)) return;
+
+		collapse();
+	}
+
 	onMount(() => {
 		updateHeights();
 		const onResize = () => updateHeights();
 		window.addEventListener('resize', onResize);
+		window.addEventListener('pointerdown', onWindowPointerDown);
 
 		return () => {
 			window.removeEventListener('resize', onResize);
+			window.removeEventListener('pointerdown', onWindowPointerDown);
 		};
 	});
 </script>
@@ -169,18 +190,17 @@
 				<img id="logo" src={TierheimLogo} alt="Logo Tierheim Starnberg" />
 				<Spacer height={24} />
 			{/if}
-				{#if !cat}
-					<p class="description">
-						Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
-					</p>
-					<Spacer height={24} />
-				{/if}
+			{#if !cat}
+				<p class="description">
+					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
+				</p>
+				<Spacer height={24} />
+			{/if}
 			<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
-			<Spacer height={16} />
-			<Button widthCss="100%" on:click={openDonationOptions}>Spendenmöglichkeiten</Button>
 			<Spacer height={16} />
 			<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
 			<Spacer height={24} />
+			<div style="flex: 1"></div>
 			<div class="donation col">
 				<div>bereits gesammelt*:</div>
 				<span>{toEur(donation)}</span>
@@ -193,12 +213,12 @@
 		</div>
 	{:else}
 		<div class="content col collapsed-content">
-				{#if !cat}
-					<p class="description">
-						Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
-					</p>
-					<Spacer height={20} />
-				{/if}
+			{#if !cat}
+				<p class="description">
+					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
+				</p>
+				<Spacer height={20} />
+			{/if}
 			<div class="row actions">
 				<div class="cta-wrapper">
 					<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>

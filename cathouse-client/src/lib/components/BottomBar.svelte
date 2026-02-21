@@ -322,7 +322,7 @@
 	}
 	.cat-details {
 		width: 100%;
-		padding: 24px;
+		padding: 16px;
 		background-color: var(--color-green-darken-1);
 		border-radius: 16px;
 		box-sizing: border-box;
@@ -344,7 +344,7 @@
 	}
 	.donation {
 		width: 100%;
-		padding: 24px;
+		padding: 16px;
 		background-color: var(--color-green-darken-1);
 		border-radius: 16px;
 		box-sizing: border-box;

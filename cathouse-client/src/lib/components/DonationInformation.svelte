@@ -39,8 +39,6 @@
 				</div>
 			</Button>
 		</div>
-		<div style="flex: 1"></div>
-		<img class="qr" src={QrPaypal} alt="QR Code mit Paypal Link des Tierheim Starnbergs" />
 	</div>
 	<Divider />
 	<b>Mehr Informationen:</b>

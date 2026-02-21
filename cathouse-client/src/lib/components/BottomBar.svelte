@@ -196,21 +196,25 @@
 				</p>
 				<Spacer height={24} />
 			{/if}
-			<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
-			<Spacer height={16} />
-			<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
-			<Spacer height={24} />
+			{#if !cat}
+				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
+				<Spacer height={16} />
+				<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
+				<Spacer height={24} />
+			{/if}
 			<div style="flex: 1"></div>
-			<div class="donation col">
-				<div>bereits gesammelt*:</div>
-				<span>{toEur(donation)}</span>
-			</div>
-			<Spacer height={16} />
-			<p id="note">
-				*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
-				gemacht wurden.
-			</p>
-			<Spacer height={10} />
+			{#if !cat}
+				<div class="donation col">
+					<div>bereits gesammelt*:</div>
+					<span>{toEur(donation)}</span>
+				</div>
+				<Spacer height={16} />
+				<p id="note">
+					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
+					gemacht wurden.
+				</p>
+				<Spacer height={10} />
+			{/if}
 			<div class="legal-links row">
 				<a href="/privacy">Datenschutz</a>
 				<span>|</span>
@@ -225,16 +229,18 @@
 				</p>
 				<Spacer height={20} />
 			{/if}
-			<div class="row actions">
-				<div class="cta-wrapper">
-					<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
+			{#if !cat}
+				<div class="row actions">
+					<div class="cta-wrapper">
+						<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
+					</div>
+					<Spacer width={16} />
+					<IconButton icon="more_vert" on:click={toggleExpanded} />
 				</div>
-				<Spacer width={16} />
-				<IconButton icon="more_vert" on:click={toggleExpanded} />
-			</div>
-			<Spacer height={14} />
-			<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
-			<Spacer height={16} />
+				<Spacer height={14} />
+				<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
+				<Spacer height={16} />
+			{/if}
 			<div class="legal-links row">
 				<a href="/privacy">Datenschutz</a>
 				<span>|</span>
@@ -322,7 +328,7 @@
 	}
 	.cat-details {
 		width: 100%;
-		padding: 16px;
+		padding: 24px;
 		background-color: var(--color-green-darken-1);
 		border-radius: 16px;
 		box-sizing: border-box;
@@ -344,7 +350,7 @@
 	}
 	.donation {
 		width: 100%;
-		padding: 16px;
+		padding: 24px;
 		background-color: var(--color-green-darken-1);
 		border-radius: 16px;
 		box-sizing: border-box;

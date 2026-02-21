@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCatDto } from './dto/create-cat.dto';
-import { UpdateCatDto } from './dto/update-cat.dto';
 import { Prisma } from '../generated/prisma/client';
 
 const CAT_NAME_ALREADY_TAKEN_MESSAGE = 'Der Katzenname ist bereits vergeben.';
@@ -48,32 +47,6 @@ export class CatService {
     }
 
     return cat;
-  }
-
-  async update(id: string, updateCatDto: UpdateCatDto) {
-    await this.findOne(id);
-
-    const data: UpdateCatDto = { ...updateCatDto };
-    if (data.name != null) {
-      data.name = await this.assertCaseInsensitiveUniqueName(data.name, id);
-    }
-
-    try {
-      return await this.prisma.client.cat.update({
-        where: { id },
-        data,
-      });
-    } catch (error) {
-      this.throwOnUniqueViolation(error);
-    }
-  }
-
-  async remove(id: string) {
-    await this.findOne(id);
-
-    return this.prisma.client.cat.delete({
-      where: { id },
-    });
   }
 
   async getTotalDonations(): Promise<number> {

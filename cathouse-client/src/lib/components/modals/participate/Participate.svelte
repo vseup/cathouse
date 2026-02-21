@@ -51,7 +51,7 @@
 		if (!acceptedConsent) {
 			consentError = hasDonorName
 				? 'Bitte stimme der Speicherung und Anzeige deines Namens in der Datenschutzerklärung zu.'
-				: 'Bitte bestätige, dass du die Datenschutzerklärung gelesen hast.';
+				: 'Bitte bestätige, dass du die Datenschutzerklärung zur Kenntnis genommen hast.';
 			return false;
 		}
 		consentError = null;
@@ -180,10 +180,10 @@
 		<span>
 			Ich habe die
 			<a href="/privacy?from=participate" on:click={persistDraft}>Datenschutzerklärung</a>
-			gelesen
+			zur Kenntnis genommen.
 			{#if hasDonorName}
-				und stimme zu, dass mein angegebener Name gespeichert und öffentlich angezeigt wird
-			{/if}.
+				Ich stimme zu, dass mein angegebener Name gespeichert und öffentlich angezeigt wird.
+			{/if}
 		</span>
 	</label>
 	{#if consentError != null}

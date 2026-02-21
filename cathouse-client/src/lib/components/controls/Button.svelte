@@ -24,8 +24,8 @@
 		border-radius: 16px;
 		border: solid 1px var(--color-text-light);
 		font-size: 18px;
-		padding-left: 24px;
-		padding-right: 24px;
+		padding-left: 16px;
+		padding-right: 16px;
 		color: var(--btn-text-color);
 		cursor: pointer;
 		background-color: var(--btn-color-bg);

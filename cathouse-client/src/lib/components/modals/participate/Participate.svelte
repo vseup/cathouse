@@ -196,17 +196,20 @@
 	{/if}
 	<Spacer height={24} />
 	<div class="row">
-		<Button
-			textColor="var(--color-text-dark)"
-			bgColor="var(--color-grey)"
-			bgColorHover="var(--color-grey-darken-1)"
-			on:click={() => {
-				if (!isSaving) closeAndClearDraft();
-			}}
-		>
-			Abbrechen
-		</Button>
-		<Spacer width={24} />
+		<div style="flex: 1;">
+			<Button
+				widthCss={'100%'}
+				textColor="var(--color-text-dark)"
+				bgColor="var(--color-grey)"
+				bgColorHover="var(--color-grey-darken-1)"
+				on:click={() => {
+					if (!isSaving) closeAndClearDraft();
+				}}
+			>
+				Abbrechen
+			</Button>
+		</div>
+		<Spacer width={16} />
 		<div style="flex: 1;">
 			<Button widthCss={'100%'} primary on:click={create}
 				>{isSaving ? 'Speichern...' : 'Katze erstellen'}</Button
@@ -219,9 +222,6 @@
 	.error-message {
 		color: var(--color-error);
 		font-size: 14px;
-	}
-	.legal-note {
-		line-height: 1.5;
 	}
 	.checkbox-row {
 		display: flex;

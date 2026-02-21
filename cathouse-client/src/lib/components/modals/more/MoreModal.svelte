@@ -13,12 +13,12 @@
 	<Spacer height={16} />
 	<b>Ausgangssituation im Jahr 2025:</b>
 	<Spacer height={8} />
-	<p>Das Katzenhaus im Tierheim Starnberg muss dringend erneuert werden.</p>
-	<Spacer height={8} />
 	<p>
-		Da die aktuelle Situation für Menschen und Tiere auf Dauer nicht mehr tragbar ist und so ein
-		Umbau massive Kosten mit sich bringt, ist das Tierheim auf deine Spende angewiesen.
+		Das Katzenhaus im Tierheim Starnberg muss dringend erneuert werden, denn die aktuelle Situation
+		ist für Menschen und Tiere auf Dauer nicht mehr tragbar.
 	</p>
+	<Spacer height={8} />
+	<p>Da der Umbau massive Kosten mit sich bringt, ist das Tierheim auf deine Spende angewiesen.</p>
 	<Divider />
 	<DonationInformation />
 	<Divider />
@@ -30,8 +30,8 @@
 	</p>
 	<Spacer height={8} />
 	<p>
-		Jedes virtuelle Kätzchen repräsentiert die Spende. Umso mehr es hier wimmelt, umso näher kommen
-		wir dem Ziel des neu erbauten Katzenhauses.
+		Jede virtuelle Katze repräsentiert eine Spende. Umso mehr es hier wimmelt, umso näher kommen wir
+		dem Ziel des neu erbauten Katzenhauses.
 	</p>
 	<Spacer height={8} />
 	<p>Für mehr Informationen zum Neubau wende dich bitte direkt an das Tierheim Starnberg.</p>

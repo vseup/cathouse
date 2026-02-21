@@ -72,13 +72,21 @@
 	}
 
 	function toggleExpanded() {
-		expanded = !expanded;
-		sheetHeight = expanded ? expandedHeight : collapsedHeight;
+		if (expanded) {
+			collapse();
+			return;
+		}
+
+		expanded = true;
+		sheetHeight = expandedHeight;
 	}
 
 	function collapse() {
 		expanded = false;
 		sheetHeight = collapsedHeight;
+		if (cat != null) {
+			clear();
+		}
 	}
 
 	function onHandleClick() {
@@ -115,8 +123,12 @@
 		}
 
 		const snapThreshold = collapsedHeight + (expandedHeight - collapsedHeight) * EXPAND_SNAP_RATIO;
-		expanded = sheetHeight >= snapThreshold;
-		sheetHeight = expanded ? expandedHeight : collapsedHeight;
+		if (sheetHeight >= snapThreshold) {
+			expanded = true;
+			sheetHeight = expandedHeight;
+		} else {
+			collapse();
+		}
 		dragStartY = null;
 	}
 

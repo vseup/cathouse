@@ -18,63 +18,66 @@
 </script>
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">
-	<div class="col">
-		<Divider color="rgba(255,255,255,0.25)" />
-		<p style="text-align: center; color: var(--color-text-light); font-size: 14px">
-			Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
-			Tierheims Starnberg.
-		</p>
-		<Divider color="rgba(255,255,255,0.25)" />
-		<Search
-			bind:searchTerm
-			placeholder="Katze suchen"
-			{clear}
-			{select}
-			terms={cats.map((c) => c.name)}
-		/>
-		{#if cat}
-			<Spacer height={16} />
-			<div class="wrapper col">
-				<span class="name">{cat.name}</span>
-				<img
-					class="cat-img"
-					src={cat.srcIdle}
-					alt="Cat named {cat.name}"
-					style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
-				/>
-				<Spacer height={24} />
-				<p class="cat-descr">Spendenbetrag: <b>{toEur(cat.donation)}</b></p>
-				<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
-			</div>
-		{/if}
-	</div>
-	<div class="col">
-		<Spacer height={24} />
-		<p style="text-align: center; color: var(--color-text-light)">
-			Jede virtuelle Katze bedeutet eine Spende für den dringend benötigten Neubau des Katzenhauses
-			im Tierheim Starnberg!
-		</p>
-		<Spacer height={32} />
-		<Button widthCss="75%" primary on:click={openParticipate}>Mitmachen!</Button>
-		<Spacer height={16} />
-		<Button widthCss="75%" on:click={openLearnMore}>mehr erfahren</Button>
-		<Spacer height={24} />
-	</div>
-	<div class="col">
-		<div id="donation" class="wrapper col">
-			<div>bereits gesammelt*:</div>
-			<span> {toEur(donation)} </span>
+	<div class="sidebar-content col">
+		<div class="col">
+			<Divider color="rgba(255,255,255,0.25)" spacer={16} />
+			<p style="text-align: center; color: var(--color-text-light); font-size: 14px">
+				Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
+				Tierheims Starnberg.
+			</p>
+			<Divider color="rgba(255,255,255,0.25)" spacer={16} />
+			<Search
+				bind:searchTerm
+				placeholder="Katze suchen"
+				{clear}
+				{select}
+				terms={cats.map((c) => c.name)}
+			/>
+			{#if cat}
+				<Spacer height={16} />
+				<div class="wrapper col">
+					<span class="name">{cat.name}</span>
+					<img
+						class="cat-img"
+						src={cat.srcIdle}
+						alt="Cat named {cat.name}"
+						style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
+					/>
+					<Spacer height={24} />
+					<p class="cat-descr">Spendenbetrag: <b>{toEur(cat.donation)}</b></p>
+					<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
+				</div>
+			{/if}
 		</div>
-		<Spacer height={16} />
-		<p id="note">
-			*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
-			gemacht wurden.
-		</p>
-		<Spacer height={10} />
-		<div class="legal-links row">
-			<a href="/privacy">Datenschutz</a>
-			<span>|</span>
-			<a href="/imprint">Impressum</a>
+		<div class="col">
+			<Spacer height={24} />
+			<p style="text-align: center; color: var(--color-text-light)">
+				Jede virtuelle Katze bedeutet eine Spende für den dringend benötigten Neubau des
+				Katzenhauses im Tierheim Starnberg!
+			</p>
+			<Spacer height={32} />
+			<Button widthCss="75%" primary on:click={openParticipate}>Mitmachen!</Button>
+			<Spacer height={16} />
+			<Button widthCss="75%" on:click={openLearnMore}>mehr erfahren</Button>
+			<Spacer height={24} />
+		</div>
+		<div class="col">
+			<div id="donation" class="wrapper col">
+				<div>bereits gesammelt*:</div>
+				<span> {toEur(donation)} </span>
+			</div>
+			<Spacer height={16} />
+			<p id="note">
+				*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
+				gemacht wurden.
+			</p>
+			<Spacer height={10} />
+			<div class="legal-links row">
+				<a href="/privacy">Datenschutz</a>
+				<span>|</span>
+				<a href="/imprint">Impressum</a>
+			</div>
+			<Spacer height={16} />
 		</div>
 	</div>
 </div>
@@ -88,10 +91,17 @@
 	#sidebar {
 		width: var(--sidebar-width);
 		height: 100%;
+		max-height: 100vh;
 		background-color: var(--color-green);
 		padding: 24px;
 		padding-top: 0px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	.sidebar-content {
+		min-height: 100%;
 		justify-content: space-between;
+		gap: 24px;
 	}
 	.col {
 		display: flex;

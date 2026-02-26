@@ -235,12 +235,13 @@
 			{/if}
 		</div>
 	{/if}
-	<Divider color="rgba(255,255,255,0.25)" />
+	<Spacer height={8} />
+	<Divider color="rgba(255,255,255,0.25)" spacer={16} />
 	<p style="text-align: center; color: var(--color-text-light); font-size: 12px">
 		Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
 		Tierheims Starnberg.
 	</p>
-	<Divider color="rgba(255,255,255,0.25)" />
+	<Divider color="rgba(255,255,255,0.25)" spacer={16} />
 	<div class="legal-links row">
 		<a href="/privacy">Datenschutz</a>
 		<span>|</span>

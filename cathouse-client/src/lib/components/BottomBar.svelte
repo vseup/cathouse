@@ -197,19 +197,6 @@
 					<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
 				</div>
 			{/if}
-			<Spacer height={24} />
-			{#if !cat}
-				<p class="description">
-					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
-				</p>
-				<Spacer height={24} />
-			{/if}
-			{#if !cat}
-				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
-				<Spacer height={16} />
-				<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
-				<Spacer height={24} />
-			{/if}
 			<div style="flex: 1"></div>
 			{#if !cat}
 				<div class="donation col">
@@ -221,6 +208,11 @@
 					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
 					gemacht wurden.
 				</p>
+				<div style="flex: 1"></div>
+				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
+				<Spacer height={16} />
+				<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
+				<Spacer height={24} />
 			{/if}
 		</div>
 	{:else}

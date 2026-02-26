@@ -25,7 +25,7 @@
 
 <InputWithLabelAndDescr
 	label="Spendenbetrag (€)"
-	descr="Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Mehr Informationen zu Spendenmöglichkeiten werden dir angezeigt, wenn du 'Katze erstellen' gedrückt hast."
+	descr="Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Deine Spende kannst du per PayPal oder Überweisung tätigen. Mehr Informationen im nächsten Schritt."
 	bind:value
 	{invalidMessage}
 	minlength={1}

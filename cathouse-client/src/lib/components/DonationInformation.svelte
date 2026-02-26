@@ -25,7 +25,7 @@
 </script>
 
 <div class="col">
-	<b>Paypal</b>
+	<b>Spenden mit Paypal</b>
 	<Spacer height={8} />
 	<div class="row">
 		<div class="col">
@@ -39,6 +39,18 @@
 				</div>
 			</Button>
 		</div>
+	</div>
+	<div class="col">
+		<Spacer height={16} />
+		<p class="fs14">Für Spenden empfehlen wir die Option "Für Freunde und Familie".</p>
+		<p class="fs14">
+			Mehr Informationen:
+			<a
+				href="https://www.paypal.com/de/cshelp/article/was-ist-der-unterschied-zwischen-zahlungen-an-freunde-und-familie-und-zahlungen-f%C3%BCr-waren-und-dienstleistungen-help277"
+				target="_blank"
+				>Paypal Optionen
+			</a>
+		</p>
 	</div>
 	<Divider />
 	<b>Mehr Informationen:</b>

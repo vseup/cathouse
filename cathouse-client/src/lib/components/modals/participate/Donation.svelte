@@ -25,9 +25,7 @@
 
 <InputWithLabelAndDescr
 	label="Spendenbetrag (€)"
-	descr="Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Bitte spende direkt an das
-		Tierheim, damit du sicher sein kannst, dass dein Geld dort ankommt, wo es benötigt wird. Wir
-		vertrauen auf deine Ehrlichkeit."
+	descr="Dieser Betrag ist symbolisch und wird mit deiner Katze verknüpft. Mehr Informationen zu Spendenmöglichkeiten werden dir angezeigt, wenn du 'Katze erstellen' gedrückt hast."
 	bind:value
 	{invalidMessage}
 	minlength={1}

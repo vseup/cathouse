@@ -175,6 +175,13 @@
 	<Spacer height={24} />
 	<Donation bind:this={donationRef} bind:value={donationInput} />
 	<Spacer height={16} />
+	<p class="fs14">
+		Ab 50€ Einzelspende kannst du einen Pfotenaufkleber im Tierheim persönlich signieren. Diese
+		bunten Aufkleber werden im neuen Katzenhaus aufgeklebt, so dass du als Spender*in ein Teil des
+		Neubaus wirst und deine Spendenpfote dort für alle sichtbar ist. Als Nachweis gilt dann z.B. das
+		Vorzeigen der PayPal Zahlung.
+	</p>
+	<Spacer height={16} />
 	<label class="checkbox-row fs14">
 		<input type="checkbox" bind:checked={acceptedConsent} on:change={() => (consentError = null)} />
 		<span>

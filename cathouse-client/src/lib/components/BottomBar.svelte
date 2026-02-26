@@ -197,8 +197,14 @@
 					<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
 				</div>
 			{/if}
-			<div style="flex: 1"></div>
 			{#if !cat}
+				<div style="flex: 1"></div>
+				<Spacer height={24} />
+				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
+				<Spacer height={16} />
+				<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
+				<Spacer height={24} />
+				<div style="flex: 1"></div>
 				<div class="donation col">
 					<div>bereits gesammelt*:</div>
 					<span>{toEur(donation)}</span>
@@ -208,11 +214,6 @@
 					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
 					gemacht wurden.
 				</p>
-				<div style="flex: 1"></div>
-				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
-				<Spacer height={16} />
-				<Button widthCss="100%" on:click={openLearnMore}>mehr erfahren</Button>
-				<Spacer height={24} />
 			{/if}
 		</div>
 	{:else}

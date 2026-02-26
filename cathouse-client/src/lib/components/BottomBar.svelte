@@ -3,10 +3,10 @@
 	import Search from '$lib/components/inputs/Search.svelte';
 	import Button from '$lib/components/controls/Button.svelte';
 	import IconButton from '$lib/components/controls/IconButton.svelte';
-	import Spacer from '$lib/components/spacer.svelte';
-	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
+	import Spacer from '$lib/components/Spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
+	import Divider from './Divider.svelte';
 
 	export let donation: number;
 	export let zIndex: number = 20;
@@ -199,10 +199,6 @@
 			{/if}
 			<Spacer height={24} />
 			{#if !cat}
-				<img id="logo" src={TierheimLogo} alt="Logo Tierheim Starnberg" />
-				<Spacer height={24} />
-			{/if}
-			{#if !cat}
 				<p class="description">
 					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
 				</p>
@@ -225,13 +221,7 @@
 					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
 					gemacht wurden.
 				</p>
-				<Spacer height={10} />
 			{/if}
-			<div class="legal-links row">
-				<a href="/privacy">Datenschutz</a>
-				<span>|</span>
-				<a href="/imprint">Impressum</a>
-			</div>
 		</div>
 	{:else}
 		<div class="content col collapsed-content">
@@ -249,18 +239,20 @@
 					<Spacer width={16} />
 					<IconButton icon="more_vert" on:click={toggleExpanded} />
 				</div>
-				<Spacer height={14} />
-				<div class="collapsed-donation">bereits gesammelt*: <b>{toEur(donation)}</b></div>
-				<Spacer height={16} />
 			{/if}
-			<div class="legal-links row">
-				<a href="/privacy">Datenschutz</a>
-				<span>|</span>
-				<a href="/imprint">Impressum</a>
-			</div>
-			<Spacer height={14} />
 		</div>
 	{/if}
+	<Divider color="rgba(255,255,255,0.25)" />
+	<p style="text-align: center; color: var(--color-text-light); font-size: 12px">
+		Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
+		Tierheims Starnberg.
+	</p>
+	<Divider color="rgba(255,255,255,0.25)" />
+	<div class="legal-links row">
+		<a href="/privacy">Datenschutz</a>
+		<span>|</span>
+		<a href="/imprint">Impressum</a>
+	</div>
 </div>
 
 <style>
@@ -311,11 +303,6 @@
 	.expanded-content {
 		height: calc(100% - 32px);
 		overflow-y: auto;
-		padding-bottom: 8px;
-	}
-	#logo {
-		width: 22%;
-		height: auto;
 	}
 	.description {
 		text-align: center;
@@ -326,14 +313,10 @@
 	.actions {
 		width: 100%;
 		align-items: center;
+		margin-bottom: -10px;
 	}
 	.cta-wrapper {
 		flex: 1;
-	}
-	.collapsed-donation {
-		font-size: 14px;
-		color: var(--color-text-light);
-		text-align: center;
 	}
 	.collapsed-content {
 		padding-bottom: 12px;

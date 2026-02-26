@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/controls/Button.svelte';
-	import Spacer from '$lib/components/spacer.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
 	import Modal from '../Modal.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import DonationInformation from '$lib/components/DonationInformation.svelte';
@@ -28,6 +28,8 @@
 		Diese Webseite wurde von einer privaten Unterstützerin erstellt und soll auf die Situation
 		aufmerksam machen, zum Spenden motivieren und visualisieren, was gemeinsam erreicht werden kann.
 	</p>
+	<Spacer height={8} />
+	<p><b>Dies ist kein offizieller Auftritt des Tierheims Starnberg.</b></p>
 	<Spacer height={8} />
 	<p>
 		Jede virtuelle Katze repräsentiert eine Spende. Umso mehr es hier wimmelt, umso näher kommen wir

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Search from '$lib/components/inputs/Search.svelte';
 	import Button from '$lib/components/controls/Button.svelte';
-	import TierheimLogo from '$lib/assets/images/tierheim-starnberg-logo.png';
-	import Spacer from './spacer.svelte';
+	import Spacer from './Spacer.svelte';
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
 	import { SIDEBAR_WIDTH } from '$lib/constants/layout';
+	import Divider from './Divider.svelte';
 
 	export let donation: number;
 	export let cat: Cat | null = null;
@@ -19,6 +19,12 @@
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px`} id="sidebar" class="col">
 	<div class="col">
+		<Divider color="rgba(255,255,255,0.25)" />
+		<p style="text-align: center; color: var(--color-text-light); font-size: 14px">
+			Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
+			Tierheims Starnberg.
+		</p>
+		<Divider color="rgba(255,255,255,0.25)" />
 		<Search
 			bind:searchTerm
 			placeholder="Katze suchen"
@@ -44,13 +50,9 @@
 	</div>
 	<div class="col">
 		<Spacer height={24} />
-		{#if !cat}
-			<img id="logo" src={TierheimLogo} alt="Logo Tierheim Starnberg" />
-			<Spacer height={32} />
-		{/if}
 		<p style="text-align: center; color: var(--color-text-light)">
-			Jede Katze auf dieser Webseite bedeutet eine Spende für den dringend benötigten Neubau des
-			Katzenhauses im Tierheim Starnberg!
+			Jede virtuelle Katze bedeutet eine Spende für den dringend benötigten Neubau des Katzenhauses
+			im Tierheim Starnberg!
 		</p>
 		<Spacer height={32} />
 		<Button widthCss="75%" primary on:click={openParticipate}>Mitmachen!</Button>
@@ -58,24 +60,24 @@
 		<Button widthCss="75%" on:click={openLearnMore}>mehr erfahren</Button>
 		<Spacer height={24} />
 	</div>
-		<div class="col">
-			<div id="donation" class="wrapper col">
-				<div>bereits gesammelt*:</div>
-				<span> {toEur(donation)} </span>
-			</div>
-			<Spacer height={16} />
-			<p id="note">
-				*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
-				gemacht wurden.
-			</p>
-			<Spacer height={10} />
-			<div class="legal-links row">
-				<a href="/privacy">Datenschutz</a>
-				<span>|</span>
-				<a href="/imprint">Impressum</a>
-			</div>
+	<div class="col">
+		<div id="donation" class="wrapper col">
+			<div>bereits gesammelt*:</div>
+			<span> {toEur(donation)} </span>
+		</div>
+		<Spacer height={16} />
+		<p id="note">
+			*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
+			gemacht wurden.
+		</p>
+		<Spacer height={10} />
+		<div class="legal-links row">
+			<a href="/privacy">Datenschutz</a>
+			<span>|</span>
+			<a href="/imprint">Impressum</a>
 		</div>
 	</div>
+</div>
 
 <style>
 	.cat-img {
@@ -88,11 +90,8 @@
 		height: 100%;
 		background-color: var(--color-green);
 		padding: 24px;
+		padding-top: 0px;
 		justify-content: space-between;
-	}
-	#logo {
-		width: 35%;
-		height: auto;
 	}
 	.col {
 		display: flex;
@@ -121,20 +120,20 @@
 	.cat-descr {
 		font-size: 14px;
 	}
-		#note {
-			font-size: 12px;
-			color: var(--color-text-light);
-		}
-		.legal-links {
-			gap: 8px;
-			font-size: 12px;
-			color: var(--color-text-light);
-		}
-		.legal-links a {
-			color: var(--color-text-light);
-			text-decoration: underline;
-		}
-		.legal-links a:visited {
-			color: var(--color-text-light);
-		}
-	</style>
+	#note {
+		font-size: 12px;
+		color: var(--color-text-light);
+	}
+	.legal-links {
+		gap: 8px;
+		font-size: 12px;
+		color: var(--color-text-light);
+	}
+	.legal-links a {
+		color: var(--color-text-light);
+		text-decoration: underline;
+	}
+	.legal-links a:visited {
+		color: var(--color-text-light);
+	}
+</style>

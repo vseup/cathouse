@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { SIDEBAR_BREAKPOINT } from '$lib/constants/layout';
 	import Icon from '../controls/Icon.svelte';
-	import Spacer from '../spacer.svelte';
+	import Spacer from '../Spacer.svelte';
 
 	export let zIndex: number = 1;
 	export let title: string;

@@ -211,7 +211,7 @@
 				</div>
 				<Spacer height={16} />
 				<p id="note">
-					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmern keine falschen Angaben
+					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmenden keine falschen Angaben
 					gemacht wurden.
 				</p>
 			{/if}

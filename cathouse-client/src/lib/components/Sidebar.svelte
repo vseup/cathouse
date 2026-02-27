@@ -68,8 +68,8 @@
 			</div>
 			<Spacer height={16} />
 			<p id="note">
-				*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmern keine falschen Angaben
-				gemacht wurden.
+				*Gesammelter Betrag beruht auf der Annahme, dass von den Teilnehmenden keine falschen
+				Angaben gemacht wurden.
 			</p>
 			<Spacer height={10} />
 			<div class="legal-links row">

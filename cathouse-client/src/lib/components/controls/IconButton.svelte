@@ -26,6 +26,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		touch-action: manipulation;
+		-webkit-user-select: none;
+		user-select: none;
 	}
 	.primary {
 		background-color: var(--color-bg);

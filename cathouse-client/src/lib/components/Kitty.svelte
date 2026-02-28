@@ -13,6 +13,18 @@
 		`height: ${size}px;` +
 		`transform: translate(${cat.x}px, ${cat.y}px);` +
 		`z-index: ${focused ? maxY + 10 : Math.round(cat.y)};`;
+
+	function onPointerEnter(event: PointerEvent) {
+		if (event.pointerType === 'mouse') {
+			hovered = true;
+		}
+	}
+
+	function onPointerLeave(event: PointerEvent) {
+		if (event.pointerType === 'mouse') {
+			hovered = false;
+		}
+	}
 </script>
 
 <div class="cat-wrapper" style={wrapperStyle}>
@@ -34,8 +46,8 @@
 		aria-label="focus cat"
 		tabindex="-1"
 		style:z-index={4}
-		on:mouseenter={() => (hovered = true)}
-		on:mouseleave={() => (hovered = false)}
+		on:pointerenter={onPointerEnter}
+		on:pointerleave={onPointerLeave}
 		on:click
 	></button>
 </div>

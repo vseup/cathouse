@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { Cat } from '$lib/models/cat';
 	export let cat: Cat;
 	export let size: number;
@@ -6,6 +7,7 @@
 	export let maxY: number;
 
 	let hovered: boolean = false;
+	let hoverEnabled = false;
 
 	$: flip = cat.vx < 0 ? -1 : 1;
 	$: wrapperStyle =
@@ -14,14 +16,31 @@
 		`transform: translate(${cat.x}px, ${cat.y}px);` +
 		`z-index: ${focused ? maxY + 10 : Math.round(cat.y)};`;
 
+	onMount(() => {
+		const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+		const updateHoverEnabled = () => {
+			hoverEnabled = mediaQuery.matches;
+			if (!hoverEnabled) {
+				hovered = false;
+			}
+		};
+
+		updateHoverEnabled();
+		mediaQuery.addEventListener('change', updateHoverEnabled);
+
+		return () => {
+			mediaQuery.removeEventListener('change', updateHoverEnabled);
+		};
+	});
+
 	function onPointerEnter(event: PointerEvent) {
-		if (event.pointerType === 'mouse') {
+		if (hoverEnabled && event.pointerType === 'mouse') {
 			hovered = true;
 		}
 	}
 
 	function onPointerLeave(event: PointerEvent) {
-		if (event.pointerType === 'mouse') {
+		if (hoverEnabled && event.pointerType === 'mouse') {
 			hovered = false;
 		}
 	}

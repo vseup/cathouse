@@ -13,13 +13,14 @@ export class Cat {
     stateTimer: number = 0;
     name: string;
     donor?: string;
+    createdAt: Date;
     type: CatType;
     srcIdle: string;
     srcLove: string;
     src: string;
 
 
-    public constructor(id: string, name: string, x: number, y: number, donation: number, type: CatType, donor?: string) {
+    public constructor(id: string, name: string, x: number, y: number, donation: number, type: CatType, donor?: string, createdAt?: Date) {
         this.id = id;
         this.name = name;
         this.x = x;
@@ -27,6 +28,7 @@ export class Cat {
         this.stateTimer = rand(8, 15);
         this.donation = donation;
         this.donor = donor;
+        this.createdAt = createdAt ?? new Date();
         this.type = type;
         this.srcIdle = getIdleImageByType(this.type);
         this.srcLove = getLoveImageByType(this.type);

@@ -7,6 +7,7 @@ export type CatApiResponse = {
 	name: string;
 	donor?: string | null;
 	donation: number;
+	createdAt: string;
 };
 
 export type CatApiCreateRequest = {

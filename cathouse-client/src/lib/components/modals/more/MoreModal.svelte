@@ -2,11 +2,15 @@
 	import Button from '$lib/components/controls/Button.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import Modal from '../Modal.svelte';
+	import CatListModal from '../catlist/CatListModal.svelte';
 	import Divider from '$lib/components/Divider.svelte';
 	import DonationInformation from '$lib/components/DonationInformation.svelte';
+	import type { Cat } from '$lib/models/cat';
 
 	export let zIndex: number = 1;
 	export let close: () => void;
+	export let cats: Cat[] = [];
+	let showCatListModal = false;
 </script>
 
 <Modal title="Spenden für den Neubau des Katzenhauses im Tierheim Starnberg." {zIndex} {close}>
@@ -52,8 +56,13 @@
 	<Spacer height={8} />
 	<p><b>Dies ist kein offizieller Auftritt des Tierheims Starnberg.</b></p>
 	<Spacer height={48} />
+	<Button widthCss={'100%'} on:click={() => (showCatListModal = true)}>Alle Katzen ansehen</Button>
+	<Spacer height={24} />
 	<Button widthCss={'100%'} primary on:click={close}>Schließen</Button>
 </Modal>
+{#if showCatListModal}
+	<CatListModal zIndex={zIndex + 10} close={() => (showCatListModal = false)} {cats} />
+{/if}
 
 <style>
 </style>

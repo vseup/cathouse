@@ -48,7 +48,17 @@
 	function createCatFromApi(cat: CatApiResponse, worldWidth: number, worldHeight: number): Cat {
 		const x = rand(0, worldWidth - catSize);
 		const y = rand(0, worldHeight - catSize);
-		return new Cat(cat.id, cat.name, x, y, cat.donation, cat.type, cat.donor ?? undefined);
+		const createdAt = new Date(cat.createdAt);
+		return new Cat(
+			cat.id,
+			cat.name,
+			x,
+			y,
+			cat.donation,
+			cat.type,
+			cat.donor ?? undefined,
+			Number.isNaN(createdAt.getTime()) ? new Date() : createdAt
+		);
 	}
 
 	async function saveCat(cat: Cat) {
@@ -224,7 +234,7 @@
 				return true;
 			}}
 			openParticipate={() => (showParticipate = true)}
-			openDonationOptions={openDonationOptions}
+			{openDonationOptions}
 			openLearnMore={() => (showLearnMore = true)}
 		/>
 		<div class="world-wrapper col">
@@ -262,7 +272,7 @@
 		<Success zIndex={worldHeight + 50} close={() => (newCat = null)} cat={newCat} />
 	{/if}
 	{#if showLearnMore}
-		<MoreModal zIndex={worldHeight + 50} close={() => (showLearnMore = false)} />
+		<MoreModal zIndex={worldHeight + 50} close={() => (showLearnMore = false)} {cats} />
 	{/if}
 </div>
 

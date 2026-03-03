@@ -53,7 +53,7 @@
 		</p>
 	</div>
 	<Divider />
-	<b>Mehr Informationen:</b>
+	<b>Weitere Spendenmöglichkeiten:</b>
 	<Spacer height={8} />
 	<div class="row" style="align-items: center">
 		<a href="https://www.tierheim-starnberg.de/helfen-und-spenden/spenden/" target="_blank">
@@ -63,6 +63,24 @@
 		<Icon icon="open_in_new" weight={300} />
 	</div>
 	<Spacer height={8} />
+	<div class="row" style="align-items: center">
+		<a
+			href="https://www.tierheim-starnberg.de/wp-content/uploads/2025/04/Vereinfachter-Spendennachweis-2025.pdf"
+			target="_blank"
+		>
+			<p>Vereinfachter Spendennachweis</p>
+		</a>
+		<Spacer width={8} />
+		<Icon icon="open_in_new" weight={300} />
+	</div>
+	<Spacer height={8} />
+
+	<p class="fs14">
+		Bei Spenden per Überweisung bitte das Wort "Spende" im Verwendungszweck mit angeben.
+	</p>
+	<Divider />
+	<b>Mehr Informationen zum Neubau:</b>
+
 	<div class="row" style="align-items: center">
 		<a
 			href="https://www.tierheim-starnberg.de/helfen-und-spenden/projekt-neubau-katzenhaus/"

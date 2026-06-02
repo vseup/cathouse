@@ -6,6 +6,8 @@
 	import { toEur } from '$lib/helpers/number.helper';
 	import { SIDEBAR_WIDTH } from '$lib/constants/layout';
 	import Divider from './Divider.svelte';
+	import CatDetails from './CatDetails.svelte';
+	import LegalLinks from './LegalLinks.svelte';
 
 	export let donation: number;
 	export let cat: Cat | null = null;
@@ -35,18 +37,7 @@
 			/>
 			{#if cat}
 				<Spacer height={16} />
-				<div class="wrapper col">
-					<span class="name">{cat.name}</span>
-					<img
-						class="cat-img"
-						src={cat.srcIdle}
-						alt="Cat named {cat.name}"
-						style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
-					/>
-					<Spacer height={24} />
-					<p class="cat-descr">Spendenbetrag: <b>{toEur(cat.donation)}</b></p>
-					<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
-				</div>
+				<CatDetails {cat} />
 			{/if}
 		</div>
 		<div class="col">
@@ -72,22 +63,13 @@
 				Angaben gemacht wurden.
 			</p>
 			<Spacer height={10} />
-			<div class="legal-links row">
-				<a href="/privacy">Datenschutz</a>
-				<span>|</span>
-				<a href="/imprint">Impressum</a>
-			</div>
+			<LegalLinks />
 			<Spacer height={16} />
 		</div>
 	</div>
 </div>
 
 <style>
-	.cat-img {
-		width: 35%;
-		height: auto;
-		image-rendering: pixelated;
-	}
 	#sidebar {
 		width: var(--sidebar-width);
 		height: 100%;
@@ -123,27 +105,8 @@
 		font-size: 48px;
 		line-height: 70px;
 	}
-	.name {
-		font-weight: 800;
-		font-size: 24px;
-	}
-	.cat-descr {
-		font-size: 14px;
-	}
 	#note {
 		font-size: 12px;
-		color: var(--color-text-light);
-	}
-	.legal-links {
-		gap: 8px;
-		font-size: 12px;
-		color: var(--color-text-light);
-	}
-	.legal-links a {
-		color: var(--color-text-light);
-		text-decoration: underline;
-	}
-	.legal-links a:visited {
 		color: var(--color-text-light);
 	}
 </style>

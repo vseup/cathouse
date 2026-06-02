@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Search from '$lib/components/inputs/Search.svelte';
 	import Button from '$lib/components/controls/Button.svelte';
 	import IconButton from '$lib/components/controls/IconButton.svelte';
@@ -7,6 +6,9 @@
 	import type { Cat } from '$lib/models/cat';
 	import { toEur } from '$lib/helpers/number.helper';
 	import Divider from './Divider.svelte';
+	import DraggableSheet from './DraggableSheet.svelte';
+	import CatDetails from './CatDetails.svelte';
+	import LegalLinks from './LegalLinks.svelte';
 
 	export let donation: number;
 	export let zIndex: number = 20;
@@ -18,160 +20,19 @@
 	export let openParticipate: () => void;
 	export let openLearnMore: () => void;
 
-	let expanded = false;
-	let dragging = false;
-	let dragStartY: number | null = null;
-	let dragStartHeight = 0;
-	let suppressNextClick = false;
-	let sheetElement: HTMLDivElement;
+	let sheetExpanded = false;
 	let lastAutoExpandedCat: Cat | null = null;
 
-	let collapsedHeight = 220;
-	let expandedHeight = 220;
-	let sheetHeight = 220;
-
-	const CLICK_SUPPRESS_DRAG_THRESHOLD = 10;
-	const EXPAND_SNAP_RATIO = 0.45;
-
-	$: showExpandedContent = sheetHeight > collapsedHeight + 40;
 	$: if (cat != null && cat !== lastAutoExpandedCat) {
-		expanded = true;
+		sheetExpanded = true;
 		lastAutoExpandedCat = cat;
-		if (!dragging) {
-			sheetHeight = expandedHeight;
-		}
 	}
 	$: if (cat == null) {
 		lastAutoExpandedCat = null;
 	}
-
-	function clamp(value: number, min: number, max: number) {
-		return Math.min(Math.max(value, min), max);
-	}
-
-	function updateHeights() {
-		if (!sheetElement) return;
-
-		const styles = getComputedStyle(sheetElement);
-		const cssCollapsedHeight = parseFloat(styles.getPropertyValue('--bottombar-height'));
-		if (!Number.isNaN(cssCollapsedHeight)) {
-			collapsedHeight = cssCollapsedHeight;
-		}
-
-		expandedHeight = Math.min(window.innerHeight - 24, 760);
-		if (expandedHeight < collapsedHeight) {
-			expandedHeight = collapsedHeight;
-		}
-
-		if (dragging) {
-			sheetHeight = clamp(sheetHeight, collapsedHeight, expandedHeight);
-			return;
-		}
-
-		sheetHeight = expanded ? expandedHeight : collapsedHeight;
-	}
-
-	function toggleExpanded() {
-		if (expanded) {
-			collapse();
-			return;
-		}
-
-		expanded = true;
-		sheetHeight = expandedHeight;
-	}
-
-	function collapse() {
-		expanded = false;
-		sheetHeight = collapsedHeight;
-		if (cat != null) {
-			clear();
-		}
-	}
-
-	function onHandleClick() {
-		if (suppressNextClick) {
-			suppressNextClick = false;
-			return;
-		}
-		toggleExpanded();
-	}
-
-	function onHandlePointerDown(event: PointerEvent) {
-		dragging = true;
-		dragStartY = event.clientY;
-		dragStartHeight = sheetHeight;
-		(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
-	}
-
-	function onHandlePointerMove(event: PointerEvent) {
-		if (!dragging || dragStartY === null) return;
-
-		const deltaY = event.clientY - dragStartY;
-		if (Math.abs(deltaY) > CLICK_SUPPRESS_DRAG_THRESHOLD) {
-			suppressNextClick = true;
-		}
-		sheetHeight = clamp(dragStartHeight - deltaY, collapsedHeight, expandedHeight);
-	}
-
-	function stopHandleDrag(event: PointerEvent) {
-		if (!dragging) return;
-
-		dragging = false;
-		if ((event.currentTarget as HTMLElement).hasPointerCapture(event.pointerId)) {
-			(event.currentTarget as HTMLElement).releasePointerCapture(event.pointerId);
-		}
-
-		const snapThreshold = collapsedHeight + (expandedHeight - collapsedHeight) * EXPAND_SNAP_RATIO;
-		if (sheetHeight >= snapThreshold) {
-			expanded = true;
-			sheetHeight = expandedHeight;
-		} else {
-			collapse();
-		}
-		dragStartY = null;
-	}
-
-	function onWindowPointerDown(event: PointerEvent) {
-		if (!expanded || dragging || !sheetElement) return;
-
-		const target = event.target;
-		if (!(target instanceof Node)) return;
-		if (sheetElement.contains(target)) return;
-
-		collapse();
-	}
-
-	onMount(() => {
-		updateHeights();
-		const onResize = () => updateHeights();
-		window.addEventListener('resize', onResize);
-		window.addEventListener('pointerdown', onWindowPointerDown);
-
-		return () => {
-			window.removeEventListener('resize', onResize);
-			window.removeEventListener('pointerdown', onWindowPointerDown);
-		};
-	});
 </script>
 
-<div
-	bind:this={sheetElement}
-	class="bottombar col {dragging ? 'dragging' : ''} {expanded ? 'expanded-state' : ''}"
-	style={`z-index: ${zIndex}; height: ${sheetHeight}px;`}
->
-	<button
-		class="handle-trigger"
-		on:click={onHandleClick}
-		on:pointerdown={onHandlePointerDown}
-		on:pointermove={onHandlePointerMove}
-		on:pointerup={stopHandleDrag}
-		on:pointercancel={stopHandleDrag}
-		aria-label={expanded ? 'Bottom bar einklappen' : 'Bottom bar ausklappen'}
-	>
-		<div class="handle"></div>
-	</button>
-
+<DraggableSheet {zIndex} bind:expanded={sheetExpanded} oncollapse={clear} let:showExpandedContent>
 	{#if showExpandedContent}
 		<div class="content col expanded-content">
 			<Search
@@ -184,20 +45,8 @@
 			/>
 			{#if cat}
 				<Spacer height={16} />
-				<div class="cat-details col">
-					<span class="cat-name">{cat.name}</span>
-					<img
-						class="cat-img"
-						src={cat.srcIdle}
-						alt="Cat named {cat.name}"
-						style:transform="scaleX({cat.vx < 0 ? -1 : 1})"
-					/>
-					<Spacer height={24} />
-					<p class="cat-descr">Spendenbetrag: <b>{toEur(cat.donation)}</b></p>
-					<p class="cat-descr">Unterstützer*in: {cat.donor ?? 'Anonym'}</p>
-				</div>
-			{/if}
-			{#if !cat}
+				<CatDetails {cat} />
+			{:else}
 				<div style="flex: 1"></div>
 				<Spacer height={24} />
 				<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
@@ -210,7 +59,7 @@
 					<span>{toEur(donation)}</span>
 				</div>
 				<Spacer height={16} />
-				<p id="note">
+				<p class="note">
 					*Gesammelter Betrag beruht auf der Annahme, dass von Teilnehmenden keine falschen Angaben
 					gemacht wurden.
 				</p>
@@ -223,73 +72,28 @@
 					Jede Katze bedeutet eine Spende für das neue Katzenhaus im Tierheim Starnberg!
 				</p>
 				<Spacer height={20} />
-			{/if}
-			{#if !cat}
 				<div class="row actions">
 					<div class="cta-wrapper">
 						<Button widthCss="100%" primary on:click={openParticipate}>Mitmachen!</Button>
 					</div>
 					<Spacer width={16} />
-					<IconButton icon="more_vert" on:click={toggleExpanded} />
+					<IconButton icon="more_vert" on:click={() => (sheetExpanded = true)} />
 				</div>
 			{/if}
 		</div>
 	{/if}
 	<Spacer height={8} />
 	<Divider color="rgba(255,255,255,0.25)" spacer={16} />
-	<p style="text-align: center; color: var(--color-text-light); font-size: 12px">
+	<p class="note" style="text-align: center;">
 		Diese Webseite ist ein privates Unterstützungsprojekt und kein offizieller Auftritt des
 		Tierheims Starnberg.
 	</p>
 	<Divider color="rgba(255,255,255,0.25)" spacer={16} />
-	<div class="legal-links row">
-		<a href="/privacy">Datenschutz</a>
-		<span>|</span>
-		<a href="/imprint">Impressum</a>
-	</div>
-</div>
+	<LegalLinks />
+	<Spacer height={18} />
+</DraggableSheet>
 
 <style>
-	.bottombar {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		background-color: var(--color-green);
-		border-top-left-radius: 24px;
-		border-top-right-radius: 24px;
-		box-sizing: border-box;
-		padding: 8px 24px 0px;
-		overflow: hidden;
-		transition:
-			height 420ms cubic-bezier(0.32, 0.72, 0, 1),
-			box-shadow 280ms ease;
-		box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
-	}
-	.dragging {
-		transition: none;
-	}
-	.expanded-state {
-		box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.28);
-	}
-	.handle-trigger {
-		width: 100%;
-		background: none;
-		border: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 52px;
-		padding: 12px 0 18px;
-		cursor: pointer;
-		touch-action: none;
-	}
-	.handle {
-		width: 96px;
-		height: 6px;
-		border-radius: 4px;
-		background-color: rgba(255, 255, 255, 0.35);
-	}
 	.content {
 		width: 100%;
 		align-items: center;
@@ -315,28 +119,6 @@
 	.collapsed-content {
 		padding-bottom: 12px;
 	}
-	.cat-details {
-		width: 100%;
-		padding: 24px;
-		background-color: var(--color-green-darken-1);
-		border-radius: 16px;
-		box-sizing: border-box;
-		color: var(--color-text-light);
-		align-items: center;
-		text-align: center;
-	}
-	.cat-name {
-		font-weight: 800;
-		font-size: 24px;
-	}
-	.cat-img {
-		width: 35%;
-		height: auto;
-		image-rendering: pixelated;
-	}
-	.cat-descr {
-		font-size: 14px;
-	}
 	.donation {
 		width: 100%;
 		padding: 24px;
@@ -351,25 +133,8 @@
 		font-size: 48px;
 		line-height: 70px;
 	}
-	#note {
+	.note {
 		font-size: 12px;
-		color: var(--color-text-light);
-	}
-	.legal-links {
-		gap: 8px;
-		flex-wrap: wrap;
-		font-size: 12px;
-		line-height: 1.3;
-		color: var(--color-text-light);
-		justify-content: center;
-		width: 100%;
-		padding-bottom: 18px;
-	}
-	.legal-links a {
-		color: var(--color-text-light);
-		text-decoration: underline;
-	}
-	.legal-links a:visited {
 		color: var(--color-text-light);
 	}
 </style>

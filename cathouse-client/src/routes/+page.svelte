@@ -118,6 +118,15 @@
 		overlay.style.zIndex = `-100`;
 	}
 
+	function selectCatBySearchTerm(term: string) {
+		const idx = cats.findIndex((el) =>
+			el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+		);
+		if (idx < 0) return false;
+		focusCat(cats[idx]);
+		return true;
+	}
+
 	onMount(() => {
 		windowWidth = window.innerWidth;
 		worldWidth = world.clientWidth;
@@ -205,14 +214,7 @@
 				{cats}
 				searchTerm={focusedCat ? focusedCat.name : ''}
 				clear={() => clearFocus()}
-				select={(term) => {
-					const idx = cats.findIndex((el) =>
-						el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
-					);
-					if (idx < 0) return false;
-					focusCat(cats[idx]);
-					return true;
-				}}
+				select={selectCatBySearchTerm}
 				openParticipate={() => (showParticipate = true)}
 				openLearnMore={() => (showLearnMore = true)}
 			/>
@@ -225,14 +227,7 @@
 			cat={focusedCat}
 			searchTerm={focusedCat ? focusedCat.name : ''}
 			clear={() => clearFocus()}
-			select={(term) => {
-				const idx = cats.findIndex((el) =>
-					el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
-				);
-				if (idx < 0) return false;
-				focusCat(cats[idx]);
-				return true;
-			}}
+			select={selectCatBySearchTerm}
 			openParticipate={() => (showParticipate = true)}
 			{openDonationOptions}
 			openLearnMore={() => (showLearnMore = true)}

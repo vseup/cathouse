@@ -128,18 +128,22 @@
 		selectedCat?.id === cat.id ? clearSelection() : selectCat(cat);
 	}
 
+	function handleResumeParticipateFromUrl() {
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.get('resumeParticipate') !== '1') return;
+
+		showParticipate = true;
+		searchParams.delete('resumeParticipate');
+		const nextSearch = searchParams.toString();
+		const nextUrl = `${window.location.pathname}${nextSearch.length > 0 ? `?${nextSearch}` : ''}${window.location.hash}`;
+		window.history.replaceState(window.history.state, '', nextUrl);
+	}
+
 	onMount(() => {
 		windowWidth = window.innerWidth;
 		worldWidth = world.clientWidth;
 		worldHeight = world.clientHeight;
-		const searchParams = new URLSearchParams(window.location.search);
-		if (searchParams.get('resumeParticipate') === '1') {
-			showParticipate = true;
-			searchParams.delete('resumeParticipate');
-			const nextSearch = searchParams.toString();
-			const nextUrl = `${window.location.pathname}${nextSearch.length > 0 ? `?${nextSearch}` : ''}${window.location.hash}`;
-			window.history.replaceState(window.history.state, '', nextUrl);
-		}
+		handleResumeParticipateFromUrl();
 
 		loadCatsFromApi(worldWidth, worldHeight).then((apiCats) => {
 			if (apiCats != null) {

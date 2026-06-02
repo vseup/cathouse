@@ -106,7 +106,8 @@ export enum CatState {
     RUN,
     CLEAN,
     BAKING,
-    CUDDLE
+    CUDDLE,
+    IDLE
 }
 
 export enum CatType {
@@ -122,16 +123,18 @@ export enum CatType {
     CAT10 = "CAT10"
 }
 
-export const catTypeImagesMap: Map<CatType, string[]> = new Map([
-    [CatType.CAT01, [cat01GifWalk, cat01GifSleep, cat01GifSit, cat01GifLie, cat01GifRun, cat01GifClean, cat01GifCuddle, cat01GifBaking, cat01GifIdle]],
-    [CatType.CAT02, [cat02GifWalk, cat02GifSleep, cat02GifSit, cat02GifLie, cat02GifRun, cat02GifClean, cat02GifCuddle, cat02GifBaking, cat02GifIdle]],
-    [CatType.CAT03, [cat03GifWalk, cat03GifSleep, cat03GifSit, cat03GifLie, cat03GifRun, cat03GifClean, cat03GifCuddle, cat03GifBaking, cat03GifIdle]],
-    [CatType.CAT04, [cat04GifWalk, cat04GifSleep, cat04GifSit, cat04GifLie, cat04GifRun, cat04GifClean, cat04GifCuddle, cat04GifBaking, cat04GifIdle]],
-    [CatType.CAT05, [cat05GifWalk, cat05GifSleep, cat05GifSit, cat05GifLie, cat05GifRun, cat05GifClean, cat05GifCuddle, cat05GifBaking, cat05GifIdle]],
-    [CatType.CAT06, [cat06GifWalk, cat06GifSleep, cat06GifSit, cat06GifLie, cat06GifRun, cat06GifClean, cat06GifCuddle, cat06GifBaking, cat06GifIdle]],
-    [CatType.CAT07, [cat07GifWalk, cat07GifSleep, cat07GifSit, cat07GifLie, cat07GifRun, cat07GifClean, cat07GifCuddle, cat07GifBaking, cat07GifIdle]],
-    [CatType.CAT08, [cat08GifWalk, cat08GifSleep, cat08GifSit, cat08GifLie, cat08GifRun, cat08GifClean, cat08GifCuddle, cat08GifBaking, cat08GifIdle]],
-    [CatType.CAT09, [cat09GifWalk, cat09GifSleep, cat09GifSit, cat09GifLie, cat09GifRun, cat09GifClean, cat09GifCuddle, cat09GifBaking, cat09GifIdle]],
-    [CatType.CAT10, [cat10GifWalk, cat10GifSleep, cat10GifSit, cat10GifLie, cat10GifRun, cat10GifClean, cat10GifCuddle, cat10GifBaking, cat10GifIdle]]
+export type CatSprites = Record<CatState, string>;
+
+export const catTypeImagesMap: Map<CatType, CatSprites> = new Map([
+    [CatType.CAT01, { [CatState.WALK]: cat01GifWalk, [CatState.SLEEP]: cat01GifSleep, [CatState.SIT]: cat01GifSit, [CatState.LIE]: cat01GifLie, [CatState.RUN]: cat01GifRun, [CatState.CLEAN]: cat01GifClean, [CatState.BAKING]: cat01GifBaking, [CatState.CUDDLE]: cat01GifCuddle, [CatState.IDLE]: cat01GifIdle }],
+    [CatType.CAT02, { [CatState.WALK]: cat02GifWalk, [CatState.SLEEP]: cat02GifSleep, [CatState.SIT]: cat02GifSit, [CatState.LIE]: cat02GifLie, [CatState.RUN]: cat02GifRun, [CatState.CLEAN]: cat02GifClean, [CatState.BAKING]: cat02GifBaking, [CatState.CUDDLE]: cat02GifCuddle, [CatState.IDLE]: cat02GifIdle }],
+    [CatType.CAT03, { [CatState.WALK]: cat03GifWalk, [CatState.SLEEP]: cat03GifSleep, [CatState.SIT]: cat03GifSit, [CatState.LIE]: cat03GifLie, [CatState.RUN]: cat03GifRun, [CatState.CLEAN]: cat03GifClean, [CatState.BAKING]: cat03GifBaking, [CatState.CUDDLE]: cat03GifCuddle, [CatState.IDLE]: cat03GifIdle }],
+    [CatType.CAT04, { [CatState.WALK]: cat04GifWalk, [CatState.SLEEP]: cat04GifSleep, [CatState.SIT]: cat04GifSit, [CatState.LIE]: cat04GifLie, [CatState.RUN]: cat04GifRun, [CatState.CLEAN]: cat04GifClean, [CatState.BAKING]: cat04GifBaking, [CatState.CUDDLE]: cat04GifCuddle, [CatState.IDLE]: cat04GifIdle }],
+    [CatType.CAT05, { [CatState.WALK]: cat05GifWalk, [CatState.SLEEP]: cat05GifSleep, [CatState.SIT]: cat05GifSit, [CatState.LIE]: cat05GifLie, [CatState.RUN]: cat05GifRun, [CatState.CLEAN]: cat05GifClean, [CatState.BAKING]: cat05GifBaking, [CatState.CUDDLE]: cat05GifCuddle, [CatState.IDLE]: cat05GifIdle }],
+    [CatType.CAT06, { [CatState.WALK]: cat06GifWalk, [CatState.SLEEP]: cat06GifSleep, [CatState.SIT]: cat06GifSit, [CatState.LIE]: cat06GifLie, [CatState.RUN]: cat06GifRun, [CatState.CLEAN]: cat06GifClean, [CatState.BAKING]: cat06GifBaking, [CatState.CUDDLE]: cat06GifCuddle, [CatState.IDLE]: cat06GifIdle }],
+    [CatType.CAT07, { [CatState.WALK]: cat07GifWalk, [CatState.SLEEP]: cat07GifSleep, [CatState.SIT]: cat07GifSit, [CatState.LIE]: cat07GifLie, [CatState.RUN]: cat07GifRun, [CatState.CLEAN]: cat07GifClean, [CatState.BAKING]: cat07GifBaking, [CatState.CUDDLE]: cat07GifCuddle, [CatState.IDLE]: cat07GifIdle }],
+    [CatType.CAT08, { [CatState.WALK]: cat08GifWalk, [CatState.SLEEP]: cat08GifSleep, [CatState.SIT]: cat08GifSit, [CatState.LIE]: cat08GifLie, [CatState.RUN]: cat08GifRun, [CatState.CLEAN]: cat08GifClean, [CatState.BAKING]: cat08GifBaking, [CatState.CUDDLE]: cat08GifCuddle, [CatState.IDLE]: cat08GifIdle }],
+    [CatType.CAT09, { [CatState.WALK]: cat09GifWalk, [CatState.SLEEP]: cat09GifSleep, [CatState.SIT]: cat09GifSit, [CatState.LIE]: cat09GifLie, [CatState.RUN]: cat09GifRun, [CatState.CLEAN]: cat09GifClean, [CatState.BAKING]: cat09GifBaking, [CatState.CUDDLE]: cat09GifCuddle, [CatState.IDLE]: cat09GifIdle }],
+    [CatType.CAT10, { [CatState.WALK]: cat10GifWalk, [CatState.SLEEP]: cat10GifSleep, [CatState.SIT]: cat10GifSit, [CatState.LIE]: cat10GifLie, [CatState.RUN]: cat10GifRun, [CatState.CLEAN]: cat10GifClean, [CatState.BAKING]: cat10GifBaking, [CatState.CUDDLE]: cat10GifCuddle, [CatState.IDLE]: cat10GifIdle }],
 ])
 

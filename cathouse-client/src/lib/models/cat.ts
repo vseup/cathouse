@@ -1,6 +1,5 @@
 import { rand } from "$lib/helpers/number.helper";
-import { getIdleImageByType, getLoveImageByType, getImageByTypeAndState } from "$lib/helpers/cat.helper";
-import { CatState, CatType } from "$lib/constants/cat.sprites";
+import { CatState, CatType, catTypeImagesMap } from "$lib/constants/cat.sprites";
 
 export class Cat {
     id: string;
@@ -30,9 +29,9 @@ export class Cat {
         this.donor = donor;
         this.createdAt = createdAt ?? new Date();
         this.type = type;
-        this.srcIdle = getIdleImageByType(this.type);
-        this.srcLove = getLoveImageByType(this.type);
-        this.src = getImageByTypeAndState(this.type, this.state);
+        this.srcIdle = catTypeImagesMap.get(this.type)![CatState.IDLE];
+        this.srcLove = catTypeImagesMap.get(this.type)![CatState.CUDDLE];
+        this.src = catTypeImagesMap.get(this.type)![this.state];
         this.updateState();
     }
 
@@ -50,7 +49,7 @@ export class Cat {
         }
 
         this.state = vals[index];
-        this.src = getImageByTypeAndState(this.type, this.state);
+        this.src = catTypeImagesMap.get(this.type)![this.state];
         this.stateTimer = this.state === CatState.CUDDLE ? 2 : rand(8, 15);
         this.updateSpeedAndDirection();
     }

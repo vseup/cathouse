@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { rand } from '$lib/helpers/number.helper';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import CatWorld from '$lib/components/CatWorld.svelte';
-	import { createCat, getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
+	import { createCat } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
+	import {
+		createCatFromApi,
+		loadCatsFromApi,
+		loadTotalDonationsFromApi
+	} from '$lib/features/home/cat-data';
 	import Participate from '$lib/components/modals/participate/Participate.svelte';
 	import Success from '$lib/components/modals/success/Success.svelte';
 	import MoreModal from '$lib/components/modals/more/MoreModal.svelte';
@@ -44,22 +48,6 @@
 		);
 	}
 
-	function createCatFromApi(cat: CatApiResponse, worldWidth: number, worldHeight: number): Cat {
-		const x = rand(0, worldWidth - catSize);
-		const y = rand(0, worldHeight - catSize);
-		const createdAt = new Date(cat.createdAt);
-		return new Cat(
-			cat.id,
-			cat.name,
-			x,
-			y,
-			cat.donation,
-			cat.type,
-			cat.donor ?? undefined,
-			Number.isNaN(createdAt.getTime()) ? new Date() : createdAt
-		);
-	}
-
 	async function saveCat(cat: Cat) {
 		const created = await createCat({
 			type: cat.type,
@@ -71,29 +59,9 @@
 		const createdCat = createCatFromApi(created, worldWidth, worldHeight);
 		cats = [createdCat, ...cats];
 		newCat = createdCat;
-		await loadTotalDonationsFromApi();
-	}
-
-	async function loadCatsFromApi(worldWidth: number, worldHeight: number) {
-		try {
-			const data = await getCats();
-			if (!Array.isArray(data)) {
-				throw new Error('Invalid cats response format');
-			}
-
-			return data.map((cat) => createCatFromApi(cat, worldWidth, worldHeight));
-		} catch (error) {
-			console.error(error);
-			return null;
-		}
-	}
-
-	async function loadTotalDonationsFromApi() {
-		try {
-			const total = await getTotalDonations();
+		const total = await loadTotalDonationsFromApi();
+		if (total != null) {
 			totalDonation = total;
-		} catch (error) {
-			console.error(error);
 		}
 	}
 
@@ -150,9 +118,14 @@
 	}
 
 	async function loadInitialData() {
-		const apiCats = await loadCatsFromApi(worldWidth, worldHeight);
+		const [apiCats, total] = await Promise.all([
+			loadCatsFromApi(worldWidth, worldHeight),
+			loadTotalDonationsFromApi()
+		]);
 		cats = apiCats != null ? apiCats : [];
-		void loadTotalDonationsFromApi();
+		if (total != null) {
+			totalDonation = total;
+		}
 	}
 
 	function setupAnimationLoop() {

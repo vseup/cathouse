@@ -152,6 +152,10 @@
 
 		let last = performance.now();
 		let running = true;
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key !== 'Escape' || selectedCat == null) return;
+			clearSelection();
+		};
 
 		function loop(currentTime: number) {
 			if (!running) return;
@@ -177,11 +181,13 @@
 			windowWidth = window.innerWidth;
 		};
 		window.addEventListener('resize', handleResize);
+		window.addEventListener('keydown', handleKeyDown);
 
 		return () => {
 			running = false;
 			cancelAnimationFrame(animationFrameId);
 			window.removeEventListener('resize', handleResize);
+			window.removeEventListener('keydown', handleKeyDown);
 		};
 	});
 </script>

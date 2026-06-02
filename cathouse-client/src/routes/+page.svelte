@@ -30,8 +30,6 @@
 	let cats: Cat[] = [];
 	let totalDonation = 0;
 	let selectedCat: Cat | null = null;
-	let animationFrameId: number;
-
 	let worldWidth = 0;
 	let worldHeight = 0;
 	let windowWidth = 0;
@@ -112,10 +110,9 @@
 
 	function setupAnimationLoop() {
 		let last = performance.now();
-		let running = true;
+		let animationFrameId: number;
 
 		function loop(currentTime: number) {
-			if (!running) return;
 			const deltaTime = (currentTime - last) / 1000; // in seconds
 			last = currentTime;
 
@@ -130,7 +127,6 @@
 		animationFrameId = requestAnimationFrame(loop);
 
 		return () => {
-			running = false;
 			cancelAnimationFrame(animationFrameId);
 		};
 	}

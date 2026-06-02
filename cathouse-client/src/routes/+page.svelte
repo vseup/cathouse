@@ -24,6 +24,7 @@
 
 	$: catSize = calculateCatSize(worldWidth);
 	$: isDesktop = windowWidth > SIDEBAR_BREAKPOINT;
+	$: searchTerm = selectedCat?.name ?? '';
 
 	let world: HTMLDivElement;
 	let cats: Cat[] = [];
@@ -56,7 +57,7 @@
 		}
 	}
 
-function selectCat(cat: Cat) {
+	function selectCat(cat: Cat) {
 		cat.updateState(CatState.CUDDLE);
 		selectedCat = cat;
 	}
@@ -179,8 +180,8 @@ function selectCat(cat: Cat) {
 			zIndex={worldHeight + 20}
 			{cats}
 			cat={selectedCat}
-			searchTerm={selectedCat ? selectedCat.name : ''}
-			clear={() => clearSelection()}
+			{searchTerm}
+			clear={clearSelection}
 			select={selectCatBySearchTerm}
 			openParticipate={() => (showParticipate = true)}
 			openLearnMore={() => (showLearnMore = true)}
@@ -203,8 +204,8 @@ function selectCat(cat: Cat) {
 				donation={totalDonation}
 				cat={selectedCat}
 				{cats}
-				searchTerm={selectedCat ? selectedCat.name : ''}
-				clear={() => clearSelection()}
+				{searchTerm}
+				clear={clearSelection}
 				select={selectCatBySearchTerm}
 				openParticipate={() => (showParticipate = true)}
 				openLearnMore={() => (showLearnMore = true)}

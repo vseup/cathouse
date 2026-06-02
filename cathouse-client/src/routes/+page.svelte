@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
@@ -97,14 +97,13 @@
 		window.history.replaceState(window.history.state, '', nextUrl);
 	}
 
-	function measureWorldDimensions() {
-		worldWidth = world.clientWidth;
-		worldHeight = world.clientHeight;
+	function syncWindowWidth() {
+		windowWidth = window.innerWidth;
 	}
 
-	function syncDimensions() {
-		windowWidth = window.innerWidth;
-		measureWorldDimensions();
+	function syncWorldDimensions() {
+		worldWidth = world.clientWidth;
+		worldHeight = world.clientHeight;
 	}
 
 	async function loadInitialData() {
@@ -127,8 +126,6 @@
 			const deltaTime = (currentTime - last) / 1000; // in seconds
 			last = currentTime;
 
-			measureWorldDimensions();
-
 			for (const cat of cats) {
 				updateCat(cat, deltaTime, worldWidth, worldHeight);
 			}
@@ -147,7 +144,8 @@
 
 	function setupWindowListeners() {
 		const handleResize = () => {
-			syncDimensions();
+			syncWindowWidth()
+			syncWorldDimensions()
 		};
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key !== 'Escape' || selectedCat == null) return;
@@ -164,9 +162,13 @@
 	}
 
 	onMount(() => {
-		syncDimensions();
 		handleResumeParticipateFromUrl();
-		void loadInitialData();
+		syncWindowWidth()
+
+		tick().then(() => {
+			syncWorldDimensions();
+			void loadInitialData();
+		});
 
 		const stopAnimationLoop = setupAnimationLoop();
 		const stopWindowListeners = setupWindowListeners();

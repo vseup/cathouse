@@ -56,22 +56,7 @@
 		}
 	}
 
-	function updateCat(
-		cat: Cat, 
-		deltaTime: number, 
-		catSize: number,
-		worldWidth: number, 
-		worldHeight: number
-	) {
-		cat.stateTimer -= deltaTime;
-		if (cat.stateTimer <= 0) {
-			cat.updateState();
-		}
-		cat.respectBoundaries(worldWidth - catSize, worldHeight - catSize);
-		cat.move(deltaTime);
-	}
-
-	function selectCat(cat: Cat) {
+function selectCat(cat: Cat) {
 		cat.updateState(CatState.CUDDLE);
 		selectedCat = cat;
 	}
@@ -134,7 +119,7 @@
 			last = currentTime;
 
 			for (const cat of cats) {
-				updateCat(cat, deltaTime, catSize, worldWidth, worldHeight);
+				cat.tick(deltaTime, worldWidth - catSize, worldHeight - catSize);
 			}
 
 			cats = [...cats];

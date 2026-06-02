@@ -54,6 +54,15 @@ export class Cat {
         this.updateSpeedAndDirection();
     }
 
+    public tick(deltaTime: number, maxX: number, maxY: number) {
+        this.stateTimer -= deltaTime;
+        if (this.stateTimer <= 0) {
+            this.updateState();
+        }
+        this.respectBoundaries(maxX, maxY);
+        this.move(deltaTime);
+    }
+
     public move(deltaTime: number) {
         if (this.state === CatState.WALK || this.state === CatState.RUN) {
             this.x += this.vx * deltaTime;

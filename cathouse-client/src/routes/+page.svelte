@@ -197,7 +197,7 @@
 					selectedCatId={selectedCat?.id ?? null}
 					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
 					onCatClick={toggleSelectionOnCat}
-					onOverlayClick={clearSelection}
+					onBackgroundClick={clearSelection}
 				/>
 			</div>
 			<Sidebar
@@ -233,7 +233,7 @@
 					selectedCatId={selectedCat?.id ?? null}
 					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
 					onCatClick={toggleSelectionOnCat}
-					onOverlayClick={clearSelection}
+					onBackgroundClick={clearSelection}
 				/>
 			</div>
 			<div class="bottombar-pad"></div>

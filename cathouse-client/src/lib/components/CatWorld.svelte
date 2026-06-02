@@ -8,7 +8,7 @@
 	export let selectedCatId: string | null = null;
 	export let overlayZIndex = -100;
 	export let onCatClick: (cat: Cat) => void;
-	export let onOverlayClick: () => void;
+	export let onBackgroundClick: () => void;
 </script>
 
 <div class="cat-world">
@@ -21,7 +21,13 @@
 			on:click={() => onCatClick(cat)}
 		/>
 	{/each}
-	<div class="overlay" style:z-index={overlayZIndex} on:click={onOverlayClick}></div>
+	<button
+		type="button"
+		class="overlay"
+		aria-label="Auswahl aufheben"
+		style:z-index={overlayZIndex}
+		on:click={onBackgroundClick}
+	></button>
 </div>
 
 <style>
@@ -37,7 +43,11 @@
 		width: 100%;
 		height: 100%;
 		position: absolute;
+		border: none;
 		opacity: 0.75;
 		z-index: -100;
+		padding: 0;
+		cursor: default;
+		appearance: none;
 	}
 </style>

@@ -23,6 +23,7 @@
 	import { calculateCatSize } from '$lib/helpers/layout.helper';
 
 	$: catSize = calculateCatSize(worldWidth);
+	$: isDesktop = windowWidth > SIDEBAR_BREAKPOINT;
 
 	let world: HTMLDivElement;
 	let cats: Cat[] = [];
@@ -55,7 +56,13 @@
 		}
 	}
 
-	function updateCat(cat: Cat, deltaTime: number, worldWidth: number, worldHeight: number) {
+	function updateCat(
+		cat: Cat, 
+		deltaTime: number, 
+		catSize: number,
+		worldWidth: number, 
+		worldHeight: number
+	) {
 		cat.stateTimer -= deltaTime;
 		if (cat.stateTimer <= 0) {
 			cat.updateState();
@@ -127,7 +134,7 @@
 			last = currentTime;
 
 			for (const cat of cats) {
-				updateCat(cat, deltaTime, worldWidth, worldHeight);
+				updateCat(cat, deltaTime, catSize, worldWidth, worldHeight);
 			}
 
 			cats = [...cats];
@@ -181,31 +188,7 @@
 </script>
 
 <div style={`--sidebar-width: ${SIDEBAR_WIDTH}px; --bottombar-height: ${BOTTOMBAR_HEIGHT}px;`}>
-	{#if windowWidth > SIDEBAR_BREAKPOINT}
-		<div class="world-wrapper row">
-			<div class="world" bind:this={world}>
-				<CatWorld
-					{cats}
-					{catSize}
-					{worldHeight}
-					selectedCatId={selectedCat?.id ?? null}
-					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
-					onCatClick={toggleSelectionOnCat}
-					onBackgroundClick={clearSelection}
-				/>
-			</div>
-			<Sidebar
-				donation={totalDonation}
-				cat={selectedCat}
-				{cats}
-				searchTerm={selectedCat ? selectedCat.name : ''}
-				clear={() => clearSelection()}
-				select={selectCatBySearchTerm}
-				openParticipate={() => (showParticipate = true)}
-				openLearnMore={() => (showLearnMore = true)}
-			/>
-		</div>
-	{:else}
+	{#if !isDesktop}
 		<BottomBar
 			donation={totalDonation}
 			zIndex={worldHeight + 20}
@@ -217,21 +200,34 @@
 			openParticipate={() => (showParticipate = true)}
 			openLearnMore={() => (showLearnMore = true)}
 		/>
-		<div class="world-wrapper col">
-			<div class="world" bind:this={world}>
-				<CatWorld
-					{cats}
-					{catSize}
-					{worldHeight}
-					selectedCatId={selectedCat?.id ?? null}
-					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
-					onCatClick={toggleSelectionOnCat}
-					onBackgroundClick={clearSelection}
-				/>
-			</div>
-			<div class="bottombar-pad"></div>
-		</div>
 	{/if}
+	<div class="world-wrapper" class:row={isDesktop} class:col={!isDesktop}>
+		<div class="world" bind:this={world}>
+			<CatWorld
+				{cats}
+				{catSize}
+				{worldHeight}
+				selectedCatId={selectedCat?.id ?? null}
+				overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
+				onCatClick={toggleSelectionOnCat}
+				onBackgroundClick={clearSelection}
+			/>
+		</div>
+		{#if isDesktop}
+			<Sidebar
+				donation={totalDonation}
+				cat={selectedCat}
+				{cats}
+				searchTerm={selectedCat ? selectedCat.name : ''}
+				clear={() => clearSelection()}
+				select={selectCatBySearchTerm}
+				openParticipate={() => (showParticipate = true)}
+				openLearnMore={() => (showLearnMore = true)}
+			/>
+		{:else}
+			<div class="bottombar-pad"></div>
+		{/if}
+	</div>
 	{#if showParticipate}
 		<Participate
 			zIndex={worldHeight + 50}

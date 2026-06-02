@@ -139,35 +139,32 @@
 		window.history.replaceState(window.history.state, '', nextUrl);
 	}
 
-	onMount(() => {
-		windowWidth = window.innerWidth;
+	function measureWorldDimensions() {
 		worldWidth = world.clientWidth;
 		worldHeight = world.clientHeight;
-		handleResumeParticipateFromUrl();
+	}
 
-		loadCatsFromApi(worldWidth, worldHeight).then((apiCats) => {
-			if (apiCats != null) {
-				cats = apiCats;
-				return;
-			}
-			cats = [];
-		});
-		loadTotalDonationsFromApi();
+	function syncDimensions() {
+		windowWidth = window.innerWidth;
+		measureWorldDimensions();
+	}
 
+	async function loadInitialData() {
+		const apiCats = await loadCatsFromApi(worldWidth, worldHeight);
+		cats = apiCats != null ? apiCats : [];
+		void loadTotalDonationsFromApi();
+	}
+
+	function setupAnimationLoop() {
 		let last = performance.now();
 		let running = true;
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key !== 'Escape' || selectedCat == null) return;
-			clearSelection();
-		};
 
 		function loop(currentTime: number) {
 			if (!running) return;
 			const deltaTime = (currentTime - last) / 1000; // in seconds
 			last = currentTime;
 
-			worldWidth = world.clientWidth;
-			worldHeight = world.clientHeight;
+			measureWorldDimensions();
 
 			for (const cat of cats) {
 				updateCat(cat, deltaTime, worldWidth, worldHeight);
@@ -179,19 +176,41 @@
 
 		animationFrameId = requestAnimationFrame(loop);
 
-		const handleResize = () => {
-			worldWidth = world.clientWidth;
-			worldHeight = world.clientHeight;
-			windowWidth = window.innerWidth;
+		return () => {
+			running = false;
+			cancelAnimationFrame(animationFrameId);
 		};
+	}
+
+	function setupWindowListeners() {
+		const handleResize = () => {
+			syncDimensions();
+		};
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key !== 'Escape' || selectedCat == null) return;
+			clearSelection();
+		};
+
 		window.addEventListener('resize', handleResize);
 		window.addEventListener('keydown', handleKeyDown);
 
 		return () => {
-			running = false;
-			cancelAnimationFrame(animationFrameId);
 			window.removeEventListener('resize', handleResize);
 			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}
+
+	onMount(() => {
+		syncDimensions();
+		handleResumeParticipateFromUrl();
+		void loadInitialData();
+
+		const stopAnimationLoop = setupAnimationLoop();
+		const stopWindowListeners = setupWindowListeners();
+
+		return () => {
+			stopAnimationLoop();
+			stopWindowListeners();
 		};
 	});
 </script>

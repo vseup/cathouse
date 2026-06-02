@@ -4,7 +4,7 @@
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
-	import Kitty from '$lib/components/Kitty.svelte';
+	import CatWorld from '$lib/components/CatWorld.svelte';
 	import { createCat, getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
 	import { CatState } from '$lib/constants/cat.sprites';
 	import { Cat } from '$lib/models/cat';
@@ -23,7 +23,6 @@
 	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
 
 	let world: HTMLDivElement;
-	let overlay: HTMLDivElement;
 	let cats: Cat[] = [];
 	let totalDonation = 0;
 	let focusedCat: Cat | null = null;
@@ -110,12 +109,10 @@
 	function focusCat(cat: Cat) {
 		cat.updateState(CatState.CUDDLE);
 		focusedCat = cat;
-		overlay.style.zIndex = `${worldHeight + 1}`;
 	}
 
 	function clearFocus() {
 		focusedCat = null;
-		overlay.style.zIndex = `-100`;
 	}
 
 	function selectCatBySearchTerm(term: string) {
@@ -125,6 +122,10 @@
 		if (idx < 0) return false;
 		focusCat(cats[idx]);
 		return true;
+	}
+
+	function toggleFocusOnCat(cat: Cat) {
+		focusedCat?.id === cat.id ? clearFocus() : focusCat(cat);
 	}
 
 	onMount(() => {
@@ -189,24 +190,15 @@
 	{#if windowWidth > SIDEBAR_BREAKPOINT}
 		<div class="world-wrapper row">
 			<div class="world" bind:this={world}>
-				{#each cats as cat (cat.id)}
-					<Kitty
-						{cat}
-						size={catSize}
-						focused={focusedCat?.id === cat.id}
-						maxY={worldHeight}
-						on:click={() => {
-							cat === focusedCat ? clearFocus() : focusCat(cat);
-						}}
-					/>
-				{/each}
-				<div
-					class="overlay"
-					bind:this={overlay}
-					on:click={() => {
-						clearFocus();
-					}}
-				></div>
+				<CatWorld
+					{cats}
+					{catSize}
+					{worldHeight}
+					focusedCatId={focusedCat?.id ?? null}
+					overlayZIndex={focusedCat != null ? worldHeight + 1 : -100}
+					onCatClick={toggleFocusOnCat}
+					onOverlayClick={clearFocus}
+				/>
 			</div>
 			<Sidebar
 				donation={totalDonation}
@@ -234,24 +226,15 @@
 		/>
 		<div class="world-wrapper col">
 			<div class="world" bind:this={world}>
-				{#each cats as cat (cat.id)}
-					<Kitty
-						{cat}
-						size={catSize}
-						focused={focusedCat?.id === cat.id}
-						maxY={worldHeight}
-						on:click={() => {
-							cat === focusedCat ? clearFocus() : focusCat(cat);
-						}}
-					/>
-				{/each}
-				<div
-					class="overlay"
-					bind:this={overlay}
-					on:click={() => {
-						clearFocus();
-					}}
-				></div>
+				<CatWorld
+					{cats}
+					{catSize}
+					{worldHeight}
+					focusedCatId={focusedCat?.id ?? null}
+					overlayZIndex={focusedCat != null ? worldHeight + 1 : -100}
+					onCatClick={toggleFocusOnCat}
+					onOverlayClick={clearFocus}
+				/>
 			</div>
 			<div class="bottombar-pad"></div>
 		</div>
@@ -286,15 +269,5 @@
 	.world {
 		flex: 1 1 auto;
 		position: relative;
-	}
-	.overlay {
-		top: 0;
-		left: 0;
-		background: var(--color-bg);
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		opacity: 0.75;
-		z-index: -100;
 	}
 </style>

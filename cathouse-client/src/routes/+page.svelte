@@ -40,14 +40,6 @@
 	let newCat: Cat | null = null;
 	let showLearnMore = false;
 
-	function openDonationOptions() {
-		window.open(
-			'https://www.tierheim-starnberg.de/helfen-und-spenden/spenden/',
-			'_blank',
-			'noopener,noreferrer'
-		);
-	}
-
 	async function saveCat(cat: Cat) {
 		const created = await createCat({
 			type: cat.type,
@@ -223,7 +215,6 @@
 			clear={() => clearSelection()}
 			select={selectCatBySearchTerm}
 			openParticipate={() => (showParticipate = true)}
-			{openDonationOptions}
 			openLearnMore={() => (showLearnMore = true)}
 		/>
 		<div class="world-wrapper col">

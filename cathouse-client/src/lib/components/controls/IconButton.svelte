@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Icon from './Icon.svelte';
-
 	export let icon: string;
 	export let primary: boolean = false;
 	export let disabled: boolean = false;
@@ -8,7 +6,7 @@
 
 <button class="button {primary ? 'primary' : 'secondary'}" {disabled} on:click>
 	{#if icon}
-		<Icon {icon} color="var(--color-text-light);" />
+		<div class="icon" style:color="var(--color-text-light)">{icon}</div>
 	{/if}
 </button>
 

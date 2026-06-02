@@ -17,14 +17,12 @@
 	import MoreModal from '$lib/components/modals/more/MoreModal.svelte';
 	import {
 		BOTTOMBAR_HEIGHT,
-		CAT_SIZE_DIVISOR,
-		CAT_SIZE_MAX,
-		CAT_SIZE_MIN,
 		SIDEBAR_BREAKPOINT,
 		SIDEBAR_WIDTH
 	} from '$lib/constants/layout';
+	import { calculateCatSize } from '$lib/helpers/layout.helper';
 
-	$: catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
+	$: catSize = calculateCatSize(worldWidth);
 
 	let world: HTMLDivElement;
 	let cats: Cat[] = [];

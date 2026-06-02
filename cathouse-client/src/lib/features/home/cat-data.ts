@@ -1,5 +1,5 @@
 import { getCats, getTotalDonations, type CatApiResponse } from '$lib/api/cats';
-import { CAT_SIZE_DIVISOR, CAT_SIZE_MAX, CAT_SIZE_MIN } from '$lib/constants/layout';
+import { calculateCatSize } from '$lib/helpers/layout.helper';
 import { rand } from '$lib/helpers/number.helper';
 import { Cat } from '$lib/models/cat';
 
@@ -8,7 +8,7 @@ export function createCatFromApi(
 	worldWidth: number,
 	worldHeight: number
 ): Cat {
-	const catSize = Math.min(Math.max(worldWidth / CAT_SIZE_DIVISOR, CAT_SIZE_MIN), CAT_SIZE_MAX);
+	const catSize = calculateCatSize(worldWidth);
 	const x = rand(0, worldWidth - catSize);
 	const y = rand(0, worldHeight - catSize);
 	const createdAt = new Date(cat.createdAt);

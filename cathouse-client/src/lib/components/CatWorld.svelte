@@ -5,7 +5,7 @@
 	export let cats: Cat[] = [];
 	export let catSize: number;
 	export let worldHeight: number;
-	export let focusedCatId: string | null = null;
+	export let selectedCatId: string | null = null;
 	export let overlayZIndex = -100;
 	export let onCatClick: (cat: Cat) => void;
 	export let onOverlayClick: () => void;
@@ -16,7 +16,7 @@
 		<Kitty
 			{cat}
 			size={catSize}
-			focused={focusedCatId === cat.id}
+			focused={selectedCatId === cat.id}
 			maxY={worldHeight}
 			on:click={() => onCatClick(cat)}
 		/>

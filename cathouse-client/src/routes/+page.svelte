@@ -25,7 +25,7 @@
 	let world: HTMLDivElement;
 	let cats: Cat[] = [];
 	let totalDonation = 0;
-	let focusedCat: Cat | null = null;
+	let selectedCat: Cat | null = null;
 	let animationFrameId: number;
 
 	let worldWidth = 0;
@@ -106,13 +106,13 @@
 		cat.move(deltaTime);
 	}
 
-	function focusCat(cat: Cat) {
+	function selectCat(cat: Cat) {
 		cat.updateState(CatState.CUDDLE);
-		focusedCat = cat;
+		selectedCat = cat;
 	}
 
-	function clearFocus() {
-		focusedCat = null;
+	function clearSelection() {
+		selectedCat = null;
 	}
 
 	function selectCatBySearchTerm(term: string) {
@@ -120,12 +120,12 @@
 			el.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
 		);
 		if (idx < 0) return false;
-		focusCat(cats[idx]);
+		selectCat(cats[idx]);
 		return true;
 	}
 
-	function toggleFocusOnCat(cat: Cat) {
-		focusedCat?.id === cat.id ? clearFocus() : focusCat(cat);
+	function toggleSelectionOnCat(cat: Cat) {
+		selectedCat?.id === cat.id ? clearSelection() : selectCat(cat);
 	}
 
 	onMount(() => {
@@ -194,18 +194,18 @@
 					{cats}
 					{catSize}
 					{worldHeight}
-					focusedCatId={focusedCat?.id ?? null}
-					overlayZIndex={focusedCat != null ? worldHeight + 1 : -100}
-					onCatClick={toggleFocusOnCat}
-					onOverlayClick={clearFocus}
+					selectedCatId={selectedCat?.id ?? null}
+					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
+					onCatClick={toggleSelectionOnCat}
+					onOverlayClick={clearSelection}
 				/>
 			</div>
 			<Sidebar
 				donation={totalDonation}
-				cat={focusedCat}
+				cat={selectedCat}
 				{cats}
-				searchTerm={focusedCat ? focusedCat.name : ''}
-				clear={() => clearFocus()}
+				searchTerm={selectedCat ? selectedCat.name : ''}
+				clear={() => clearSelection()}
 				select={selectCatBySearchTerm}
 				openParticipate={() => (showParticipate = true)}
 				openLearnMore={() => (showLearnMore = true)}
@@ -216,9 +216,9 @@
 			donation={totalDonation}
 			zIndex={worldHeight + 20}
 			{cats}
-			cat={focusedCat}
-			searchTerm={focusedCat ? focusedCat.name : ''}
-			clear={() => clearFocus()}
+			cat={selectedCat}
+			searchTerm={selectedCat ? selectedCat.name : ''}
+			clear={() => clearSelection()}
 			select={selectCatBySearchTerm}
 			openParticipate={() => (showParticipate = true)}
 			{openDonationOptions}
@@ -230,10 +230,10 @@
 					{cats}
 					{catSize}
 					{worldHeight}
-					focusedCatId={focusedCat?.id ?? null}
-					overlayZIndex={focusedCat != null ? worldHeight + 1 : -100}
-					onCatClick={toggleFocusOnCat}
-					onOverlayClick={clearFocus}
+					selectedCatId={selectedCat?.id ?? null}
+					overlayZIndex={selectedCat != null ? worldHeight + 1 : -100}
+					onCatClick={toggleSelectionOnCat}
+					onOverlayClick={clearSelection}
 				/>
 			</div>
 			<div class="bottombar-pad"></div>

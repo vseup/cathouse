@@ -17,4 +17,7 @@ make down
 
 # Show all available commands
 make help
+
+# Run client unit tests
+cd cathouse-client && npm test
 ```

@@ -2,9 +2,21 @@
 
 Visit: https://cats.verenapues.com/
 
-Simple web app where people can name and spawn their favourite cat after making a donation to an animal shelter.
+A lightweight donation platform for the Tierheim Starnberg cat house rebuild campaign. Creating a virtual cat in the app as a visible contribution should motivate people to donate through official shelter channels. This turns abstract fundraising progress into a shared, playful visual story.
 
-For a nice cat animation sprites starter kit see: https://seethingswarm.itch.io/catset.
+![Cat House](docs/cathouse-screens.png)
+
+## Architecture
+
+Full-stack TypeScript across the entire project — consistent types between client and API without extra overhead.
+
+- **Frontend:** SvelteKit
+- **Backend:** NestJS + PostgreSQL + Prisma
+- **Infrastructure:** Docker Compose (dev and prod), deployed on a vServer
+
+TypeScript was the primary driver for the stack choices: SvelteKit for a lightweight UI, NestJS for a structured backend that fits naturally with TypeScript. Prisma handles DB migrations and generates typed query results.
+
+Cat animations are built on a sprite starter kit (see [seethingswarm.itch.io/catset](https://seethingswarm.itch.io/catset)), extended with additional coat variations and animations.
 
 ## Essential Commands
 

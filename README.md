@@ -20,4 +20,7 @@ make help
 
 # Run client unit tests
 cd cathouse-client && npm test
+
+# Run API unit tests
+cd cathouse-api && npm test
 ```
